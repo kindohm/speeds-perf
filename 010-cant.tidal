@@ -1,0 +1,45 @@
+do
+    let dens = 1
+        melody = "{[0 4] 2 -24 ~ [ 4 11] ~ ~ [0] [14 16] ~ 11 ~ ~}%16"        
+    p "synth" 
+        $ harmorOn $ sometimesBy 0 (stutWith (shiftBy 20 $ choose [1,2,3]) (0.125*3) (|+ note (shiftBy 44 $ choose [5,7,12,14]))) 
+        $ (|+ note "-7") 
+        $ slow 4 $ note melody 
+        # cantChan # gain 1.15 # cps 0.6666666 # s "harmor"
+    p "ccs" $ harmorOn $ density dens $ stack [ 
+        pan melody # ccv (range 0 127 $ slow 13.1 sine) # filter1
+        , pan melody # ccv (range 127 127 $ slow 11.31 sine) # filter1width
+        , pan melody # ccv (range 0 127 $ slow 12.25 sine) # filter1env
+        , pan melody # ccv (range 70 127 $ slow 10.212 sine) # filter2
+        , pan melody # ccv (range 0 127 $ slow 8.41 sine) # filter2width
+        , pan melody # ccv (range 40 90 $ slow 9.587 sine) # filter2env
+        , pan melody # ccv (range 60 127 $ slow 14.6801 sine) # uniDetune
+        , pan melody # ccv (range 64 64 $ slow 15 tri) # porta
+        ] # cantChan # s "harmor"
+    let 
+        bd1 p = fast 2 $ whenmod 32 16 (# pad6n) $ shift $ sb 0.2 (within (0,0.125) g) $ struct "1(3,8,3)" $ p
+        cp1 p = (0.125 <~) $ p
+        sd1 p = (0.25 ~>) $ p 
+        bd2 p = whenmod 32 16 (# pad6n) $ struct "1 1 1 [~ 1]" $ p
+        sd2 p = off 0.125 id $ ((11/16) ~>) $ p
+        cp2 p = (0.125 ~>) $ p
+        bdpat = bd1
+        sdpat = sd1
+        cppat = cp1
+    p "rytm"
+        $ limit
+        $ shift
+        $ useIter (iter 16)
+        $ reduce $ stack [
+            kickOn $ bdpat $ pad1n
+            , clapOn $ cppat $ pad4n
+            , perc1On $ sdpat $ pad2n
+            , hatOn 
+              $ whenmod 16 8 (slow 2)
+              $ whenmod 20 10 (slow (4/3))
+              $ struct "1*16" $ pad11n
+            , g $ padOn $ dg6 $ struct "1(<5 3 7>,16,<0 4 8 3 9>)" $ pad5n 
+            , perf5 "0"
+        ] # rytm
+
+hush

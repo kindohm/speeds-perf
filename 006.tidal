@@ -1,0 +1,45 @@
+hush
+
+do 
+  let rfreq = segment 1
+  d1 
+    $ limit
+    $ cpsDisc minTempo maxTempo
+    $ (|* cps ("<1 0.7 0.5 0.8 0.9>"))
+    $ stack [
+      padOn $ (|+ note (choose [-12,0]))
+        $ (|+ note (scale "ritusen" "{0 -1 1 -2 2 -5 -10}%16")) $ pad1n
+      , samplestart (segment 1 $ range 0 70 $ slow 33 rand)
+      , sampleend (segment 1 $ range 0 64 $ slow 44 rand)
+      , perf3 (segment 1.3 $ range 0 64 $ slow 234 rand)
+      , perf4 (segment 1.4 $ range 0 127 $ slow 333 rand)
+      , perf7 (segment 1.1 $ range 0 96 $ slow 88711 rand)
+      , kickOn $ reduce $ slow 2 $ struct "1(3,16)" $ pad3n
+      , clapOn $ reduce 
+          $ (|+ note (shiftBy 101 $ choose [-12,-11..5])) 
+          $ slow "<2 1.74 1.25 1.333 2.333 1>" 
+          $ (0.75 ~>) $ pad4n
+      , perc1On $ (|+ note (shiftBy 99 $ choose [0,1,4,-4,-12])) 
+          $ fast "<1 1.2 0.8 0.6>" 
+          $ ssb 0.5 (# gain 1) $ shiftBy 18 $ (0.5 ~>) $ pad2n # gain 0.1
+      , stack [
+        harmorOn $ (0.5 ~>) $ harmor
+        -- harmor cc's
+        , ccv (rfreq $ ccrand 10 100 133) # filter1
+        , ccv (rfreq $ ccrand 10 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 40 80 38282) # phspeed
+        , ccv (rfreq $ ccrand 5 127 533) # envattack
+        , ccv (rfreq $ ccrand 0 127 7283) # envdecay
+        , ccv (rfreq $ ccrand 100 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 100 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 64 64 1133) # amprel
+        , ccv (rfreq $ ccrand 0 127 7) # harm
+      ] # speed006chan
+    ] # cps (100/120/2)
+
+    hush
