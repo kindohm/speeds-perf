@@ -120,6 +120,13 @@ let
   xfademap mapping pattern = xfadep (mapp mapping $ pattern)
   notemap mapping pattern = note (mapp mapping $ pattern)
   notemap' mapping pattern = note (mapp' mapping $ pattern)
+  ampmap mapping pattern = amp (mapp mapping $ pattern) 
+  ampmap' mapping pattern = amp (mapp' mapping $ pattern)  
+  replicator text1 = [putStr (text1) | x <- replicate 500 text1]
+  flood text2 = sequence_(replicator text2)
+  replicator' n text1 = [putStr (text1) | x <- replicate n text1]
+  flood' n text2 = sequence_(replicator' n text2)
+  say = flood
 
 d1 $ fast 4 $ harm # ccv (range 0 127 $ slow 33 rand) # harmor
 

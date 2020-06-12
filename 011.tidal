@@ -1,0 +1,64 @@
+
+
+
+
+do 
+  let defaultStart = 91
+      defaultEnd = 68
+      seg = segment (1/8)
+      pat1 = "{0 0 0 0}%8"
+      pat2 = "{0 0*2 0 0}%8"
+      pat3 = "{0 0*2 0*2 0 0}%8"
+      pat4 = "{0@3}%16"
+      fill1 = "{0@2 0 1@3 0@2}%16"      
+      fill2 = "{0 1 ~ 0 0*2 0}%8"
+      fill3 = "{~ 1@4}%16"
+      pats = [pat1, pat2, pat3, pat4, fill1, fill2, fill3]
+      rfreq = segment (1/8)
+      degg = reduce
+      snaredub = superimpose ((# pad2n) . (0.0625 ~>))
+  d1 
+    $ whenmod 50 40 (slow (4/3))
+    $ whenmod 60 45 (fast (7/6))
+    $ whenmod 45 30 (fast (7/6))
+    $ whenmod 30 15 (fast (7/6))
+    $ useIter (iter 16)
+    $ cpsDisc minTempo maxTempo
+    $ stack [
+      stack [
+        kickOn $ degg $ rytmmap [2,"~"] (randcat pats) # note "a2" # amp 1
+        , perc1On $ superimpose ((# pad2n) . (# amp 1) . (0.0625 ~>)) 
+          $ degg $ rytmmap ["0","~"] (randcat pats) # note "a2" # amp 0
+        , clapOn $ degg $ rytmmap ["~",3] (randcat pats) # note "a2" # amp 1
+        , hatOn $ whenmod 32 16 (off 0.0625 id) 
+          $ degg $ rytmmap [10,"~"] (randcat pats) # note "c3" # amp 1
+        , padOn $ amp "1" # pad5 # note "[a2]*3"
+        , samplestart (segment (1/4) $ range 33 100 $ slow 33 rand) # midichan 4
+        , sampleend (segment (1/4) $ range 0 22 $ slow 44 rand) # midichan 4
+      ] # rytm 
+      , stack [
+         harmorOn $ degg $ ampmap [1,"~"] (randcat pats) # note "-12"
+        -- harmor cc's
+        , ccv (rfreq $ ccrand 10 100 133) # filter1
+        , ccv (rfreq $ ccrand 10 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 40 80 38282) # phspeed
+        , ccv (rfreq $ ccrand 15 50 533) # envattack
+        , ccv (rfreq $ ccrand 0 127 7283) # envdecay
+        , ccv (rfreq $ ccrand 100 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 100 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 100 100 1133) # amprel
+        , ccv (rfreq $ ccrand 0 127 7) # harm
+      ] # harmor # speed004chan
+    ]# cps 0.7
+
+
+d1 $ s "harmor" # ccv 100 # amprel # speed004chan
+
+    hush
+
+say "hey hey hey. x)   "
