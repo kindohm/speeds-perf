@@ -1,0 +1,12 @@
+d2   
+  $ limit
+  $ gain "<1*15 1*7>" 
+  # s "blog2pad"
+  # n "[4]"  
+  # note "[d4]"
+  # cps "<1 0.666>"
+  # lpf 4000
+  # legato 1
+  # begin 0.3
+
+  hush

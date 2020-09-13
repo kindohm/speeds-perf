@@ -1,0 +1,36 @@
+do
+  let minTempo14 = (range 1 0.125 $ (cF 0 "88"))
+      maxTempo14 = (range 1 2 $ (cF 0 "88"))
+  let minTempoTri14 = (range 1 0.25 $ (cF 0 "72"))
+      maxTempoTri14 = (range 1 1.5 $ (cF 0 "72"))
+  d2   
+    $ cpsTri minTempoTri14 maxTempoTri14 3.1
+    $ cpsDisc minTempo14 maxTempo14
+    $ (|* gain 0.9)
+    $ padOn $ limit
+    $ gain "<1*15 1*7>" 
+    # s "blog2pad"
+    # n (slow 32 $ "<4>")
+    # note "[d4]"
+    # cps "<1 0.666>"
+    # lpf 4000
+    # legato 1
+    # begin 0.3
+  p "rytm"
+    $ cpsTri minTempoTri14 maxTempoTri14 3.1
+    $ cpsDisc minTempo14 maxTempo14
+    $ limit
+    $ shift
+    $ reduce
+    $ sb 0.333 (stutWith "<2 3 4 5>" 0.125 (id))
+    $ stack [
+      kickOn $ slow 2 $ struct "1(3,16,<0 10 20 30>)" $ midichan 2 # note "<c3 c3 bf2>"
+      , clapOn $ slow 1.5 $ midichan 3 # note "<c3 c3 c3 g2>"
+      , hatOn $ struct (binaryN 8 "<2893423 2378231 90348922>") $ midichan 10 # note "c3"
+      , perf3 (segment (1/2) $ shiftBy 1210 $ choose [0,0,127])      
+      , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
+--      , scene (segment (shiftBy 44 $ choose [1.5,0.75]) $ shiftBy 100 $ choose [0,1,2])
+    ] # rytm
+    # cps "<1 0.666>"
+
+hush

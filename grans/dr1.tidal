@@ -1,0 +1,11 @@
+d1   
+  $ gain "<1*15>" 
+  # s "dr"
+  # legato 1
+  # note "[<c4 c4 c4 c4 g3>, <d3 d3 d3 f3>]"
+  # beginend (cat [(range 0.42 0.425 $ slow 1 saw), 0.4]) 0.01
+  # cps "<[0.8 0.7 0.9]/3 0.21>"
+  # lpf 3000
+  # hpf 200
+
+  hush

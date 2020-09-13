@@ -1,0 +1,78 @@
+
+
+do
+  -- spotless pad
+  d2
+    $ cpsDisc 0.5 2
+    $ shift
+    $ every 2 (within (0.5,1) (|+ n "<2>"))
+    $ plyWith "<6 1 15>" id
+    $ gain "1.05"
+    # s "speeds2pad" 
+    # n "0"
+    # note "<c5 c5 c5 c5 [g4]>"
+    # cps "<2 2 0.5>"
+    # begin "<0.1 0.1 0.5>"
+    # legato "<1 1 1 1 1 1.5>"
+    # hpf (segment 1 $ shiftBy 100 $ (range 200 1200 $ shrand 100000))
+  let pat = "{1@9 1@9 1@18}%16"
+  p "rytm"
+    $ limit
+    $ stack [
+      sb 0.25 (off (0.25) id) 
+        $ dg0
+        $ shift $ struct pat $ midichan "{2 2 3 2 3}%16" # note "c3"
+      , struct (binaryN 6 "<2834923 3023891 423940234>") $ midichan 10 # note "c3"
+      , perf2 (shiftBy 66 $ randcat [0,0,(segment 1.5 $ range 0 127 $ shrand 1999)])
+      , perf3 (segment 1.5 $ range 0 127 $ shrand 2000)
+      , perf4 (segment 1.5 $ range 0 127 $ shrand 2001)
+      , perf8 (segment 1.5 $ range 0 127 $ shrand 2002)
+      , perf7 (shiftBy 55 $ randcat [0,0, (segment 1 $ range 0 127 $ shrand 2003)])
+      , scene (segment 1 $ shiftBy 3000 $ choose [0,1,2])
+    ] # rytm
+
+hush
+
+
+do
+  let minTempoSpot = (range 1 0.0625 $ (cF 0 "88"))
+      maxTempoSpot = (range 1 2 $ (cF 0 "88"))
+      minTempo2Spot = (range 1 0.333 $ (cF 0 "72"))
+      maxTempo2Spot = (range 1 2 $ (cF 0 "72"))
+      plyPat = "<6 1 15>"
+  -- spotless pad
+  d2
+    $ cpsTri minTempo2Spot maxTempo2Spot 4.1
+    $ cpsDisc minTempoSpot maxTempoSpot
+    $ padOn
+    $ shift
+    $ every 2 (within (0.5,1) (|+ n "<2>"))
+    $ plyWith plyPat id
+    $ gain "1.2"
+    # s "speeds2pad" 
+    # n "0"
+    # note "<c5 c5 c5 c5 [g4]>"
+    # cps "<2 2 0.5>"
+    # begin "<0.1 0.1 0.5>"
+    # legato "<1 1 1 1 1 1.5>"
+    # hpf (segment 1 $ shiftBy 100 $ (range 200 1200 $ shrand 100000))
+  let fu2 = (shiftBy 839110 . spreadr ($) [(# gain 0.8), (# gain 0.8), (# gain 0.8), (|* gain 0.97)])
+      fu = (# gain 0.95)
+  d1
+    $ limit
+    $ ssb 0.222 rev
+    $ shift
+    $ stack [
+      kickOn $ plyWith plyPat fu $ midichan (segment 1 $ shiftBy 389 $ choose [2,2,3]) # note "c3"
+      , hatOn $ plyWith plyPat fu $ (0.5 ~>) $ midichan "[10]" # note "c3"
+      , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
+      , perf2 (shiftBy 66 $ randcat [0,0,(segment 1.5 $ range 0 127 $ shrand 1999)])
+      , perf3 (segment 1.5 $ range 0 127 $ shrand 2000)
+      , perf4 (segment 1.5 $ range 0 127 $ shrand 2001)
+      , perf8 (segment 1.5 $ range 0 127 $ shrand 2002)
+      , perf6 (segment 1.333 $ range 0 127 $ shrand 2003)
+      , perf7 (shiftBy 55 $ randcat [0,0, (segment 1 $ range 0 127 $ shrand 2003)])
+    ] # rytm
+
+
+hush

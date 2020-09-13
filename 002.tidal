@@ -26,13 +26,14 @@ do
       -- pad
       , padOn $ dg0 $ shiftBy 100 $ slow 5.5 $ (|+ note (shiftBy 17 $ choose [-36,-24,-12])) $ pan 1 
         # note (scale "minor" "{0 -2 -3}%16") # pad5
-      , perf1 (segment 8 $ shiftBy 33 $ choose [0,0,0,0,0,0,0,127])
+      , perf1 (segment 8 $ shiftBy 33 $ choose [0,0,0,0,0,0,127])
       , perf2 (segment 4 $ range 0 127 $ slow 10 tri)
       , perf3 (segment 4 $ range 0 127 $ slow 11 tri)
       , perf4 (segment 4 $ range 0 127 $ slow 12 tri)
       , perf8 (segment 4 $ range 0 127 $ slow 13 tri)
       , samplestart (segment 1.666 $ ccrand 20 100 900) # midichan 4
       , sampleend (segment 1.333 $ ccrand 20 100 901) # midichan 4
+      , scene (segment 2 $ range 0 sceneRange $ shrand 9991)
       -- harmor cc's
       , stack [
         ccv (rfreq $ ccrand 20 100 133) # filter1
@@ -56,4 +57,4 @@ do
 
     d1 $ harmor # phspeed # ccv 0
 
-
+say "hows it going? "

@@ -1,0 +1,12 @@
+d1  
+  $ (|* speed (range 0.95 1.05 $ slow 50 saw))
+  $ cpsDisc 0.25 2
+  $ plyWith "<2 20>" (|+ begin 0.005)
+  $ s "sauce" 
+  # n "3"
+  # begin (range 0 0.3 $ slow 15 saw)
+  # speed "[[0.5 0.2]/3, [0.4 0.3]/6, [0.6 0.8]/8]"
+  # legato "<9 8 10>"
+  # cps "<2 0.75>"
+  # orbit 1
+  # hpf 400

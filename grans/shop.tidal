@@ -1,0 +1,13 @@
+do
+  d1 
+    $ s "tg8h*24" 
+    # beginend ("<0 0 0 0 -0.1 -0.3>" 
+        + (range 0.6 0.7 $ slow 1 saw)) 
+          (range 0.03 0.06 $ slow 10 tri)
+    # note "[a4]"
+    # n "[15]"
+    # hpf 200
+    # lpf 3000
+    # cps "0.6"
+
+    hush

@@ -1,0 +1,10 @@
+d1   
+  $ every 2 (within (0.5,1) (|+ n "<2>"))
+  $ plyWith "<6 1 15>" id
+  $ gain "<1 1 1>"
+  # s "speeds2pad" 
+  # n "0"
+  # note "<c5 c5 c5 c5 [g4]>"
+  # cps "<2 2 0.5>"
+  # begin "<0.1 0.1 0.5>"
+  # legato "<1 1 1 1 1 1.5>"

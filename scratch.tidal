@@ -1,35 +1,8 @@
-setcps 0.7
-
 d1 
-  $ chunk 8 (rev)
-  $ slice "<16>" (foldEvery [2,3,4] (|+ 2) $ run 8)
+  $ (|* gain 1.2)
   $ stack [
-    gain "1(<13 11 5 9>,16,<0 7 4 3 1>)"
-    # s "[[peri ch]*2 k*4 [tite*2 gab ch*4 ch*2]/4 [mi b]/2]*3"
-    # legato "<2 3 1.5 2.5 3.5>" 
-      # n (every 3 rev $ every 2 (|+ 1) $ run 10)
-    , s "~ s" # n "[0 7 7 2]/3"
-    , off "3e" (hurry 1.5) 
-      $ off (0.25) (hurry 1.25) 
-      $ slow 2 $ s "ahh" 
-      # legato 2 # speed "<0.5 0.75>" # hpf 80]
+    (|+ note "-32") $ note (scale "ritusen" "{0 -2 0 -1 1 2 -4}%8") # midichan 0 # s "rytm" # legato 0.25
+    , (|+ note "-32") $ note (scale "ritusen" "{10 9 10 7 11 12}%8") # midichan 1 # s "rytm" # legato 0.125
+  ] # cps (130/120/2)
 
-
-let pat1 = chunk 8 rev
-              $ s "fur1*8" 
-              # n (foldEvery [2,3] (|+ 1) $ run 8) 
-              # unit "c" # speed 8 # gain 1.2
-
-d1 
-  $ every 3 rev
-  $ chunk 4 (hurry 2) 
-  $ off "1e" (hurry 0.5)
-  $ stack [
-    cat [ fastcat [s "gab(3,8)" # n 2 # gain 1.2, pat1], pat1, pat1, pat1]
-    , s "ahh(3,8)" # legato 2 # gain 1.1 # speed "[1,0.5]"]
-
-
-
-d1 $ fast 6 $ phspeed # ccv (range 0 127 $ rand) # harmor # speed008chan
-
-
+  hush

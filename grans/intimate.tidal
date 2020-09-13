@@ -1,0 +1,14 @@
+do
+  d2
+    $ s "tg8h*24" 
+    # beginend ("0" 
+        + (range 0.2 0.4 $ slow 1 saw)) 
+          0.02
+    # note "[c5, d6]"
+    # n "[13,14]"
+    # hpf 200
+    # lpf 2000
+    # cps "0.6"
+    # gain 0.9
+
+    hush

@@ -1,0 +1,11 @@
+do
+  d2 
+    $ s "pads*24" 
+    # beginend ("<0 0 0 0>" 
+        + (range 0.5 0.55 $ fast 1 saw)) 
+          0.08
+    # note (scale "ritusen" "<0 2 -2 -3>")
+    # n "[6]"
+    # hpf 400
+    # lpf 2000
+    # cps "0.7"

@@ -5,6 +5,8 @@ let
   shiftBy n = (n ~>)
   shiftby = shiftBy
   shrand x = (shiftBy x $ rand)
+  beginend bpat durpat = (begin bpat) # (end $ (+) <$> bpat <*> durpat)
+  be = beginend
   cps200 = cps (200/120/2)
   reduce = degradeBy (cF 0 "96")
   reduce2 = degradeBy (cF 0 "72")
@@ -18,6 +20,8 @@ let
   useIter f = every ( range 0 1 $  (cI 0 "89") ) f  
   minTempo = (range 1 0.333 $ (cF 0 "88"))
   maxTempo = (range 1 1.5 $ (cF 0 "88"))
+  minTempo2 = (range 1 0.333 $ (cF 0 "72"))
+  maxTempo2 = (range 1 1.5 $ (cF 0 "72"))
   sceneRange = (range 0 3 $ (cF 0 "90"))
   rytm = s "rytm"
   harmor = s "harmor"
@@ -127,7 +131,31 @@ let
   replicator' n text1 = [putStr (text1) | x <- replicate n text1]
   flood' n text2 = sequence_(replicator' n text2)
   say = flood
+  allccs rfreq = stack [
+        ccv (rfreq $ ccrand 10 100 133) # filter1
+        , ccv (rfreq $ ccrand 10 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 40 80 38282) # phspeed
+        , ccv (rfreq $ ccrand 5 127 533) # envattack
+        , ccv (rfreq $ ccrand 0 127 7283) # envdecay
+        , ccv (rfreq $ ccrand 100 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 100 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 64 64 1133) # amprel
+        , ccv (rfreq $ ccrand 0 127 7) # harm ] # harmor
+
+
+
 
 d1 $ fast 4 $ harm # ccv (range 0 127 $ slow 33 rand) # harmor
 
 hush
+
+asd ad dasa d 
+
+d1 $ s "harmor" # midichan 5 # note 0
+
+say "oh hai!!   "

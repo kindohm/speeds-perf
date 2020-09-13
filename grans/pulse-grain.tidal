@@ -1,0 +1,13 @@
+  d1
+    $ stack [
+      plyWith "<1 15>" (|+ begin 0.002)
+        $ s "tg8h"
+        # n 8
+        # legato 1
+        # begin 0.2        
+        # hpf 200
+        # shape 0.1
+        # orbit 1
+    ] # cps "<1.5 1>"
+
+    hush

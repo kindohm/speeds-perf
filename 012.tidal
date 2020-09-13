@@ -1,0 +1,52 @@
+
+do
+  let pat = "1(<3 5>,17,<0 3 5>)"  
+      rfreq = segment (1/8) 
+  d1 
+    $ cpsDisc minTempo maxTempo
+    $ limit $ stack [
+      stack [
+        reduce $ shift $ stack [
+          -- kick / clap
+          kickOn $ dg2 $ palindrome $ struct pat
+            $ midichan "{2@4 3@3 2@3 2 3@3 3?@4 2@6}%16" # note "c3"
+          -- hat
+          , hatOn $ dg3 $ shift $ struct (inv pat) $ midichan 10 # note "c3"
+      ]
+      -- atmo pad
+      , padOn $ slow 2 $ midichan 4 # note "<c3 c3 a3 d1>"
+      , samplestart (segment 0.333 $ ccrand 20 100 900) # midichan 4
+      , sampleend (segment 0.666 $ ccrand 20 100 901) # midichan 4 
+      , perf3 (segment 1 $ shiftBy 8392 $ choose [0,0,127])
+      , perf4 (segment 2 $ range 0 127 $ shrand 100)
+      , perf8 (randcat [0, (segment (1/3) $ range 64 127 $ shrand 101)])
+      , scene (segment (0.75) $ range 0 sceneRange $ shrand 9991)
+      --, every 2 rev $ (|+ note "-12") 
+      --  $ gain (fast 4 $ "<1*4 ~ ~ [~ 1]*2 ~ ~ ~>") # note (scale "minor" "{0 -1 1 -2 2 -3}%16") # midichan 0
+      ] # rytm
+      , stack [
+        reduce $ shift $ harmorOn $ dg0 $ (100 ~>) $ slow "<3 2>" $ struct pat $ note "<d4 d4 c3 c4 d3>" # speed007chan # legato 2
+      -- harmor cc's
+      , stack [
+        ccv (rfreq $ ccrand 10 100 133) # filter1
+        , ccv (rfreq $ ccrand 10 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 40 80 38282) # phspeed
+        , ccv (rfreq $ ccrand 5 127 533) # envattack
+        , ccv (rfreq $ ccrand 0 127 7283) # envdecay
+        , ccv (rfreq $ ccrand 100 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 100 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 64 64 1133) # amprel
+        , ccv (rfreq $ ccrand 0 127 7) # harm
+      ]
+      ] # speed007chan # harmor
+    ] # cps (160/120/2)
+
+
+d1 $ s "harmor(3,8)" # note "c5" # midichan 0 # gain 1
+
+hush

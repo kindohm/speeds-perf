@@ -21,6 +21,7 @@ do
       , perf4 (segment 1 $ ccrand 0 64 3388)
       , perf8 (segment 1 $ ccrand 0 127 448)
       , perf12 (segment 1 $ range 0 127 $ shrand 4001)
+      , scene (segment (shiftBy 414 $ choose [1,2,3,0.5,0.5]) $ range 0 sceneRange $ shrand 9991)
       -- harmor cc's
       , stack [
         ccv (rfreq $ ccrand 10 100 133) # filter1

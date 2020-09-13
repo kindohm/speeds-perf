@@ -1,0 +1,8 @@
+d1   
+  $ gain (randcat ["1*7", "1*25"])
+  # s "dvd" 
+  # n "0"
+  # note "<b4>"
+  # cps (randcat [1,0.5])
+  # beginend (randcat [0.1, ( range 0.1 0.15 $ saw)]) 0.005
+  # hpf 40

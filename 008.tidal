@@ -24,6 +24,7 @@ do
       , perf5 (segment 0.75 $ range 0 127 $ shrand 999)
       , perf7 (segment 1 $ range 0 32 $ shrand 1001100)
       , perf8 (segment 1 $ shiftBy 33 $ choose [0,0,0,127])
+      , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
       , stack [
         harmorOn $ (0.375 ~>) $ chain $ harmor # note "-12"
         -- harmor cc's
@@ -41,7 +42,18 @@ do
         , chain $ ccv (ccrand 0 127 10183) # prism
       ] # speed008chan
     ] 
-    
     # cps (160/120/2)
 
     hush
+
+    
+
+
+
+    / thanks for listening 
+
+
+
+    hush
+
+    

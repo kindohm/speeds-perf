@@ -1,0 +1,13 @@
+do
+  let pat = "<5 20 15 25>"
+  d2 
+    $ plyWith 2 (|- note 3)
+    $ s "tg8h*24"
+    # note "[c5, d3]"
+    # beginend (range 0.2 0.5 $ slow 10 saw) 0.01
+    # hpf 300
+    # lpf 3000
+    # n "[14,15]"
+    # gain 0.9
+   
+   hush

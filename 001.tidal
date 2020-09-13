@@ -1,5 +1,7 @@
 hush
 
+say "ok here we go. "
+
 do 
   let 
       main = (ssb 0.2 (within (0,0.5) (const $ "~")) 
@@ -35,10 +37,11 @@ do
       -- rytm eprfs
       , perf1 (segment 0.25 $ (shiftBy 1100 $ choose [0,127]))
       , perf2 (segment 1 $ (range 0 127 $ shrand 89234))
-      , perf3 (segment 4 $ shiftBy 4477 $ choose [0])
+      , perf3 (segment 4 $ shiftBy 4477 $ choose [0,0,0,0,0,0,0,127])
       , perf4 (segment 1 $ (range 0 127 $ shrand 89204))
       , perf7 (segment 4 $ range 0 127 $ slow 234 rand)
       , perf8 (segment 4 $ range 0 127 $ slow 1234 rand)
+      , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
       -- harmor cc's
       , stack [
           ccv (rfreq $ ccrand 20 100 133) # filter1

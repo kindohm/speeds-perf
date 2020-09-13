@@ -1,10 +1,7 @@
 (
 SuperDirt.postBadValues = false;
 
-// SuperDirt.start
-
-// s.options.device_("JackRouter");
-// s.options.device_("BlackHole 16ch");
+s.options.device_("JackRouter");
 
 s.options.numBuffers = 1024 * 16;
 s.options.memSize = 8192 * 16;
@@ -15,14 +12,9 @@ s.options.numInputBusChannels = 0;
 s.waitForBoot {
 	~dirt = SuperDirt(2, s);
 
-	// ~dirt.loadSoundFiles;
-	// ~dirt.loadSoundFiles("~/studio/tidal-samples/tracks/shared/*");
-	// ~dirt.loadSoundFiles("~/studio/tidal-samples-2/lazyfish/*");
-
-	// ~dirt.loadSoundFiles("~/studio/sample-packs/speeds-sample-pack/*");
-//	~dirt.loadSoundFiles("~/long/*");
-
-
+	~dirt.loadSoundFiles("~/studio/moon/kits/*");
+	~dirt.loadSoundFiles("~/studio/moon/long/*");
+	~dirt.loadSoundFiles("~/studio/moon/other/*");
 
 	s.sync;
 	~dirt.start(57120, [0, 2, 4, 6]);
