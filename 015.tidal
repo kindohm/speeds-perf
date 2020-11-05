@@ -1,0 +1,49 @@
+hush
+
+-- firs tattempted
+do
+  let 
+    pat = (every 3 rev $ "{0@3 0@9 1@4 0@3 0@15 1@3 0@6 1}%16") :: Pattern Bool
+    rfreq = segment 0.125
+  d1
+    $ limit
+    $ stack [
+      -- kick
+      dg0 $ shiftBy 100 $ one 0.333 $ struct (whenmod 12 8 inv $ inv pat) $ midichan 2 # note "c3" # s "rytm"
+      -- snare
+      , g $ dg5 $ shiftBy 77 $ struct pat $ midichan 3 # note "c3" # s "rytm" # legato (range 0.25 3 $ shrand 892)
+      -- samp 1
+      , g $ one 0.333 $ struct (inv pat) $ midichan 6 # s "rytm" # note "c3"
+      -- samp 2
+      , g $ struct pat $ midichan 7 # note "c3" # s "rytm"
+      , g $ samplestart (segment (1/4) $ range 0 64 $ shrand 2871) # midichan 6 # s "rytm"
+      -- pad
+      , g $ rarely (stutWith 2 (0.75) (|+ note 2)) $ shift $ slow "<2 3>" $ midichan 4 # s "rytm" # note "c3"
+      -- , fast "<1 2>" $ samplestart (segment 1 $ range 32 64 $ shrand 37111) # midichan 4 # s "rytm"
+      -- , fast "<1 1.25 1.5 1.75 2>" $ sampleend (segment 1 $ range 0 31 $ shrand 37411) # midichan 4 # s "rytm"
+      , g $ struct (binaryN 16 "<8292110 7271916 2035073 3373733>") $ midichan 10 # s "rytm" # note "c3"
+      , dg0 $ shiftBy 100 $ one 0.333 $ struct (whenmod 12 8 inv $ inv pat) $ s "harmor" # midichan 1 # note "c4"
+        # legato (range 2 5 $ shrand 700)
+      , stack [
+        ccv (rfreq $ ccrand 20 100 133) # filter1
+        , ccv (rfreq $ ccrand 20 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 0 127 555) # phoff
+        , ccv (rfreq $ ccrand 64 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 64 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 50 90 2000) # lforate
+        , ccv (rfreq $ ccrand 50 90 2001) # lfoten
+        , ccv (rfreq $ ccrand 50 90 2002) # lfoskew
+        , ccv (rfreq $ ccrand 50 90 2003) # lfopw
+        , ccv (rfreq $ ccrand 0 127 2004) # ph
+      ] # midichan 1
+    ] # cps (120/120/2)
+
+
+d1 $ fast 5 $ ccv (segment 1 $ range 0 127 $ shrand 28282) # ph # midichan 1 # s "harmor"
+
+hush
+
+hush
