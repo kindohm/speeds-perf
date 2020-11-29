@@ -14,9 +14,15 @@ let
   harmorOn = every ( range 1 0 $  (cI 0 "101") ) g
   kickOn = every ( range 1 0 $  (cI 0 "71") ) g
   perc1On = every ( range 1 0 $  (cI 0 "79") ) g
+  perc1If f x = every (range 0 1 $ (cI 0 "79") ) f $ x
   perc2On = every ( range 1 0 $  (cI 0 "87") ) g
+  perc2If f x = every (range 0 1 $ (cI 0 "87")) f $ x
   clapOn = every ( range 1 0 $  (cI 0 "95") ) g
+  clapIf f x = every ( range 0 1 $ ( cI 0 "95" )) f $ x
+  snareIf = clapIf
+  snareOn = clapOn
   hatOn = every ( range 1 0 $  (cI 0 "93") ) g  
+  hatIf f x = every ( range 0 1 $ (cI 0 "93" )) f $ x
   useIter f = every ( range 0 1 $  (cI 0 "89") ) f  
   minTempo = (range 1 0.333 $ (cF 0 "88"))
   maxTempo = (range 1 1.5 $ (cF 0 "88"))
@@ -58,6 +64,7 @@ let
   ghostp prob f p = sb prob (ghost f) $ shiftBy 101 $ p
   one prob p = sb prob (off 0.0625 id) $ shiftBy 100 $ p
   roll prob p = sb prob (off "3e" id) $ shiftBy 102 $ p
+  roll2 prob p = sb prob (off (0.0625*3) id) $ shiftBy 103 $ p
   sb = sometimesBy
   ssb = someCyclesBy
   dg0 = id

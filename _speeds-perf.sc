@@ -2,6 +2,8 @@
 SuperDirt.postBadValues = false;
 
 // s.options.device_("JackRouter");
+s.options.device_("BlackHole 16ch");
+
 
 s.options.numBuffers = 1024 * 16;
 s.options.memSize = 8192 * 16;
