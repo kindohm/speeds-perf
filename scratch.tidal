@@ -86,17 +86,43 @@ p "drums"
 
 
 
-d1  
-  $ whenmod 32 24 (slow 1.5)
-  $ whenmod 24 16 (slow 1.5)
-  $ shift
-  $ limit
-  $ every 3 rev
-  $ stack [
-    g $ dg3 $ shiftBy 333 $ one 0.25 $ shiftBy 389 $ gain "{1@3 1@5 1@7 1@9 1@11 1@13 1@15}%16" # midichan 2 # note "c3"
-    , g $ roll 0.3 $ shiftBy 4 $ dg3 $ midichan 3 # note "c3"
-    , g $ dg3 $ shiftBy 9 $ struct (binaryN 16 "<23721 7238711 432054>") $ midichan 10 # note "c3"
-    , foldEvery [2,3] (slow 1.5) $ midichan 4 # note "c3" # legato 0.2
-  ] # rytm # cps (140/120/2)
+let 
+    first = stack [ ccn 1 # ccv 102, ccn 2 # ccv 0, ccn 3 # ccv 0, ccn 4 # ccv 0, ccn 5 # ccv 0, ccn 6 # ccv 0, ccn 7 # ccv 0, ccn 8 # ccv 0, ccn 9 # ccv 0 ] # s "harmor" # midichan 0
+    second = stack [ ccn 1 # ccv 0, ccn 2 # ccv 102, ccn 3 # ccv 0, ccn 4 # ccv 0, ccn 5 # ccv 0, ccn 6 # ccv 0, ccn 7 # ccv 0, ccn 8 # ccv 0, ccn 9 # ccv 0 ] # s "harmor" # midichan 0
+    third = stack [ ccn 1 # ccv 0, ccn 2 # ccv 0, ccn 3 # ccv 102, ccn 4 # ccv 0, ccn 5 # ccv 0, ccn 6 # ccv 0, ccn 7 # ccv 0, ccn 8 # ccv 0, ccn 9 # ccv 0 ] # s "harmor" # midichan 0
+    fourth = stack [ ccn 1 # ccv 0, ccn 2 # ccv 0, ccn 3 # ccv 0, ccn 4 # ccv 102, ccn 5 # ccv 0, ccn 6 # ccv 0, ccn 7 # ccv 0, ccn 8 # ccv 0, ccn 9 # ccv 0 ] # s "harmor" # midichan 0
+    fifth = stack [ ccn 1 # ccv 0, ccn 2 # ccv 0, ccn 3 # ccv 0, ccn 4 # ccv 0, ccn 5 # ccv 102, ccn 6 # ccv 0, ccn 7 # ccv 0, ccn 8 # ccv 0, ccn 9 # ccv 0 ] # s "harmor" # midichan 0
+    sixth = stack [ ccn 1 # ccv 9, ccn 2 # ccv 0, ccn 3 # ccv 0, ccn 4 # ccv 0, ccn 5 # ccv 0, ccn 6 # ccv 102, ccn 7 # ccv 0, ccn 8 # ccv 0, ccn 9 # ccv 0 ] # s "harmor" # midichan 0
+    seventh = stack [ ccn 1 # ccv 0, ccn 2 # ccv 0, ccn 3 # ccv 0, ccn 4 # ccv 0, ccn 5 # ccv 0, ccn 6 # ccv 0, ccn 7 # ccv 102, ccn 8 # ccv 0, ccn 9 # ccv 0 ] # s "harmor" # midichan 0
+    eighth = stack [ ccn 1 # ccv 0, ccn 2 # ccv 0, ccn 3 # ccv 0, ccn 4 # ccv 0, ccn 5 # ccv 0, ccn 6 # ccv 0, ccn 7 # ccv 0, ccn 8 # ccv 102, ccn 9 # ccv 0 ] # s "harmor" # midichan 0
+    ninth = stack [ ccn 1 # ccv 0, ccn 2 # ccv 0, ccn 3 # ccv 0, ccn 4 # ccv 0, ccn 5 # ccv 0, ccn 6 # ccv 0, ccn 7 # ccv 0, ccn 8 # ccv 0, ccn 9 # ccv 102 ] # s "harmor" # midichan 0
+    getit = slow (shiftBy 38 $ choose [0.5,0.6..1.5]) $ randcat [first, second, third, fourth, fifth, sixth, seventh, eighth, ninth]
+    verb1 = stack [ ccn 1 # ccv 85, ccn 2 # ccv 0 ] # s "harmor" # midichan 2
+    verb2 = stack [ ccn 1 # ccv 0, ccn 2 # ccv 102 ] # s "harmor" # midichan 2
+    getitverb = slow (shiftBy 3811 $ choose [0.5,0.6..2]) $ randcat [verb1, verb2]
+
+do
+  d1  
+    $ whenmod 32 24 (slow 1.5)
+    $ whenmod 24 16 (slow 1.5)
+    $ dg0
+    $ shift
+    $ limit
+    $ every 3 rev
+    $ stack [
+      dg5 $ shiftBy 333 $ one 0.25 $ shiftBy 389 $ gain "{1@3 1@5 1@7 1@9 1@11 1@13 1@15}%16" # midichan 2 # note "c3"
+      , dg5 $ shiftBy 1001 $ roll 0.3 $ shiftBy 4 $ dg3 $ midichan 3 # note "c3"
+      , dg5 $ shiftBy 9 $ struct (binaryN 16 "<23721 7238711 432054>") $ midichan 10 # note "c3"
+      , dg0 $ foldEvery [2,3] (slow 1.5) $ midichan 4 # note "c3" # legato 0.2
+    ] # rytm # cps (140/120/2)
+
+  d2 
+    $ stack [getit, getitverb ]
+
+
+d2 $ fast 5 $ ccn 1 # ccv (range 0 127 $ shrand 83) # s "harmor" # midichan 2
 
   hush
+
+
+  0.800003051757813
