@@ -26,7 +26,7 @@ do
       , ssb 0.333 (# perf3 (segment 3 $ range 0 127 $ shrand 78917111)) $ shiftBy 90 $ perf3 0
       , perf4 (segment 1 $ range 0 127 $ shrand 8922)
       , harmorOn $ stack [
-        (0.5 ~>) $ harmor # note "0" # speed002chan # gain 1   
+        (0.5 ~>) $ harmor # note "<0 -12 -6>" # speed002chan # gain 1   
         , ccv (rfreq $ ccrand 10 100 133) # filter1
         , ccv (rfreq $ ccrand 10 100 233) # filter2
         , ccv (rfreq $ ccrand 0 127 333) # unidetune
