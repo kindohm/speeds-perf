@@ -1,7 +1,7 @@
 -- real meme 004
 
 do
-  let pat = "t(<3 2 1>,16,<3 1>)"
+  let pat = "t(<3 2 1 5>,16,<3 1 5>)"
       rfreq = segment (1/4)
   d1
     $ limit
@@ -26,12 +26,10 @@ do
       , perf3 (segment 3 $ shiftBy 378310 $ choose [0,0,0,127])
       , perf4 (segment 1 $ range 0 127 $ shrand 829)
       , perf11 (segment 3 $ shiftBy 74 $ choose [0,0,0,0,127])
-      -- , degradeBy 0.2 $ slow "<2 5 4 3>" $ (0.75 ~>) $ harmor # note "<c4 c3>"
-      -- , x (segment 0.5 $ range 0 127 $ shrand 82934)
-      -- , y (segment 0.5 $ range 0 127 $ shrand 444)
       -- harmor cc's
+      , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
       , harmorOn $ reduce $ stack [
-        dg4 $ slow 4 $ struct "1(3,8,<0 7 13>)" $ harmor # note "0" # speed006chan # gain 1   
+        dg3 $ slow 4 $ struct "1(3,8,<0 7 13>)" $ harmor # note "0" # speed006chan # gain 1   
         , ccv (rfreq $ ccrand 10 100 133) # filter1
         , ccv (rfreq $ ccrand 10 100 233) # filter2
         , ccv (rfreq $ ccrand 0 127 333) # unidetune
