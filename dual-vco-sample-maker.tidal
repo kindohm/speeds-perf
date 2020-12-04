@@ -1,0 +1,40 @@
+
+
+let
+  tune pat = ccv pat # ccn 17 # s "rytm" # midichan 0
+  balance pat = ccv pat # ccn 19 # s "rytm" # midichan 0
+  osc2detune pat = ccv pat # ccn 20 # s "rytm" # midichan 0
+  oscconfig pat = ccv pat # ccn 21 # s "rytm" # midichan 0
+  lfospeed pat = ccv pat # ccn 102 # s "rytm" # midichan 0
+  lfomult pat = ccv pat # ccn 103 # s "rytm" # midichan 0
+  lfodest pat = ccv pat # ccn 105 # s "rytm" # midichan 0
+  lfodepth pat = ccv pat # ccn 109 # s "rytm" # midichan 0
+  limit x = (|* gain 1.2) $ x
+  shrand a = slow a $ rand
+  shift x = (1 ~>) $ x
+  shiftBy a x = (a ~>) $ x
+
+do
+  let chg = segment (1)
+  d1 
+    $ stack [
+      limit $ s "rytm" # midichan 0 # note "c3" # legato (range 0.5 1 $ slow 444 $ rand)
+      , limit $ s "rytm" # midichan 1 # note "c3"
+      , tune 55 -- (segment 1 $ range 0 127 $ shrand 999)
+      , balance (chg $ range 0 127 $ slow 30 tri)
+      , osc2detune (chg $ range 0 127 $ slow 31 tri)
+      , oscconfig (chg $ range 0 127 $ slow 16 tri)
+      , lfospeed (chg $ range 65 127 $ slow 29 tri)
+      , lfomult (chg $ range 0 8 $ slow 28 tri)
+      , slow 4 $ gain 1 # lfodest (shiftBy 383 $ choose [10,12,14,30])
+      , lfodepth (chg $ range 0 127 $ slow 33 tri)
+    ] # cps "<3 2 1 1.5 1 3 4 2>"
+
+10 tune
+12 detune
+14 balance
+30 filter freq 
+
+  d1 $fast 4 $ lfodest 30
+
+  hush

@@ -62,11 +62,11 @@ let
   pad11n = pad11 # stdnote
   ghost f p = off 0.0625 f $ p
   ghostp prob f p = sb prob (ghost f) $ shiftBy 101 $ p
+  sb = sometimesBy
+  ssb = someCyclesBy
   one prob p = sb prob (off 0.0625 id) $ shiftBy 100 $ p
   roll prob p = sb prob (off "3e" id) $ shiftBy 102 $ p
   roll2 prob p = sb prob (off (0.0625*3) id) $ shiftBy 103 $ p
-  sb = sometimesBy
-  ssb = someCyclesBy
   dg0 = id
   dg1 = degradeBy 0.1
   dg2 = degradeBy 0.2

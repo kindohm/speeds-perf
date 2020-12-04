@@ -1,22 +1,22 @@
 -- real memes 003
 do
-  let psp = 15
-      oft = 2
-      minTempoSpot = (range 0.4 0.0625 $ (cF 0 "88"))
-      maxTempoSpot = (range 0.4 0.8 $ (cF 0 "88"))
+  let minTempoSpot = (range 0.5 0.25 $ (cF 0 "88"))
+      maxTempoSpot = (range 0.5 0.8 $ (cF 0 "88"))
       rfreq = segment (1/4)
   d1
     $ cpsDisc minTempoSpot maxTempoSpot
     $ shiftBy 829 
+    $ useIter (iter 16)
     $ limit
     $ stack [      
       every 3 rev $ snareIf(every "<2 3 4>" (off 0.125 (# midichan 3)))
         $ sb 0.333 (off 0.0625 id) 
         $ shift
-        $ perc1If(sb 0.25 (# midichan 6))
+        $ perc1If(sb 0.333 (# midichan 6))
         $ shift
         $ sb 0.333 (off (0.0625*3) id) 
         $ kickOn $ s "rytm" # midichan 2 # note "c3"
+      , perc1On $ (0.75 ~>) $ midichan 7 # note "c3" # s "rytm"
       , hatOn $ ssb 0.2 (plyWith "<5 3 7>" id )
         $ rev $ plyWith "<3 5 7>" (# gain 0.8) $ midichan 10 # s "rytm" # note "c3"
       , padOn $ slow 1.333 $ (0.5 ~>) $ (|+ note (shiftBy 474 $ choose [0,-12,-2])) $ s "rytm" # midichan 4 # note "<c3 c3 c3 d3>"
@@ -25,6 +25,9 @@ do
       , sampleend (segment 1.666 $ range 55 64 $ shrand 171) # midichan 4
       , ssb 0.333 (# perf3 (segment 3 $ range 0 127 $ shrand 78917111)) $ shiftBy 90 $ perf3 0
       , perf4 (segment 1 $ range 0 127 $ shrand 8922)
+      , perf7 (segment 1 $ range 0 127 $ shrand 9181)
+      , perf8 (segment 1 $ range 0 127 $ shrand 872)
+      , perf12 (segment 1 $ range 0 127 $ shrand 617)
       , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
       , harmorOn $ stack [
         (0.5 ~>) $ harmor # note "<0 -12 -6>" # speed002chan # gain 1   

@@ -31,7 +31,7 @@ do
         , padOn $ amp "1" # pad5 # note "[a2]*3"
         , samplestart (segment (1/4) $ range 33 100 $ slow 33 rand) # midichan 4
         , sampleend (segment (1/4) $ range 0 22 $ slow 44 rand) # midichan 4
-        , scene (segment (1/4) $ range 0 sceneRange $ shrand 9991)
+        , scene  (segment (1/4) $ range 0 sceneRange $ shrand 9991)
       ] # rytm 
       , stack [
          harmorOn $ degg $ ampmap [1,"~"] (randcat pats) # note "-12"

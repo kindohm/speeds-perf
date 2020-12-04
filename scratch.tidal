@@ -122,7 +122,57 @@ do
 
 d2 $ fast 5 $ ccn 1 # ccv (range 0 127 $ shrand 83) # s "harmor" # midichan 2
 
+  
+  
+  
+  
+  
+  
+  
   hush
 
 
   0.800003051757813
+
+
+
+
+
+
+
+
+
+
+let target =
+      Target {oName = "visualiser",   -- A friendly name for the target (only used in error messages)
+              oAddress = "localhost", -- The target's network address, normally "localhost"
+              oPort = 5050,           -- The network port the target is listening on
+              oLatency = 0.2,         -- Additional delay, to smooth out network jitter/get things in sync
+              oSchedule = Live,       -- The scheduling method - see below
+              oWindow = Nothing       -- Not yet used
+             }
+
+let oscplay = OSC "/play" $ ArgList [("s", Nothing),
+                                     ("vowel", Just $ VS "a"),
+                                     ("pan", Just $ VF 0.5),
+                                     ("cut", Just $ VI 1),
+                                     ("intensity", Just $ VI 0),
+                                     ("sec", Just $ VF 0),
+                                     ("usec", Just $ VF 0),
+                                     ("cps", Just $ VF 0),
+                                     ("cycle", Just $ VF 0),
+                                     ("delta", Just $ VF 0)
+                                   ]
+
+let oscmap = [(target, [oscplay]),
+              (superdirtTarget, [superdirtShape])
+             ]
+
+stream <- startStream defaultConfig oscmap
+
+d = streamReplace stream
+
+d 1 $ s "bd"             
+
+
+d1 $ s "herb1" # cut 1 # speed (range 0.5 1 $ slow 3 rand)

@@ -5,6 +5,7 @@ do
       rfreq = segment (1/4)
   d1
     $ limit
+    $ useIter (iter 16)
     $ stack [
       padOn $ every 3 (superimpose (("<0.5 0.75 1>" <~) . (|+ note "<12 12 12 -12>"))) 
         $ slow 8 $ midichan 4 # rytm # note "<c3>"

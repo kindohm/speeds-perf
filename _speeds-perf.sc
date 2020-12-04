@@ -15,8 +15,9 @@ s.waitForBoot {
 	~dirt = SuperDirt(2, s);
 
 	// ~dirt.loadSoundFiles("~/studio/moon/kits/*");
-	// ~dirt.loadSoundFiles("~/studio/moon/long/*");
-	// ~dirt.loadSoundFiles("~/studio/moon/other/*");
+	~dirt.loadSoundFiles("~/studio/_deleted/moon/long/*");
+	~dirt.loadSoundFiles("~/studio/_deleted/moon/other/*");
+	~dirt.loadSoundFiles("~/studio/sample-maker/*");
 
 	s.sync;
 	~dirt.start(57120, [0, 2, 4, 6]);
