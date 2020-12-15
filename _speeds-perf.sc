@@ -15,9 +15,9 @@ s.waitForBoot {
 	~dirt = SuperDirt(2, s);
 
 	// ~dirt.loadSoundFiles("~/studio/moon/kits/*");
-	~dirt.loadSoundFiles("~/studio/_deleted/moon/long/*");
-	~dirt.loadSoundFiles("~/studio/_deleted/moon/other/*");
-	~dirt.loadSoundFiles("~/studio/sample-maker/*");
+	// ~dirt.loadSoundFiles("~/studio/_deleted/moon/long/*");
+	// ~dirt.loadSoundFiles("~/studio/_deleted/moon/other/*");
+	// ~dirt.loadSoundFiles("~/studio/sample-maker/*");
 
 	s.sync;
 	~dirt.start(57120, [0, 2, 4, 6]);
@@ -37,7 +37,15 @@ s.waitForBoot {
 s.latency = 0;
 );
 
-
+(
+var addr = NetAddr.new("127.0.0.1", 3333);
+OSCFunc({ |msg, time, tidalAddr|
+    var latency = time - Main.elapsedTime;
+    msg = msg ++ ["time", time, "latency", latency];
+    msg.postln;
+    addr.sendBundle(latency, msg)
+}, '/play2').fix;
+)
 
 // Evaluate the block below to start the mapping MIDI -> OSC.
 (

@@ -1,5 +1,7 @@
 -- real meme 004
 
+hush
+
 do
   let pat = "t(<3 2 1 5>,16,<3 1 5>)"
       rfreq = segment (1/4)
@@ -11,7 +13,7 @@ do
         $ slow 8 $ midichan 4 # rytm # note "<c3>"
       -- kicks + hat
       , reduce 
-        $ hatIf(off 0.0625 (# midichan 10))
+        $ hatIf(off 0.125 (# midichan 10))
         $ roll2 0.333
         $ one 0.333
         $ perc1If( sb 0.333 (# midichan 6))

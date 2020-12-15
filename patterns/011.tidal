@@ -28,7 +28,7 @@ do
         , clapOn $ degg $ rytmmap ["~",3] (randcat pats) # note "a2" # amp 1
         , hatOn $ whenmod 32 16 (off 0.0625 id) 
           $ degg $ rytmmap [10,"~"] (randcat pats) # note "c3" # amp 1
-        , padOn $ amp "1" # pad5 # note "[a2]*3"
+        , padOn $ amp "1" # pad5 # note "a2"
         , samplestart (segment (1/4) $ range 33 100 $ slow 33 rand) # midichan 4
         , sampleend (segment (1/4) $ range 0 22 $ slow 44 rand) # midichan 4
         , scene  (segment (1/4) $ range 0 sceneRange $ shrand 9991)

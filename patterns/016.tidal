@@ -9,15 +9,16 @@ do
     $ useIter (iter 16)
     $ limit
     $ stack [      
-      every 3 rev $ snareIf(every "<2 3 4>" (off 0.125 (# midichan 3)))
+      reduce $ every 3 rev 
+        $ snareIf(every "<2 3>" (off 0.125 (# midichan 3)))
         $ sb 0.333 (off 0.0625 id) 
         $ shift
         $ perc1If(sb 0.333 (# midichan 6))
         $ shift
         $ sb 0.333 (off (0.0625*3) id) 
         $ kickOn $ s "rytm" # midichan 2 # note "c3"
-      , perc1On $ (0.75 ~>) $ midichan 7 # note "c3" # s "rytm"
-      , hatOn $ ssb 0.2 (plyWith "<5 3 7>" id )
+      , reduce $ perc1On $ (0.75 ~>) $ midichan 7 # note "c3" # s "rytm"
+      , reduce $ hatOn $ ssb 0.2 (plyWith "<5 3 7>" id )
         $ rev $ plyWith "<3 5 7>" (# gain 0.8) $ midichan 10 # s "rytm" # note "c3"
       , padOn $ slow 1.333 $ (0.5 ~>) $ (|+ note (shiftBy 474 $ choose [0,-12,-2])) $ s "rytm" # midichan 4 # note "<c3 c3 c3 d3>"
       , perc2On $ degradeBy 0.4 $ slow 2.666 $ (0.74 ~>) $ s "rytm" # midichan 5 # note "<c3>"
@@ -29,7 +30,7 @@ do
       , perf8 (segment 1 $ range 0 127 $ shrand 872)
       , perf12 (segment 1 $ range 0 127 $ shrand 617)
       , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
-      , harmorOn $ stack [
+      , reduce $ harmorOn $ stack [
         (0.5 ~>) $ harmor # note "<0 -12 -6>" # speed002chan # gain 1   
         , ccv (rfreq $ ccrand 10 100 133) # filter1
         , ccv (rfreq $ ccrand 10 100 233) # filter2
@@ -55,3 +56,19 @@ do
     hush
 
 
+let pat = "1(<3 2 5 3>,16,<0 3 9>)"
+
+d1 
+  $ limit
+  $ dg4
+  $ sb 0.5 (stutWith 2 (0.0625) ((# midichan "<6 10>") . (# note "c3") . (# legato (range 1 3 $ slow 333 rand))))
+  $ shift
+  $ dg9
+  $ stack [
+    struct pat $ midichan 2 # note "c3"
+    , dg9 $ shift $ struct (inv pat) 
+      $ midichan 3 # note "c3"
+    , scene (segment 1.333 $ range 0 sceneRange $ shrand 81)
+  ] # s "rytm" # cps (140/120/2)
+
+hush

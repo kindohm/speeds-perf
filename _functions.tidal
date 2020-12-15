@@ -38,6 +38,7 @@ let
   speed006chan = midichan 5
   speed007chan = midichan 6
   speed008chan = midichan 7
+  speed018chan = midichan 10
   rebChan = midichan 8
   cantChan = midichan 9
   std p = limit $ (# cps200) $ p
@@ -87,6 +88,9 @@ let
   perf8 pat = ccv pat # ccn 43 # rytm
   perf11 pat = ccv pat # ccn 46 # rytm
   perf12 pat = ccv pat # ccn 47 # rytm
+  fxpad = midichan 12 # rytm
+  delaytime pat = ccv pat # ccn 16 # fxpad 
+  delayfb pat = ccv pat # ccn 19 # fxpad
   samplestart pat = ccv pat # ccn 28 # rytm
   sampleend pat = ccv pat # ccn 29 # rytm
   scene pat = ccv pat # ccn 92 # rytm
@@ -189,3 +193,8 @@ asd ad dasa d
 d1 $ s "harmor" # midichan 5 # note 0
 
 say "oh hai!!   "
+
+
+d1 $ fast  8 $ speed018chan # ccv (range 0 127 $ slow 333 rand) # prism 
+
+hush
