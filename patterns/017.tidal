@@ -5,7 +5,10 @@ hush
 do
   let pat = "t(<3 2 1 5>,16,<3 1 5>)"
       rfreq = segment (1/4)
+      minTempoSpot = (range 1 0.5 $ (cF 0 "88"))
+      maxTempoSpot = (range 1 1.5 $ (cF 0 "88"))
   d1
+    $ cpsDisc minTempoSpot maxTempoSpot
     $ limit
     $ useIter (iter 16)
     $ stack [

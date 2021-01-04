@@ -22,13 +22,13 @@ do
           $ shift $ one 0.22
           $ gain "1(<2 1 3 1>,16,<11 23 31>)" # midichan 7 # note "c3" # rytm
         , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
-        , perf4 (segment "<1 2 3>" $ shiftBy 383 $ choose [0])
+        , perf4 (segment "<1 2 3>" $ shiftBy 383 $ choose [0,127])
         , delaytime 23 --(segment "<1 3 2 0.5>" $ choose [0,1,3,7,11,23,31,47]) # fxpad
-        , delayfb 50 # fxpad
+        , delayfb 30 # fxpad
       ]
       , useIter (iter 16) $ (0 ~>) $ harmorOn $ reduce $ stack [
           every 3 rev $ one 0.333 $ roll 0.333 $ one 1
-            $ harmor # note "[-24]" # gain 1   
+            $ harmor # note "[-12]" # gain 1   
         , ccv (rfreq $ ccrand 0 127 133) # filter1
         , ccv (rfreq $ ccrand 0 127 233) # filter2
         , ccv (rfreq $ ccrand 0 127 333) # unidetune

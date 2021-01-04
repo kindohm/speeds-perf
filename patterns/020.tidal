@@ -1,0 +1,25 @@
+
+do
+  let chain p = (0.375 ~>) $ slow "<3 4 5>" $ p
+  d1
+    $ limit
+    $ while "{t f f}%4" rev
+    $ stack [
+      slow 4 $ s "rytm" # midichan 4 # note "<c3 c3 c3 c3 c3 d2>"
+      , sb 0.33 ((# midichan 0) . (# note (scale "minor" ("{0 -1 -2 -3 -4}%16" |- "[12 24 36]*3"))))
+        $ shift 
+        $ sb 0.33 (off (0.125*3) (# midichan (shiftBy 9 $ choose [3,7]))) 
+        $ shift 
+        $ sb 0.5 (# midichan 6)
+        $ shift
+        $ roll 0.333
+        $ one 0.33 $ gain "{1@3 1@11 1@14 1@2 1@17 1@20}%16" # midichan 2 # s "rytm" # note "c3"     
+      , gain "{1@20 1@30 1@50 1@40 1@60}%16" # s "rytm" # midichan 1 # note (scale "minor" ("{0 -1 -2 -3 -4 -5 -6}%16" |- "<12 24 0>"))
+      , dg5 $ (|* gain (range 0.8 1 $ shrand 9181)) $ struct (binaryN 16 "<28349 17381 38503 374283>") $ s "rytm" # midichan 10 # note "c3"
+      , ccn 102 # ccv (range 64 127 $ shrand 1000) # s "rytm" # midichan 0 
+      , ccn 20 # ccv (range 0 127 $ shrand 2000) # s "rytm" # midichan 0 
+      , ccn 19 # ccv (range 0 127 $ shrand 3000) # s "rytm" # midichan 0 
+      , scene (segment (1/2) $ shiftBy 383 $ choose [0,1,2])
+    ] # cps (170/120/2)
+
+    hush

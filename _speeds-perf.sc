@@ -2,13 +2,13 @@
 SuperDirt.postBadValues = false;
 
 // s.options.device_("JackRouter");
-s.options.device_("BlackHole 16ch");
+// s.options.device_("BlackHole 16ch");
 
 
 s.options.numBuffers = 1024 * 16;
 s.options.memSize = 8192 * 16;
 s.options.maxNodes = 1024 * 64;
-s.options.numOutputBusChannels = 8;
+s.options.numOutputBusChannels = 2;
 s.options.numInputBusChannels = 0;
 
 s.waitForBoot {
@@ -20,7 +20,7 @@ s.waitForBoot {
 	// ~dirt.loadSoundFiles("~/studio/sample-maker/*");
 
 	s.sync;
-	~dirt.start(57120, [0, 2, 4, 6]);
+	~dirt.start(57120, [0]);
 
 	MIDIClient.init;
 
@@ -32,6 +32,9 @@ s.waitForBoot {
 	~harmorOut.latency = 0;
 	~dirt.soundLibrary.addMIDI(\harmor, ~harmorOut);
 
+	~harmorOut2 = MIDIOut.newByName("IAC Driver", "Bus 2");
+	~harmorOut2.latency = 0;
+	~dirt.soundLibrary.addMIDI(\custom, ~harmorOut2);
 
 };
 s.latency = 0;
@@ -46,6 +49,8 @@ OSCFunc({ |msg, time, tidalAddr|
     addr.sendBundle(latency, msg)
 }, '/play2').fix;
 )
+
+SuperDirt.start
 
 // Evaluate the block below to start the mapping MIDI -> OSC.
 (
@@ -84,3 +89,8 @@ if (~stopMidiToOsc != nil, {
 
 // Evaluate the line below to stop it.
 ~stopMidiToOsc.value;
+
+
+SuperDirt.start
+
+~dirt.loadSoundFiles("~/studio/sample-maker/*");

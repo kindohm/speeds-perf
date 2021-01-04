@@ -1,0 +1,34 @@
+
+
+do
+  let pat = "t(<3 2 5>,16,<0 3 5 7>)"
+      rfreq = segment 0.25
+  d1  
+    $ limit
+    $ stack [
+      slow 2 $ midichan 4 # rytm # note "<c3 c3 c3 c3 c4>"
+      , one 0.4 $ dg3 $ shift $ sb 0.3 (# midichan 3) $ struct pat $ midichan 2 # rytm # note "c3"
+      , off 0.0625 id $ dg8
+        $ struct (inv pat) $ midichan 10 # rytm # note "c3"
+      , g $ midichan 1 # rytm # note "c3"
+      , iter "<1 1 16 1 8>" $ (0.5 ~>) $ midichan 8 # rytm # note "c3"
+      , stack [
+        one 0.4 $ dg3 $ shift $ slow 2 $ struct pat $ harmor # note "-12" # gain 1 
+        , ccv (rfreq $ ccrand 10 100 133) # filter1
+        , ccv (rfreq $ ccrand 10 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 40 80 38282) # phspeed
+        , ccv (rfreq $ ccrand 5 127 533) # envattack
+        , ccv (rfreq $ ccrand 0 127 7283) # envdecay
+        , ccv (rfreq $ ccrand 100 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 100 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 64 64 1133) # amprel
+        , ccv (rfreq $ ccrand 0 127 7) # harm
+      ] # speed008chan
+    ] # cps (160/120/2)
+
+    hush
