@@ -41,7 +41,7 @@ s.latency = 0;
 );
 
 (
-var addr = NetAddr.new("127.0.0.1", 3333);
+var addr = NetAddr.new("10.0.0.221", 57101);
 OSCFunc({ |msg, time, tidalAddr|
     var latency = time - Main.elapsedTime;
     msg = msg ++ ["time", time, "latency", latency];
