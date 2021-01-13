@@ -1,15 +1,47 @@
 
 
 do
+  let pat = "{1@5 1@5 1@5 1@7 1@9 1@11}%16"
+      onoffpat = "{1 1 1 0 1}%16"
+      _kickIf f x = every 0 f $ x
+      _clapIf f x = every 0 f $ x
+      _hatOn = every 0 g   
+      _harmorOn = every 0 g   
+      _perc1On = every 0 g 
+      _padOn = every 0 g
+      _reduce = degradeBy (segment (1/4) $ range 0 0.7 $ shrand 879111183)
+      _scene pat = ccn pat # ccn 92 # rytm
   d1
     $ limit
-    $ whenmod 20 10 (while "{t f f}%4" (rev . (0.0625 ~>)))
     $ stack [
-      slow "<3 4 3>" $ midichan 4 # s "rytm" # note "c3"
-      , samplestart "<64 64 55>" # s "rytm" # midichan 4
-      , sampleend "<30 30 30 20>" # s "rytm" # midichan 4
-      , one 0.333 $ gain "{1@10 1@20 1@30}%16" # midichan 2 # s "rytm" # note "c3"
-      , (0.0625 ~>) $ one 0.1 $ shift $ ssb (segment (1/4) $ range 0.1 0.8 $ shrand 3892) g $ midichan "{[~ 6] 3 [~ 7] ~ ~}%8" # s "rytm" # note "c3"
-    ] # cps (120/120/2)
+      _padOn $ slow 10 $ midichan 4 # rytm # note "c3"
+      , _reduce $ while "{t f f}%4" rev 
+        $ stack [
+          gain pat # midichan (stitch onoffpat (_kickIf (const $ "~") $ "2") (_clapIf (const $ "~") $ "3")) # rytm # note "{c3 c3 d3}%17"
+          , bddec (segment 2 $ shiftBy 88333 $ choose [33,33,33,33,33,33,33,33,33,33,33,33,33,80]) # midichan 2
+          , _hatOn $ (0.0625 ~>) $ gain pat # midichan 10 # rytm # note "c3"
+          , _perc1On $ (0.5 ~>) $ midichan 1 # rytm # note "c3"
+          , lfodepth (segment 3 $ range 64 127 $ shrand 8932) # rytm # midichan 3
+          , lfomult (segment 3 $ range 4 10 $ shrand 18932) # rytm # midichan 3
+          , _harmorOn $ stack [
+            pan pat # gain (stitch onoffpat "1" "0.4") # note "<a4 a4 a3>"
+            , ccv (segment 1 $ (20000 ~>) $ range 0 7 $ slow 10 $ perlin) # phwidth 
+            , ccv (segment 1 $ (1000 ~>) $ range 0 127 $ slow 10 $ perlin) # filter1 
+            , ccv (segment 1 $ (2000 ~>) $ range 0 127 $ slow 10 $ perlin) # filter2
+            , ccv (segment 1 $ (3000 ~>) $ range 0 64 $ slow 10 $ perlin) # filter1atk
+            , ccv (segment 1 $ (4000 ~>) $ range 0 64 $ slow 10 $ perlin) # filter1dec
+            , ccv (segment 1 $ (5000 ~>) $ range 0 64 $ slow 10 $ perlin) # filter2atk
+            , ccv (segment 1 $ (6000 ~>) $ range 0 64 $ slow 10 $ perlin) # filter2dec
+            , ccv (segment 1 $ (7000 ~>) $ range 0 127 $ slow 10 $ perlin) # prism 
+            , ccv (segment 1 $ (8000 ~>) $ range 0 127 $ slow 10 $ perlin) # harm 
+            , ccv (segment 1 $ (9000 ~>) $ range 0 127 $ slow 10 $ perlin) # timbre 
+            , ccv (segment 1 $ (10000 ~>) $ range 0 127 $ slow 10 $ perlin) # unidetune 
+          ] # harmor # midichan 10
+      ]
+      , scene (segment 2 $ shiftBy 383 $ choose [0,1,2])
+    ] # cps (160/120/2)
+
+d1 $ fast 8 $ timbre # s "harmor" # midichan 10 # ccv (range 0 127 $ slow 333 rand)
+
 
     hush

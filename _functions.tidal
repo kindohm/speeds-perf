@@ -21,6 +21,7 @@ let
   clapIf f x = every ( range 0 1 $ ( cI 0 "95" )) f $ x
   snareIf = clapIf
   snareOn = clapOn
+  kickIf f x = every ( range 0 1 $ ( cI 0 "71" )) f $ x
   hatOn = every ( range 1 0 $  (cI 0 "93") ) g  
   hatIf f x = every ( range 0 1 $ (cI 0 "93" )) f $ x
   useIter f = every ( range 0 1 $  (cI 0 "89") ) f  
@@ -88,6 +89,7 @@ let
   perf8 pat = ccv pat # ccn 43 # rytm
   perf11 pat = ccv pat # ccn 46 # rytm
   perf12 pat = ccv pat # ccn 47 # rytm
+  bddec pat = ccv pat # ccn 18 # rytm
   fxpad = midichan 12 # rytm
   delaytime pat = ccv pat # ccn 16 # fxpad 
   delayfb pat = ccv pat # ccn 19 # fxpad
@@ -95,6 +97,7 @@ let
   sampleend pat = ccv pat # ccn 29 # rytm
   scene pat = ccv pat # ccn 92 # rytm
   lfodepth pat = ccv pat # ccn 109 # rytm
+  lfomult pat = ccv pat # ccn 103 # rytm
   perf3flip = dg5 $ pan "1*16" # perf3 (choose [0,127])
   randGain min p = (|* gain (range min 1 $ shrand 1011)) $ p
   filter1 = ccn 1 # harmor
@@ -128,6 +131,12 @@ let
   lfoskew = ccn 25 # harmor
   lfopw = ccn 26 # harmor
   ph = ccn 27 # harmor
+  filter1atk = ccn 28 # harmor
+  filter1dec = ccn 29 # harmor
+  filter2atk = ccn 30 # harmor
+  filter2dec = ccn 31 # harmor
+  filter1rel = filter1dec
+  filter2rel = filter2dec
   ccrand min max x = (range min max $ shrand x)
   discRange a b = (discretise 1 $ range a b $ shrand 10003)
   discrange = discRange
