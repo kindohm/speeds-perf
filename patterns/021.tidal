@@ -1,0 +1,15 @@
+
+
+do
+  d1
+    $ limit
+    $ whenmod 20 10 (while "{t f f}%4" (rev . (0.0625 ~>)))
+    $ stack [
+      slow "<3 4 3>" $ midichan 4 # s "rytm" # note "c3"
+      , samplestart "<64 64 55>" # s "rytm" # midichan 4
+      , sampleend "<30 30 30 20>" # s "rytm" # midichan 4
+      , one 0.333 $ gain "{1@10 1@20 1@30}%16" # midichan 2 # s "rytm" # note "c3"
+      , (0.0625 ~>) $ one 0.1 $ shift $ ssb (segment (1/4) $ range 0.1 0.8 $ shrand 3892) g $ midichan "{[~ 6] 3 [~ 7] ~ ~}%8" # s "rytm" # note "c3"
+    ] # cps (120/120/2)
+
+    hush
