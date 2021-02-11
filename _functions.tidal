@@ -135,10 +135,12 @@ let
   filter1dec = ccn 29 # harmor
   filter2atk = ccn 30 # harmor
   filter2dec = ccn 31 # harmor
+  detune = ccn 32 # harmor
+  detunedenom = ccn 33 # harmor
   filter1rel = filter1dec
   filter2rel = filter2dec
   ccrand min max x = (range min max $ shrand x)
-  discRange a b = (discretise 1 $ range a b $ shrand 10003)
+  discRange a b = (segment 1 $ range a b $ shrand 10003)
   discrange = discRange
   triRange a b c = (range a b $ slow c tri)
   trirange = triRange

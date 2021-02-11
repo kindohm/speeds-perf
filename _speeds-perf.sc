@@ -60,9 +60,9 @@ var osc;
 osc = NetAddr.new("127.0.0.1", 6010);
 
 MIDIClient.init;
-MIDIIn.connectAll;
+//MIDIIn.connectAll;
 
-MIDIIn.connect(inport: 0, device: 5);
+MIDIIn.connect(inport: 0, device: 4);
 
 // on = MIDIFunc.noteOn({ |val, num, chan, src|
 // 	osc.sendMsg("/ctrl", num.asString, val/127);

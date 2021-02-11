@@ -38,7 +38,7 @@ do
             , ccv (segment 1 $ (10000 ~>) $ range 0 127 $ slow 10 $ perlin) # unidetune 
           ] # harmor # midichan 10
       ]
-      , scene (segment 2 $ shiftBy 383 $ choose [0,1,2])
+      , scene (segment "<2 0.5 1 4 0.25 2 1>" $ shiftBy 383 $ choose [0,1,2])
     ] # cps (160/120/2)
 
 d1 $ fast 8 $ timbre # s "harmor" # midichan 10 # ccv (range 0 127 $ slow 333 rand)

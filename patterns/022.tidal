@@ -1,0 +1,26 @@
+
+
+do
+  let pat = "t(3,8,<3 3 3 3 2>)"
+      mod x = id $ x
+  d1  
+    $ slow 1
+    $ limit
+    $ stack [
+      fast 2 $ gain (stitch pat "1" "~") # s "rytm" # note "c3" # midichan (stitch "[t f f f f f f f]/2" "3" "2")
+      , fast 2 $ struct (inv pat) $ s "rytm" # midichan 10 # note "c3"
+      , stack [
+        fast 2 $ gain (stitch pat "1" "~") # note (stitch "[t f f f f f f f]/2" "[c4, f4, d5]" "[c4, f4, d5]")
+        , ccv (segment 8 $ (1000 ~>) $ range 0 127 $ slow 10 $ perlin) # filter1
+        , ccv (segment 8 $ (2000 ~>) $ range 0 127 $ slow 10 $ perlin) # filter2
+        , ccv (segment 8 $ (3000 ~>) $ range 0 127 $ slow 20 $ perlin) # unidetune
+      ] # s "harmor" # midichan 11
+    ] # cps (170/120/2)
+
+
+
+d1 $ fast 8 $ ccn 103 # s "harmor" # midichan 11 # ccv (range 5 127 $ slow 333 rand)
+
+
+
+hush  

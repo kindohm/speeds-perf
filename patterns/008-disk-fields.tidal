@@ -21,7 +21,7 @@ do
       , perf2 (segment 1 $ shiftBy 883310 $ choose [0,0,0,0,0,127])
       , perf3 (segment 2.11 $ range 0 127 $ shrand 888)
       , perf4 (segment 1.333 $ range 0 127 $ shrand 777)
-      , perf5 (segment 0.75 $ range 0 127 $ shrand 999)
+      --, perf5 (segment 0.75 $ range 0 127 $ shrand 999)
       , perf7 (segment 1 $ range 0 32 $ shrand 1001100)
       , perf8 (segment 1 $ shiftBy 33 $ choose [0,0,0,127])
       , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)

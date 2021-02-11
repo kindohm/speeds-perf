@@ -13,7 +13,7 @@ do
       , g $ midichan 1 # rytm # note "c3"
       , iter "<1 1 16 1 8>" $ (0.5 ~>) $ midichan 8 # rytm # note "c3"
       , stack [
-        one 0.4 $ dg3 $ shift $ slow 2 $ struct pat $ harmor # note "-12" # gain 1 
+        one 0.4 $ dg3 $ shift $ slow 2 $ struct pat $ harmor # note "-12" # gain 1 # legato (choose [2,3,4])
         , ccv (rfreq $ ccrand 10 100 133) # filter1
         , ccv (rfreq $ ccrand 10 100 233) # filter2
         , ccv (rfreq $ ccrand 0 127 333) # unidetune
@@ -28,7 +28,7 @@ do
         , ccv (rfreq $ ccrand 0 127 1033) # timbre
         , ccv (rfreq $ ccrand 64 64 1133) # amprel
         , ccv (rfreq $ ccrand 0 127 7) # harm
-      ] # speed008chan
+      ] # harmor # midichan 10 -- # speed008chan
     ] # cps (160/120/2)
 
     hush
