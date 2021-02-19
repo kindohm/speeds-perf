@@ -50,6 +50,7 @@ do
         , ccv (rfreq $ ccrand 0 127 20222) # prism
         , ccv (rfreq $ ccrand 0 127 10132) # phoff
         , ccv (rfreq $ ccrand 45 75 38111) # phspeed
+        , ccv 1 # amprel
       ] # speed002chan
     ] # cps (140/120/2)
 

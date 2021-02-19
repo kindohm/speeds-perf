@@ -19,9 +19,11 @@ let
   perc2If f x = every (range 0 1 $ (cI 0 "87")) f $ x
   clapOn = every ( range 1 0 $  (cI 0 "95") ) g
   clapIf f x = every ( range 0 1 $ ( cI 0 "95" )) f $ x
+  clapIfInv f x = every ( range 1 0 $ ( cI 0 "95" )) f $ x
   snareIf = clapIf
   snareOn = clapOn
   kickIf f x = every ( range 0 1 $ ( cI 0 "71" )) f $ x
+  kickIfInv f x = every ( range 1 0 $ ( cI 0 "71" )) f $ x
   hatOn = every ( range 1 0 $  (cI 0 "93") ) g  
   hatIf f x = every ( range 0 1 $ (cI 0 "93" )) f $ x
   useIter f = every ( range 0 1 $  (cI 0 "89") ) f  
@@ -87,6 +89,7 @@ let
   perf6 pat = ccv pat # ccn 41 # rytm
   perf7 pat = ccv pat # ccn 42 # rytm
   perf8 pat = ccv pat # ccn 43 # rytm
+  perf9 pat = ccv pat # ccn 44 # rytm
   perf11 pat = ccv pat # ccn 46 # rytm
   perf12 pat = ccv pat # ccn 47 # rytm
   bddec pat = ccv pat # ccn 18 # rytm
@@ -206,6 +209,6 @@ d1 $ s "harmor" # midichan 5 # note 0
 say "oh hai!!   "
 
 
-d1 $ fast  8 $ speed018chan # ccv (range 0 127 $ slow 333 rand) # prism 
+d1 $ fast  8 $ speed002chan # ccv (range 0 127 $ slow 333 rand) # amprel 
 
 hush

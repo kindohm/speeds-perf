@@ -1,8 +1,9 @@
 
+hush 
 
 do
-  let pat = "{1@5 1@5 1@5 1@7 1@9 1@11}%16"
-      onoffpat = "{1 1 1 0 1}%16"
+  let pat = "{1@5 1@5 1@5 1@7 1@9 1@11 1@3 1 1@3 1 }%16"
+      onoffpat = "{1 1 0 1 0 1}%16"
       _kickIf f x = every 0 f $ x
       _clapIf f x = every 0 f $ x
       _hatOn = every 0 g   
@@ -11,19 +12,28 @@ do
       _padOn = every 0 g
       _reduce = degradeBy (segment (1/4) $ range 0 0.7 $ shrand 879111183)
       _scene pat = ccn pat # ccn 92 # rytm
+      kickIf2 f x = every ( range 1 0 $ ( cI 0 "71" )) f $ x
   d1
     $ limit
     $ stack [
-      _padOn $ slow 10 $ midichan 4 # rytm # note "c3"
-      , _reduce $ while "{t f f}%4" rev 
+      padOn $ slow 10 $ midichan 4 # rytm # note "c3"
+      , useIter (iter 16) $ reduce $ while "{t f f}%4" rev 
         $ stack [
-          gain pat # midichan (stitch onoffpat (_kickIf (const $ "~") $ "2") (_clapIf (const $ "~") $ "3")) # rytm # note "{c3 c3 d3}%17"
-          , bddec (segment 2 $ shiftBy 88333 $ choose [33,33,33,33,33,33,33,33,33,33,33,33,33,80]) # midichan 2
-          , _hatOn $ (0.0625 ~>) $ gain pat # midichan 10 # rytm # note "c3"
-          , _perc1On $ (0.5 ~>) $ midichan 1 # rytm # note "c3"
+          one 0.3 $ gain pat 
+            # midichan (stitch onoffpat (kickIfInv (const $ "~") $ "2") (clapIfInv (const $ "~") $ "3")) 
+            # rytm # note "{c3 c3 d3}%17"
+          , bddec (segment 2 $ shiftBy 88333 $ choose [33,33,33,33,33,33,33,33,33,33,33,80,120]) # midichan 2
+          , hatOn $ (0.0625 ~>) $ gain pat # midichan 10 # rytm # note "c3"
+          , perc1On $ (0.5 ~>) $ midichan 1 # rytm # note "c3"
           , lfodepth (segment 3 $ range 64 127 $ shrand 8932) # rytm # midichan 3
           , lfomult (segment 3 $ range 4 10 $ shrand 18932) # rytm # midichan 3
-          , _harmorOn $ stack [
+          , perf1 (segment 1 $ range 0 127 $ shrand 20020) # rytm # midichan 1
+          , perf2 (segment 1 $ range 0 127 $ shrand 10177) # rytm # midichan 2
+          , perf3 (segment 1 $ range 0 127 $ shrand 80802) # rytm # midichan 2
+          , perf4 (segment 1 $ range 0 127 $ shrand 82933222) # rytm # midichan 3
+          , perf8 (segment 1 $ range 0 127 $ shrand 77111) # rytm # midichan 3
+          , perf11 (segment 4 $ range 0 127 $ shrand 622633) # rytm # midichan 10
+          , harmorOn $ stack [
             pan pat # gain (stitch onoffpat "1" "0.4") # note "<a4 a4 a3>"
             , ccv (segment 1 $ (20000 ~>) $ range 0 7 $ slow 10 $ perlin) # phwidth 
             , ccv (segment 1 $ (1000 ~>) $ range 0 127 $ slow 10 $ perlin) # filter1 
@@ -38,7 +48,7 @@ do
             , ccv (segment 1 $ (10000 ~>) $ range 0 127 $ slow 10 $ perlin) # unidetune 
           ] # harmor # midichan 10
       ]
-      , scene (segment "<2 0.5 1 4 0.25 2 1>" $ shiftBy 383 $ choose [0,1,2])
+      , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
     ] # cps (160/120/2)
 
 d1 $ fast 8 $ timbre # s "harmor" # midichan 10 # ccv (range 0 127 $ slow 333 rand)
