@@ -24,7 +24,7 @@ s.waitForBoot {
 
 	MIDIClient.init;
 
-	~rytmOut = MIDIOut.newByName("Elektron Analog Rytm", "Analog Rytm out 1");
+	~rytmOut = MIDIOut.newByName("Elektron Analog Rytm", "Elektron Analog Rytm");
 	~rytmOut.latency = 0;
 	~dirt.soundLibrary.addMIDI(\rytm, ~rytmOut);
 
@@ -62,7 +62,7 @@ osc = NetAddr.new("127.0.0.1", 6010);
 MIDIClient.init;
 //MIDIIn.connectAll;
 
-MIDIIn.connect(inport: 0, device: 5);
+MIDIIn.connect(inport: 0, device: 2);
 
 // on = MIDIFunc.noteOn({ |val, num, chan, src|
 // 	osc.sendMsg("/ctrl", num.asString, val/127);
