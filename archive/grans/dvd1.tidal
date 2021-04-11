@@ -6,3 +6,6 @@ d1
   # cps (randcat [1,0.5])
   # beginend (randcat [0.1, ( range 0.1 0.15 $ saw)]) 0.005
   # hpf 40
+
+  
+  # speed "[0.5,1, 0.25]"

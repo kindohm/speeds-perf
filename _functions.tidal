@@ -69,6 +69,7 @@ let
   sb = sometimesBy
   ssb = someCyclesBy
   one prob p = sb prob (off 0.0625 id) $ shiftBy 100 $ p
+  one2 prob p = sb prob (off 0.125 id) $ shiftBy 10000 $ p
   roll prob p = sb prob (off "3e" id) $ shiftBy 102 $ p
   roll2 prob p = sb prob (off (0.0625*3) id) $ shiftBy 103 $ p
   dg0 = id
