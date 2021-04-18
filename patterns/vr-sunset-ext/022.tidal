@@ -9,25 +9,46 @@ do
      sdpat1 = struct "~ 1" $ midichan 1 # note "c3" # s "rytm"
      sdpat2 = struct "~ [~ ~ ~ 1]" $ midichan 1 # note "c3" # s "rytm"
      sdpat3 = (0.25 ~>) $ struct "1" $ midichan 1 # note "c3" # s "rytm"
+     mainDrumPat = "{1@41 1@20 1@31}%16"
   d1  
-    $ degradeBy 0.5
+    $ cpsDisc minTempo ("2" * maxTempo)
+    $ useIter (iter 16)    
     $ limit
     $ shift
     $ every 3 rev
     $ chunk "<4 8>" (iter (shiftBy 38923 $ choose [1,2,4,8,16]))
     $ stack [
-      foldEvery [3,5] (|+ note "-7") 
+      -- background
+      padOn $ foldEvery [3,5] (|+ note "-7") 
         $ slow "<2 5 3 4>" 
         $ s "rytm" 
-        # midichan 4 # note "<c3 bf3 c3 c3 bf3>" # legato 0.5
+        # midichan 4 # note "<c3 bf3 c3 c3 bf3>" # legato 1
       , fast 1.25 $ foldEvery [4,7,10] (|- ccv 10) $ samplestart "<57 57 47>" # midichan 4 # s "rytm"
       , sampleend 114 # midichan 4 # s "rytm"
-      , one2 0.2 $ while "{f f t f f f t}%16" (off "3e" (|+ note "<4 -4>")) $ struct "{1@41 1@20 1@31}%16" $ midichan "{2 2 3 2 3 3}%16" # s "rytm" # note "c3"
-      , slow 7 $ s "rytm" # midichan 8 # note "c3"
-      , slow 2 $ (0.5 ~>) $ midichan 1 # s "rytm" # note "{c3 d3 c3 f3}%16"
-      , (|+ note "{0 0 0 0 0 0 12}%16") 
-        $ sb 0.2 (off "3e" (|+ note "12")) $ (0.25 ~>) $ sb 0.2 (off 0.125 (|+ note 1)) $ slow 4 $ midichan 0 # s "rytm" # note "c3"
+      , reduce $ shift $ stack [
+        -- kick
+        kickOn $ one2 0.3 $ while "{f f t f f f t}%16" (off "3e" (|+ note "<4 -4>")) $ struct mainDrumPat $ midichan "{2 2 ~ 2 ~ ~}%16" # note "c3"
+        , perf3 (segment 1 $ shiftBy 38 $ choose [0,0,0,0,0,127])
+        -- clap
+        , clapOn $ one2 0.3 $ while "{f f t f f f t}%16" (off "3e" (|+ note "<4 -4>")) $ struct mainDrumPat $ midichan "{~ ~ 3 ~ 3 3}%16"  # note "c3"
+        -- perc1
+        , perc1On $ slow 7 $ midichan 8 # note "c3"
+        -- perc2
+        , perc2On $ slow 2 $ (0.5 ~>) $ midichan 1 # note "{c3 d3 c3 f3}%16"
+        -- bass ?
+        , hatOn  
+            $ (0.25 ~>) $ sb 0.3 (off "{0.125 0.375 0.25}%13" (|+ note 1)) 
+            $ shift $ degradeBy 0.8 $ struct "1(<3 2 1>,<8 16>,<101 202 303 404>)" $ midichan 0 # s "rytm" # note "{c3 c2 c4}%11" # legato 1
+        , perf1 (segment 3 $ shiftBy 893 $ choose [0,0,127])
+      ] # s "rytm"
     ] # cps (200/120/2)
+  d2 $ scene (segment (1/1) $ range 0 sceneRange $ shrand 9991)
+
+
+
 
 
 hush
+
+
+d1 $ cpsDisc minTempo maxTempo $ fast 4 $ s "rytm" # midichan 2 # note "c3"

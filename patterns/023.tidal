@@ -8,3 +8,5 @@ do
       one 0.1 $ struct pat $ s "rytm" # midichan 2 # note "c3"
       , one 0.1 $ struct pat $ s "harmor" # midichan 0 # note "c5"
     ] # cps (180/120/2)
+
+    hush
