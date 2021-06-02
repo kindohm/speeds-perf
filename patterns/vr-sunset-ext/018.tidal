@@ -2,23 +2,23 @@ do
   let rfreq = segment (1/4)
   d1  
     $ limit
-    $ sb 0.2 (|+ note "<1 2 3 -1>")
+    $ shift
     $ stack [
-      slow 8 $ midichan 4 # note "c3" # rytm
+      padOn $ slow 5 $ note "<c3 c3 c3 c3 [c4 a3]>" # midichan 4 # rytm
       -- drums
-      , useIter (iter 16) $ every 3 rev $ stack [
-        one 0.333 $ roll 0.333 $ one 1 $ midichan "2" # note "c3" # rytm
-        , reduce $ sb 0.6 (off (0.0625*3) (|+ note 2)) 
+      , useIter (iter 16) $ (# legato (range 0.25 1 $ shrand 81871)) $ every 3 rev $ dg1 $ stack [
+        kickOn $ reduce $ one 0.333 $ roll 0.333 $ one 1 $ midichan "2" # note "c3" # rytm
+        , clapOn $ reduce $ sb 0.6 (off (0.0625*3) (|+ note 2)) 
           $ roll2 0.333 $ shift $ (choose [0,0.0625,0.125] ~>) 
           $ (0.125 ~>) $ midichan 3 # note "c3" # rytm
-        , reduce $ shift $ dg3 
+        , hatOn $ reduce $ shift $ dg3 
           $ (|* gain (range 0.8 1 $ shrand 100101))
           $ struct (binaryN 16 "<28394 2482340 173481 477171>") 
           $ midichan 10 # rytm # note "c3"
-        , reduce 
+        , perc1On $ reduce 
           $ one 0.22
           $ gain "1(<1 2 3>,16,<20 33 44>)" # midichan 6 # note "c3" # rytm
-        , reduce  
+        , perc2On $ reduce  
           $ shift $ one 0.22
           $ gain "1(<2 1 3 1>,16,<11 23 31>)" # midichan 7 # note "c3" # rytm
         , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
@@ -26,8 +26,8 @@ do
         , delaytime 23 --(segment "<1 3 2 0.5>" $ choose [0,1,3,7,11,23,31,47]) # fxpad
         , delayfb 30 # fxpad
       ]
-      , useIter (iter 16) $ (0 ~>) $ reduce $ stack [
-          every 3 rev $ one 0.333 $ roll 0.333 $ one 1
+      , harmorOn $ useIter (iter 16) $ (# legato (range 1 1 $ shrand 81871)) $ every 3 rev $ dg1 $ stack [
+          reduce $ one 0.333 $ roll 0.333 $ one 1
             $ harmor # note "[-12]" # gain 1   
         , ccv (rfreq $ ccrand 0 127 133) # filter1
         , ccv (rfreq $ ccrand 0 127 233) # filter2
@@ -37,7 +37,7 @@ do
         , ccv (rfreq $ ccrand 1 64 7282323) # phwidth
         , ccv (rfreq $ ccrand 0 127 82323) # phoff
       ] # speed018chan
-    ] 
+    ] # cps (160/120/2)
 
 
 hush

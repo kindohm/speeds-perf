@@ -7,21 +7,23 @@ do
     rfreq = segment 0.25
   d1
     $ limit
+    $ reduce
+    $ shift
     $ stack [
       -- kick
       dg0 $ shiftBy 100 $ one 0.333 $ struct (whenmod 12 8 inv $ inv pat) $ midichan 2 # note "c3" # s "rytm"
       -- snare
-      , g $ dg5 $ shiftBy 77 $ struct pat $ midichan 3 # note "c3" # s "rytm" # legato (range 0.25 3 $ shrand 892)
+      , dg5 $ shiftBy 77 $ struct pat $ midichan 3 # note "c3" # s "rytm" # legato (range 0.25 3 $ shrand 892)
       -- samp 1
-      , g $ one 0.333 $ struct (inv pat) $ midichan 6 # s "rytm" # note "c3"
+      , one 0.333 $ struct (inv pat) $ midichan 6 # s "rytm" # note "c3"
       -- samp 2
-      , g $ struct pat $ midichan 7 # note "c3" # s "rytm"
-      , g $ samplestart (segment (1/4) $ range 0 64 $ shrand 2871) # midichan 6 # s "rytm"
+      , struct pat $ midichan 7 # note "c3" # s "rytm"
+      , samplestart (segment (1/4) $ range 0 64 $ shrand 2871) # midichan 6 # s "rytm"
       -- pad
-      , g $ rarely (stutWith 2 (0.75) (|+ note 2)) $ shift $ slow "<2 3>" $ midichan 4 # s "rytm" # note "c3"
+      , rarely (stutWith 2 (0.75) (|+ note 2)) $ shift $ slow "<2 3>" $ midichan 4 # s "rytm" # note "c3"
       -- , fast "<1 2>" $ samplestart (segment 1 $ range 32 64 $ shrand 37111) # midichan 4 # s "rytm"
       -- , fast "<1 1.25 1.5 1.75 2>" $ sampleend (segment 1 $ range 0 31 $ shrand 37411) # midichan 4 # s "rytm"
-      , g $ struct (binaryN 16 "<8292110 7271916 2035073 3373733>") $ midichan 10 # s "rytm" # note "c3"
+      , struct (binaryN 16 "<8292110 7271916 2035073 3373733>") $ midichan 10 # s "rytm" # note "c3"
       , dg0 $ shiftBy 100 $ one 0.333 $ struct (whenmod 12 8 inv $ inv pat) $ s "harmor" # midichan 1 # note "c4"
         # legato (range 2 5 $ shrand 700)
       , stack [

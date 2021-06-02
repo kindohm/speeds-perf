@@ -3,13 +3,15 @@ do
   let minTempoSpot = (range 0.5 0.25 $ (cF 0 "88"))
       maxTempoSpot = (range 0.5 0.8 $ (cF 0 "88"))
       rfreq = segment (1/4)
+      sampleSlotRange = (range 0 5 $ (cF 0 "90"))
+      stutFunc = (every 3 (plyWith "<5 10>" (# gain 0.8)))
   d1
     $ cpsDisc minTempoSpot maxTempoSpot
     $ shiftBy 829 
-    $ useIter (iter 16)
+    $ useIter (iter 8)
     $ limit
     $ stack [      
-      reduce $ every 3 rev 
+      stutIf stutFunc $ reduce $ every 3 rev 
         $ snareIf(every "<2 3>" (off 0.125 (# midichan 3)))
         $ sb 0.333 (off 0.0625 id) 
         $ shift
@@ -17,11 +19,11 @@ do
         $ shift
         $ sb 0.333 (off (0.0625*3) id) 
         $ kickOn $ s "rytm" # midichan 2 # note "c3"
-      , reduce $ perc1On $ (0.75 ~>) $ midichan 7 # note "c3" # s "rytm"
+      , stutIf stutFunc $ reduce $ perc1On $ (0.75 ~>) $ midichan 7 # note "c3" # s "rytm"
       , reduce $ hatOn $ ssb 0.2 (plyWith "<5 3 7>" id )
         $ rev $ plyWith "<3 5 7>" (# gain 0.8) $ midichan 10 # s "rytm" # note "c3"
       , padOn $ slow 1.333 $ (0.5 ~>) $ (|+ note (shiftBy 474 $ choose [0,-12,-2])) $ s "rytm" # midichan 4 # note "<c3 c3 c3 d3>"
-      , perc2On $ degradeBy 0.4 $ slow 2.666 $ (0.74 ~>) $ s "rytm" # midichan 5 # note "<c3>"
+      , stutIf stutFunc $ reduce $ perc2On $ degradeBy 0.4 $ slow 2.666 $ (0.74 ~>) $ s "rytm" # midichan 5 # note "<c3>"
       , samplestart (segment 1.333 $ range 70 80 $ shrand 8372) # midichan 4
       , sampleend (segment 1.666 $ range 55 64 $ shrand 171) # midichan 4
       , ssb 0.333 (# perf3 (segment 3 $ range 0 127 $ shrand 78917111)) $ shiftBy 90 $ perf3 0
@@ -31,7 +33,7 @@ do
       , perf12 (segment 1 $ range 0 127 $ shrand 617)
       , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
       , reduce $ harmorOn $ stack [
-        (0.5 ~>) $ harmor # note "<0 -12 -6>" # speed002chan # gain 1   
+        (0.5 ~>) $ harmor # note "<0 -12 -6>" # speed007chan # gain 1   
         , ccv (rfreq $ ccrand 10 100 133) # filter1
         , ccv (rfreq $ ccrand 10 100 233) # filter2
         , ccv (rfreq $ ccrand 0 127 333) # unidetune
@@ -46,7 +48,18 @@ do
         , ccv (rfreq $ ccrand 0 127 1033) # timbre
         , ccv (rfreq $ ccrand 64 64 1133) # amprel
         , ccv (rfreq $ ccrand 0 127 7) # harm
-      ] # speed002chan
+      ] # speed007chan
+      , pad2On $ stutIf stutFunc $ reduce $ (0.5 ~>) $ stack [
+        s "rytm" # midichan 0 # note "c3"
+        , sampletune (segment 1 $ range 40 64 $ shrand 555)
+        , samplebr (segment 1 $ range 0 64 $ shrand 666)
+        , lfospeed (segment 1 $ range 0 127 $ shrand 888)
+        , lfomult (segment 1 $ range 0 8 $ shrand 999)
+        , lfodepth (segment 1 $ range 32 95 $ shrand 777)
+        , sampleslot (segment 0.5 $ shiftBy 776644 $ choose [10,9,8,10,9,8,20,45])
+        , rytmpan (segment 1 $ range 30 100 $ shrand 444)
+      ]
+      , verbpre (segment 0.5 $ range 1 50 $ shrand 1671)
     ] # cps "<3 2 3 2 1 0.5>"
 
     hush
@@ -72,3 +85,18 @@ d1
   ] # s "rytm" # cps (140/120/2)
 
 hush
+
+
+
+d1 
+  $ stack [
+    s "rytm" # midichan 0 # note "c3"
+    , sampletune (segment 1 $ range 40 64 $ shrand 555)
+    , samplebr (segment 1 $ range 0 64 $ shrand 666)
+    -- , sampleslot 10
+    , lfospeed (segment 1 $ range 0 127 $ shrand 888)
+    , lfomult (segment 1 $ range 0 6 $ shrand 999)
+    , lfodepth (segment 1 $ range 32 95 $ shrand 777)
+  ] # cps (segment 1 $ range 0.2 0.5 $ shrand 8392)
+
+  hush

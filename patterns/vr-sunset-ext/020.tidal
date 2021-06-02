@@ -5,7 +5,7 @@ do
     $ limit
     $ while "{t f f}%4" rev
     $ whenmod 21 17 (iter 16)
-    $ degradeBy 0
+    $ degradeBy 0.2
     $ shift
     $ stack [
       slow 4 $ s "rytm" # midichan 4 # note "<c3 c3 c3 d2 c3 d3>"
@@ -26,6 +26,6 @@ do
       , ccn 82 # ccv (range 0 64 $ shrand 5000) # s "rytm" # midichan 0
       , ccn 83 # ccv (range 0 64 $ shrand 6000) # s "rytm" # midichan 0
       , scene (segment (1/2) $ shiftBy 383 $ choose [0,1,2])
-    ] # cps (170/120/2)
+    ] # cps (140/120/2)
 
     hush
