@@ -1,13 +1,16 @@
 do
   let rfreq = segment (1/4)
+      stutFunc = (every 3 (plyWith "<5 10>" (# gain 0.8)))
   d1  
+    $ cpsDisc minTempo maxTempo
     $ limit
     $ shift
     $ stack [
       padOn $ slow 5 $ note "<c3 c3 c3 c3 [c4 a3]>" # midichan 4 # rytm
       -- drums
-      , useIter (iter 16) $ (# legato (range 0.25 1 $ shrand 81871)) $ every 3 rev $ dg1 $ stack [
-        kickOn $ reduce $ one 0.333 $ roll 0.333 $ one 1 $ midichan "2" # note "c3" # rytm
+      , useIter (iter 16) $ (# legato (range 0.25 1 $ shrand 81871)) 
+        $ every 3 rev $ dg1 $ stack [
+          kickOn $ reduce $ one 0.333 $ roll 0.333 $ one 1 $ midichan "2" # note "c3" # rytm
         , clapOn $ reduce $ sb 0.6 (off (0.0625*3) (|+ note 2)) 
           $ roll2 0.333 $ shift $ (choose [0,0.0625,0.125] ~>) 
           $ (0.125 ~>) $ midichan 3 # note "c3" # rytm
@@ -37,6 +40,17 @@ do
         , ccv (rfreq $ ccrand 1 64 7282323) # phwidth
         , ccv (rfreq $ ccrand 0 127 82323) # phoff
       ] # speed018chan
+      , pad2On $ (0.5 ~>) $ stack [
+        slow "<1 2 1>" $ s "rytm" # note "c3"
+        , sampletune (segment 1 $ range 40 75 $ shrand 555)
+        , samplebr (segment 1 $ range 0 64 $ shrand 666)
+        , lfospeed (segment 1 $ range 0 127 $ shrand 888)
+        , lfomult (segment 1 $ range 0 127 $ shrand 999)
+        , lfodepth (segment 1 $ range 32 95 $ shrand 777)
+        , rytmpan (segment 1 $ range 30 100 $ shrand 444)
+        , samplestart (segment 1 $ range 0 127 $ shrand 222)
+        , sampleend (segment 1 $ range 0 127 $ shrand 333)
+      ] # midichan 0
     ] # cps (160/120/2)
 
 
