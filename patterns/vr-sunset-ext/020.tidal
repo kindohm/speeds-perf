@@ -8,24 +8,44 @@ do
     $ degradeBy 0.2
     $ shift
     $ stack [
-      slow 4 $ s "rytm" # midichan 4 # note "<c3 c3 c3 d2 c3 d3>"
-      , sb 0.33 ((# midichan 0) . (# note (scale "minor" ("{0 -1 -2 -3 -4}%16" |- "[12 24 36]*3"))))
+      -- pad
+      padOn $ slow 4 $ s "rytm" # midichan 4 # note "<c3 c3 c3 d2 c3 d3>"
+      -- kick
+      , useIter (iter 8) $ shift
+        $ reduce
         $ shift 
-        $ sb 0.33 (off (0.125*3) (# midichan (shiftBy 9 $ choose [3,7]))) 
+        -- snare fill in
+        $ clapIf (sb 0.4 (off (0.125*3) ( (# midichan (shiftBy 9 $ choose [3,7])) . (# gain 1)) ))
         $ shift 
-        $ sb 0.5 (# midichan 6)
+        $ clapIf (sb 0.5 (# midichan 6))
         $ shift
         $ roll 0.333
-        $ one 0.33 $ gain "{1@3 1@11 1@14 1@2 1@17 1@20}%16" # midichan 2 # s "rytm" # note "c3"     
-      , gain "{1@20 1@30 1@50 1@40 1@60}%16" # s "rytm" # midichan 1 # note (scale "minor" ("{0 -1 -2 -3 -4 -5 -6}%16" |- "<12 24 0>"))
-      , dg5 $ (|* gain (range 0.7 1 $ shrand 9181)) $ struct (binaryN 16 "<28349 17381 38503 374283>") $ s "rytm" # midichan 10 # note "c3"
-      , ccn 102 # ccv (range 64 127 $ shrand 1000) # s "rytm" # midichan 0 
-      , ccn 20 # ccv (range 0 127 $ shrand 2000) # s "rytm" # midichan 0 
-      , ccn 19 # ccv (range 0 127 $ shrand 3000) # s "rytm" # midichan 0 
-      , ccn 23 # ccv (range 30 90 $ shrand 4000) # s "rytm" # midichan 0
-      , ccn 82 # ccv (range 0 64 $ shrand 5000) # s "rytm" # midichan 0
-      , ccn 83 # ccv (range 0 64 $ shrand 6000) # s "rytm" # midichan 0
-      , scene (segment (1/2) $ shiftBy 383 $ choose [0,1,2])
+        $ shift
+        $ kickIfInv (# gain 0)
+        $ one 0.33 $ shift 
+        $ gain "{1@3 1@11 1@14 1@2 1@7 1@10}%16" # midichan 2 # s "rytm" # note "c3"     
+      -- sfx (?)
+      , perc1On $ useIter (iter 8) $ reduce $ gain "{1@20 1@30 1@50 1@40 1@60}%16" # s "rytm" # midichan 1 # note (scale "minor" ("{0 -1 -2 -3 -4 -5 -6}%16" |- "<12 24 0>"))
+      -- thomas
+      , perc2On $ useIter (iter 8) $ sb 0.05 (# midichan 8) $ shift $ ("1s" ~>) $ reduce $ one 0.2 
+        $ struct "1(<2 2 1>,<8 8 16 8 16>,<0 11 22 33>)" 
+        $ s "rytm" # midichan 5 # note "c3"
+      , hatOn $ useIter (iter 8) $ reduce $ shift $ dg2 
+        $ (|* gain (range 0.7 1 $ shrand 9181)) $ struct (binaryN 16 "<283479 173841 38503 374283>") 
+        $ s "rytm" # midichan 10 # note "c3"
+      , useIter (iter 8) 
+        $ scene (segment 1 $ range 0 sceneRange $ shrand 9991)
+      , pad2On $ (0.5 ~>) $ stack [
+        note "c3"
+        , sampletune (segment 1 $ range 40 64 $ shrand 555)
+        , samplebr (segment 1 $ range 0 64 $ shrand 666)
+        , lfospeed (segment 1 $ range 0 127 $ shrand 888)
+        , lfomult (segment 1 $ range 0 8 $ shrand 999)
+        , lfodepth (segment 1 $ range 32 95 $ shrand 777)
+        , rytmpan (segment 1 $ range 30 100 $ shrand 444)
+        , samplestart (segment 1 $ range 0 127 $ shrand 1717111)
+        , sampleend (segment 1 $ range 0 127 $ shrand 22266)
+      ] # midichan 0 # s "rytm"
     ] # cps (140/120/2)
 
     hush

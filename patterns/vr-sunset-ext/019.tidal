@@ -2,28 +2,32 @@
 hush
 
 do
-  let pat = "t(<3 2 7 5>,16,<0 11 3 5 7>)"
+  let pat = "t(<3 2 3 [3 2]/2>,16,<0 11 3 5 7>)"
       rfreq = segment 0.5
+      minTempoSpot = (range 1 0.25 $ (cF 0 "88"))
+      maxTempoSpot = (range 1 1.5 $ (cF 0 "88"))
+      stutFunc x = every 5 rev $ every 3 (plyWith "<5 10 3 5>" ((|* gain 0.95)) ) $ x
   d1  
+    $ cpsDisc minTempoSpot maxTempoSpot
     $ limit
     $ stack [
       padOn $ slow 2 $ midichan 4 # rytm # note "<c3 c3 c3 c3 c4>"
-      , kickOn $ useIter (iter 16) $ reduce $ one 0.2 $ shift $ roll 0.2 $ dg1 $ shift 
+      , kickOn $ useIter (iter 8) $ stutIf stutFunc $ reduce $ one 0.2 $ shift $ roll 0.2 $ dg1 $ shift 
         $ clapIf(sb 0.3 (# midichan 3)) 
-        $ struct pat $ midichan 2 # rytm # note "c3"
-      , hatOn $ useIter (iter 16) $ reduce $ off 0.0625 id $ dg7
-        $ struct (inv pat) $ midichan 10 # rytm # note "c3"
-      , g $ midichan 1 # rytm # note "c3"
-      , perc1On $ useIter (iter 16) $ reduce $ iter "<1 1 16 1 8>" $ (0.5 ~>) $ midichan 8 # rytm # note "c3"
-      , useIter (iter 16) 
+        $ struct pat $ midichan 2 # rytm # note "c3" # gain 1
+      , hatOn $ useIter (iter 8) $ stutIf stutFunc $ reduce $ off 0.0625 id $ dg8
+        $ struct (inv pat) $ midichan 10 # rytm # note "c3" # gain 1
+      , perc1On $ useIter (iter 8) $ stutIf stutFunc $ reduce $ iter "<1 1 16 1 8>" $ (0.5 ~>) $ midichan 8 # rytm # note "c3" # gain 1
+      , perc2On $ useIter (iter 8) $ fast 2 
+        $ (|* gain (range 0.8 1 $ shrand 71600)) $ gain "0.7*4 [1 0.7 0.7 0.7]" # midichan 7 # rytm # note "c3"
+      , useIter (iter 8) 
         $ scene (segment 1 $ range 0 sceneRange $ shrand 9991)
       , perf3 (segment 2 $ range 0 127 $ shrand 80802) # rytm # midichan 2
       , perf4 (segment 2 $ range 0 127 $ shrand 82933222) # rytm # midichan 3
-      , perf7 (segment 2 $ range 0 127 $ shrand 483802) # rytm # midichan 2
+      , perf7 (segment 2 $ shiftBy 44 $ choose [0,0,0,127]) # rytm # midichan 2
       , perf9 (segment 2 $ range 0 127 $ shrand 83802) # rytm # midichan 8
-      , perf11 (segment 2 $ range 0 127 $ shrand 85933222) # rytm # midichan 10
-      , harmorOn $ useIter (iter 16) $ reduce $ stack [
-        one 0.2 $ dg1 $ shift $ struct pat $ harmor # note "0" # gain 1 
+      , harmorOn $ useIter (iter 8) $ reduce $ stack [
+        one 0.2 $ dg1 $ shift $ struct pat $ harmor # note "0" # gain 1 # legato (range 1 2 $ shrand 81711)
         , ccv (rfreq $ ccrand 10 100 133) # filter1
         , ccv (rfreq $ ccrand 10 100 233) # filter2
         , ccv (rfreq $ ccrand 0 127 333) # unidetune
@@ -36,11 +40,23 @@ do
         , ccv (rfreq $ ccrand 100 127 833 ) # filter2width
         , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
         , ccv (rfreq $ ccrand 0 127 1033) # timbre
-        , ccv (rfreq $ ccrand 64 64 1133) # amprel
+        , ccv (rfreq $ ccrand 64 100 1133) # amprel
         , ccv (rfreq $ ccrand 0 127 7) # harm
-        , ccv 32 # amprel
-      ] # speed002chan -- # harmor # midichan 10 -- # speed008chan
-    ] # cps (160/120/2)
+        , ccv 100 # amprel
+      ] # speed007chan -- # harmor # midichan 10 -- # speed008chan
+      , pad2On $ foldEvery [3,5] g $ (0.5 ~>) $ stack [
+        note "c3"
+        , sampletune (segment 1 $ range 40 64 $ shrand 555)
+        , samplebr (segment 1 $ range 0 64 $ shrand 666)
+        , lfospeed (segment 1 $ range 0 127 $ shrand 888)
+        , lfomult (segment 1 $ range 0 8 $ shrand 999)
+        , lfodepth (segment 1 $ range 32 95 $ shrand 777)
+        , rytmpan (segment 1 $ range 30 100 $ shrand 444)
+        , samplestart (segment 1 $ range 0 127 $ shrand 999)
+        , sampleend (segment 1 $ range 0 127 $ shrand 1111)
+        , sampleslot (segment 1 $ shiftBy 6161 $ choose [50,51,52,53])
+      ] # s "rytm" # midichan 5
+    ] # cps (110/120/2)
 
     hush
 
