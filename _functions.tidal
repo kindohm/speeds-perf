@@ -111,6 +111,7 @@ let
   verbdecay pat = ccv pat # ccn 25 # rytm # midichan 12
   verbpre pat = ccv pat # ccn 24 # rytm # midichan 12
   rytmpan pat = ccv pat # ccn 10 # rytm
+  rytmfiltercutoff pat = ccv pat # ccn 74 # rytm
   perf3flip = dg5 $ pan "1*16" # perf3 (choose [0,127])
   randGain min p = (|* gain (range min 1 $ shrand 1011)) $ p
   filter1 = ccn 1 # harmor
