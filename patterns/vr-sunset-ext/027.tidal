@@ -2,6 +2,8 @@
 do
   let slowness = "<3 4 3 4 2>"
       beepOn x = every (range 1 0 $ (cI 0 "81")) g $ x
+      rfreq = segment 1
+      chain x = one 0.3 $ roll 0.2 $ stutWith "<3 4>" "3e" id $ slow slowness $ x
   d1
     $ limit
     $ reduce
@@ -13,7 +15,7 @@ do
     $ foldEvery [2,3] rev
     $ shift
     $ stack [
-      kickOn $ one 0.3 $ roll 0.2 $ stutWith "<3 4>" "3e" id $ slow slowness $ midichan 2 # note "c3" # s "rytm"
+      kickOn $ chain $ midichan 2 # note "c3" # s "rytm"
       , perc1On $ off "10s" id $ ("1e" ~>) $ stutWith 3 "3e" id $ slow slowness $ midichan 6 # note "c3" # s "rytm"
       , perc1On $ off "13s" id $ ("3s" ~>) $ stutWith 3 "3e" id $ slow slowness $ midichan 7 # note "c3" # s "rytm"
       , snareOn $ (0.5 ~>) $ midichan 3 # note "c3" # s "rytm"
@@ -32,8 +34,28 @@ do
       , lfospeed (segment 1 $ range 70 100 $ shrand 4455) # midichan 0
       , lfomult (segment 1 $ range 2 5 $ shrand 5566) # midichan 0
       , scene (segment 1 $ range 0 sceneRange $ shrand 272711)
+      , harmorOn $ stack [
+        chain $ note "-12" # s "harmor"
+        , ccv (rfreq $ ccrand 10 100 133) # filter1
+        , ccv (rfreq $ ccrand 10 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 40 80 38282) # phspeed
+        , ccv (rfreq $ ccrand 5 127 533) # envattack
+        , ccv (rfreq $ ccrand 0 127 7283) # envdecay
+        , ccv (rfreq $ ccrand 100 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 0 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 100 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 0 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 64 64 1133) # amprel
+        , ccv (rfreq $ ccrand 0 127 7) # harm
+      ] # speed007chan
     ] # cps (160/120/2)
 
+let chain = id 
+
+d1 $  ccv (ccrand 10 100 133) # filter1 # speed008chan
 
 hush
 
