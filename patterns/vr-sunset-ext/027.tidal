@@ -1,29 +1,37 @@
 
 do
   let slowness = "<3 4 3 4 2>"
+      beepOn x = every (range 1 0 $ (cI 0 "81")) g $ x
   d1
     $ limit
-    $ degradeBy (slow 4 $ segment 1 $ range 0 0.8 $ slow 32423 rand)
+    $ reduce
     $ shift
     $ sb 0.1 ("1s" ~>)
     $ shift
+    $ useIter (iter 8)
     $ iter "<8 4 2 16>"
     $ foldEvery [2,3] rev
     $ shift
     $ stack [
-      one 0.2 $ roll 0.2 $ stutWith "<3 4>" "3e" id $ slow slowness $ midichan 2 # note "c3" # s "rytm"
-      , off "10s" id $ ("1e" ~>) $ stutWith 3 "3e" id $ slow slowness $ midichan 6 # note "c3" # s "rytm"
-      , off "13s" id $ ("3s" ~>) $ stutWith 3 "3e" id $ slow slowness $ midichan 7 # note "c3" # s "rytm"
-      , (0.5 ~>) $ midichan 3 # note "c3" # s "rytm"
-      , (0.25 <~) $ midichan 0 # note "c3" # s "rytm" 
+      kickOn $ one 0.3 $ roll 0.2 $ stutWith "<3 4>" "3e" id $ slow slowness $ midichan 2 # note "c3" # s "rytm"
+      , perc1On $ off "10s" id $ ("1e" ~>) $ stutWith 3 "3e" id $ slow slowness $ midichan 6 # note "c3" # s "rytm"
+      , perc1On $ off "13s" id $ ("3s" ~>) $ stutWith 3 "3e" id $ slow slowness $ midichan 7 # note "c3" # s "rytm"
+      , snareOn $ (0.5 ~>) $ midichan 3 # note "c3" # s "rytm"
+      , perc2On $ (0.25 <~) $ midichan 0 # note "c3" # s "rytm" 
         # note (segment 1 $ shiftBy 666 $ choose [-24,-23])
         # legato "<1 1 1 1.5 1 2>"
-      , off "3e" id $ midichan 4 # note "c3" # s "rytm"
-      , sb 0.2 (|+ midichan 1)  $ shift
+      , padOn $ off "3e" id $ midichan 4 # note "c3" # s "rytm"
+      , hatOn $ sb 0.2 (|+ midichan 1)  $ shift
         $ struct "{1*4 1*2 1*2 1 ~ ~ ~}%4" $ midichan 10 # note "c3" # s "rytm"
+      , beepOn $ (0.25 ~>) $ foldEvery [1,2,3] (slow 2) $ midichan 1 # note "c3" # s "rytm"
+      , pad2On $ slow 6 $ midichan 5 # note "<c3 f3>" # s "rytm" # legato 0.7
       , perf4 (fast 2 $ segment 1 $ range 0 127 $ shrand 82934)
       , perf1 (fast 2 $ segment 1 $ range 0 127 $ shrand 287711)
-      , rytmfiltercutoff (segment 1 $ range 10 100 $ slow 50 tri) # midichan 0
+      , rytmfiltercutoff (segment 1 $ range 30 110 $ slow 50 tri) # midichan 0
+      , rytmfiltercutoff (segment 1 $ range 10 120 $ slow 43 tri) # midichan 1
+      , lfospeed (segment 1 $ range 70 100 $ shrand 4455) # midichan 0
+      , lfomult (segment 1 $ range 2 5 $ shrand 5566) # midichan 0
+      , scene (segment 1 $ range 0 sceneRange $ shrand 272711)
     ] # cps (160/120/2)
 
 
