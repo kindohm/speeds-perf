@@ -13,6 +13,7 @@ let
   stutIf f x = every (range 0 1 $ (cI 0 "81")) f $ x
   padOn = every ( range 1 0 $  (cI 0 "77") ) g
   pad2On = every ( range 1 0 $  (cI 0 "85") ) g
+  pad2If f x = every ( range 0 1 $  (cI 0 "85") ) f $ x
   harmorOn = every ( range 1 0 $  (cI 0 "101") ) g
   kickOn = every ( range 1 0 $  (cI 0 "71") ) g
   perc1On = every ( range 1 0 $  (cI 0 "79") ) g
@@ -29,6 +30,7 @@ let
   hatOn = every ( range 1 0 $  (cI 0 "93") ) g  
   hatIf f x = every ( range 0 1 $ (cI 0 "93" )) f $ x
   useIter f = every ( range 0 1 $  (cI 0 "89") ) f  
+  useExtra f = every ( range 0 1 $  (cI 0 "73") ) f  
   minTempo = (range 1 0.333 $ (cF 0 "88"))
   maxTempo = (range 1 1.5 $ (cF 0 "88"))
   minTempo2 = (range 1 0.333 $ (cF 0 "72"))
@@ -44,6 +46,7 @@ let
   speed007chan = midichan 6
   speed008chan = midichan 7
   speed018chan = midichan 10
+  speed029chan = midichan 12
   rebChan = midichan 8
   cantChan = midichan 9
   std p = limit $ (# cps200) $ p

@@ -16,9 +16,9 @@ do
   d2 
     $ limit
     $ whenmod 30 22 (slow (4/3))
-    $ every 5 (within (0,0.5) (const $ (0.125 ~>) $ s "harmor" # note "[c5]" # gain 0.4))
+    $ every 5 (within (0,0.5) (const $ (0.125 ~>) $ s "harmor" # note "[c3]" # gain 0.4))
     $ whenmod 20 10 (iter "<1 2 4 8>")
-    $ one 0.2 $ ("[0.125]" ~>) $ rep 9 $ slow 2 $ s "harmor" # note "[c5]"
+    $ one 0.2 $ ("[0.125]" ~>) $ rep 9 $ slow 2 $ s "harmor" # note "[c3]"
 
 
   hush

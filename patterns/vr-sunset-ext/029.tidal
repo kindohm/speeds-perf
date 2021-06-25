@@ -1,0 +1,65 @@
+do
+  let reps = struct (randcat (
+                (replicate 10 "0")
+                ++ (replicate 2 "1")
+                ++ (replicate 4 "1*2")
+                ++ (replicate 6 "1*3")
+                ++ (replicate 8 "1*4")
+                ++ (replicate 5 "1*5")
+                ++ (replicate 6 "1*6")
+                ++ (replicate 7 "1*7")
+                ++ (replicate 8 "1*8")
+                ++ (replicate 9 "1*9")
+                ++ (replicate 10 "1*10")
+                ++ (replicate 11 "1*11")
+                ++ (replicate 12 "1*12")
+            ))
+      minTempo29 = (range 1 0.333 $ (cF 0 "88"))
+      maxTempo29 = (range 1 2 $ (cF 0 "88"))
+      plies = (slow 2 $ "<5 10 15>") :: Pattern (Ratio Integer)
+      minFluid = (range 1 0.333 $ (cF 0 "90"))
+      maxFluid = (range 1 2 $ (cF 0 "90"))
+  d1
+    $ cpsTri minFluid maxFluid 4.333
+    $ cpsDisc minTempo29 maxTempo29
+    $ limit
+    $ ssb 0.3 (within (0,0.5) (const $ stack 
+      [
+        clapOn $ s "rytm" # note "c3" # midichan 3
+        , pad2If (# gain 1) $ s "harmor" # note "c4" # speed029chan # gain 0.4
+        , s "harmor" # xfade # ccv 127 # speed029chan
+      ]))
+    $ stack [
+       kickOn $ hatIf (plyWith 2 (|+ midichan 8)) $ reduce $ reps $ midichan 2 # s "rytm" # note "c3"
+       , padOn $ slow 4 $ midichan 4 # note "c3" # s "rytm"
+       , padOn $ samplestart (slow 4 $ segment 1 $ range 0 120 $ slow 234 rand) # midichan 4 # s "rytm"
+       , padOn $ sampleend (slow 4 $ segment 1 $ range 126 127 $ slow 2314 rand) # midichan 4 # s "rytm"
+       , harmorIf (# gain 1) $ reduce $ reps $ note "c4" # gain 0.4 # s "harmor" # speed029chan
+       , stack [
+         reduce $ reps $ phoff # ccv (slow 8 $ segment 1 $ shiftBy 11111 $ choose [40])
+         , reduce $ reps $ phwidth # ccv (slow 8 $ segment 1 $ range 0 20 $ shrand 3293)
+         , reduce $ reps $ prism # ccv (slow 8 $ segment 1 $ shiftBy 3811111 $ choose [0,127,64])
+         , reduce $ reps $ filter1 # ccv (slow 8 $ segment 1 $ range 50 75 $ shrand 458)
+         , reduce $ reps $ filter2 # ccv (slow 8 $ segment 1 $ range 55 85 $ shrand 3293458)
+         , reduce $ reps $ filter2env # ccv (slow 8 $ segment 1 $ shiftBy 92781 $ choose [0,127])
+         , reduce $ reps $ unidetune # ccv (slow 8 $ segment 1 $ range 127 127 $ shrand 78289)
+         --, reduce $ reps $ filter1width # ccv (slow 8 $ segment 1 $ range 120 127 $ shrand 782849)
+         , reduce $ reps $ xfade # ccv 0
+       ] # s "harmor" # speed029chan
+    ] # cps 1
+
+
+hush
+
+hush
+
+
+
+
+d1 $ fast 4 $ s "harmor" # ccv (range 0 127 $ slow 3 rand) # unidetune # speed029chan
+
+
+    hush
+
+
+    0.320320320315659

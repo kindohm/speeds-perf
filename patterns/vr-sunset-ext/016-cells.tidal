@@ -31,7 +31,7 @@ do
       , perf7 (segment 1 $ range 0 127 $ shrand 9181)
       , perf8 (segment 1 $ range 0 127 $ shrand 872)
       , perf12 (segment 1 $ range 0 127 $ shrand 617)
-      , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
+      , scene (fast 3 $ segment 1 $ range 0 sceneRange $ shrand 9991)
       , reduce $ harmorOn $ stack [
         (0.5 ~>) $ harmor # note "<0 -12 -6>" # speed007chan # gain 1   
         , ccv (rfreq $ ccrand 10 100 133) # filter1
@@ -59,7 +59,7 @@ do
         , sampleslot (segment 0.5 $ shiftBy 776644 $ choose [10,9,8,10,9,8,20,45])
         , rytmpan (segment 1 $ range 30 100 $ shrand 444)
       ]
-      , verbpre (segment 0.5 $ range 1 50 $ shrand 1671)
+      , verbpre (segment 0.5 $ range 1 64 $ shrand 1671)
     ] # cps "<3 2 3 2 1 0.5>"
 
     hush

@@ -1,9 +1,10 @@
+hush
 
 do
-  let slowness = "<3 4 3 4 2>"
+  let slowness = "<1 3 4 3 2>"
       beepOn x = every (range 1 0 $ (cI 0 "81")) g $ x
       rfreq = segment 1
-      chain x = one 0.3 $ roll 0.2 $ stutWith "<3 4>" "3e" id $ slow slowness $ x
+      chain x = one 0.4 $ roll 0.4 $ stutWith "<3 4>" "3e" id $ slow slowness $ x
   d1
     $ limit
     $ reduce
@@ -11,15 +12,15 @@ do
     $ sb 0.1 ("1s" ~>)
     $ shift
     $ useIter (iter 8)
-    $ iter "<8 4 2 16>"
+    $ useExtra (iter "<8 4 2 16>")
     $ foldEvery [2,3] rev
     $ shift
     $ stack [
       kickOn $ chain $ midichan 2 # note "c3" # s "rytm"
-      , perc1On $ off "10s" id $ ("1e" ~>) $ stutWith 3 "3e" id $ slow slowness $ midichan 6 # note "c3" # s "rytm"
-      , perc1On $ off "13s" id $ ("3s" ~>) $ stutWith 3 "3e" id $ slow slowness $ midichan 7 # note "c3" # s "rytm"
+      , perc1On $ dg3 $ off "10s" id $ ("1e" ~>) $ stutWith 3 "3e" id $ slow slowness $ midichan 6 # note "c3" # s "rytm"
+      , perc1On $ dg3 $ off "13s" id $ ("3s" ~>) $ stutWith 3 "3e" id $ slow slowness $ midichan 7 # note "c3" # s "rytm"
       , snareOn $ (0.5 ~>) $ midichan 3 # note "c3" # s "rytm"
-      , perc2On $ (0.25 <~) $ midichan 0 # note "c3" # s "rytm" 
+      , perc2On $ (0.25 <~) $ midichan 0 # note "<c3 b2 a2>" # s "rytm" 
         # note (segment 1 $ shiftBy 666 $ choose [-24,-23])
         # legato "<1 1 1 1.5 1 2>"
       , padOn $ off "3e" id $ midichan 4 # note "c3" # s "rytm"
