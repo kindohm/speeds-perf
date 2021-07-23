@@ -1,4 +1,6 @@
 let 
+  ripOLD a b p = within (0.25, 0.75) (slow 2 . rev . stut 8 a b) p
+  ripOLD' a b c d e p = within (a, b) (slow 2 . rev . stut c d e) p
   limit p = (|* gain 1.15) $ p
   g p = (const $ s "~") $ p
   shift = (1 ~>)
@@ -15,6 +17,7 @@ let
   pad2On = every ( range 1 0 $  (cI 0 "85") ) g
   pad2If f x = every ( range 0 1 $  (cI 0 "85") ) f $ x
   harmorOn = every ( range 1 0 $  (cI 0 "101") ) g
+  harmorIf f x = every ( range 0 1 $  (cI 0 "101") ) f $ x
   kickOn = every ( range 1 0 $  (cI 0 "71") ) g
   perc1On = every ( range 1 0 $  (cI 0 "79") ) g
   perc1If f x = every (range 0 1 $ (cI 0 "79") ) f $ x

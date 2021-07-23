@@ -1,0 +1,90 @@
+hush
+
+let
+  pad1OnOff = id
+  pad2OnOff = id
+  percOnOff = id
+  drumsOnOff = id
+  drums2OnOff = id
+  -- percDegrade = 0
+  -- drumsDegrade = 0
+  -- ripFreq = 0
+  ripFreq = (range 0 1 $ (cF 0 "88"))
+  rip2Freq = (range 0 1 $ (cF 0 "72"))
+  ripit p = ssb ripFreq (ripOLD 0.7 (0.0625/8)) $ p
+  ripit2 p = ssb ripFreq (ripOLD' 0 1 8 0.7 (0.0625/8)) $ p
+  pad1 =
+    pad1OnOff 
+      $ every 2 (off (0.125*3) (|* speed 1.5))
+      $ superimpose ((21.5 ~>) . (|* speed "-1"))
+      $ slow 2 $ s "cp-end" # legato 2 # n (irand 3) # speed "0.5" # shape 0 # begin "{0 0.25 0.5}%16" # crush "{6 7 8}%12"
+      # hpf 100
+      # gain 0.95
+  pad2 = 
+    pad2OnOff
+      $ every 2 (off (1.375*3) (|* speed 1.75))
+      $ every 3 (off (0.325*3) (|* speed 1.5))
+      $ superimpose ((21.5 ~>) . (|* speed "-1"))
+      $ slow 2 $ s "reg-end" # legato 2 # n (irand 3) # speed "0.5" # shape 0 # begin "{0 0.125 0.25 0.5 0.375}%16" # crush "{6 7 5}%12"
+      # hpf 100
+      # gain 0.85
+  perc =
+    percOnOff
+      $ limit
+      -- $ degradeBy percDegrade
+      $ shiftBy 38
+      $ every 3 rev
+      $ every 4 (|+ n "<5 10>")
+      $ every 5 (# accelerate "{-0.25 -0.5}%13")
+      $ while ("t(<10 6>,16,<1 11 101 202 303>)") (# s "breded")
+      $ one 0.2
+      $ roll 0.3
+      $ struct "1(<3 2 2 3 1>,16,<1000 2003 37>)" $ s "airmass-shots-1" 
+      # n "{8 9 10 12 13}%16" # cps (160/120/2) # cut 1 # speed 0.5
+  drums = 
+    drumsOnOff
+      -- $ ssb ripFreq (ripOLD 0.7 (0.0625/8))
+      $ shift
+      -- $ degradeBy drumsDegrade
+      $ shift
+      $ limit
+      $ every "<2 3 4>" (|* speed 0.5)
+      $ shift
+      $ stack [
+        foldEvery [3,5,7] (|+ n "<1 2 3 4>") 
+          $ one 0.2 $ roll 0.3 $ struct "1(<2 1 2 2 1>,16,<1 11 14>)" $ s "airmass-shots-1" # n 20 # cut 111 
+        , whenmod 10 5 (0.125 <~) 
+            $ sb 0.125 (off (0.125*3) (|* speed 1.25))
+            $ shift
+            $ roll 0.1 $ iter 16 $ s "airmass-shots-1" # n 3 # hpf 1000 # begin 0.05 # end (range 0.5 1 $ shrand 202) # shape 0.2
+      ]
+  drums2 = 
+    drums2OnOff
+      $ limit
+      -- $ ssb ripFreq (ripOLD 0.7 (0.0625/8))
+      -- $ degradeBy drumsDegrade
+      $ shiftBy 2023331901
+      $ every 3 (|* speed 0.5)
+      $ shift
+      $ stack [
+        foldEvery [3,5,7] (|+ n "<1 2 3 4>") 
+          $ one 0.2 $ roll 0.3 $ struct "1(<7 5 9 5 7>,16,<1 11 14>)" $ s "airmass-shots-1" # n 20 # cut 111 
+        , whenmod 10 5 (0.125 <~) 
+            $ sb 0.125 (off (0.125*3) (|* speed 1.25))
+            $ shift
+            $ roll 0.1 $ iter 16 $ s "airmass-shots-1" # n 3 # hpf 1000 # begin 0.05 # end (range 0.5 1 $ shrand 202) # shape 0.2
+      ]
+
+do
+  d1 
+    $ useIter (iter 8) 
+    $ ripit 
+    $ stack [ 
+      kickOn $ reduce $ shiftBy 101 $ perc
+      , perc1On $ reduce $ shiftBy 201 $ drums
+      , perc2On $ reduce $ shiftBy 301 $ drums2
+      , clapOn $ reduce $ shiftby 401 $ limit $ sound (slowcat ["fur1*8" ]) # unit "c" # speed 8 # n (shiftBy 38 $ irand 20)]
+  d2 $ stack [ padOn $ pad1, pad2On $ pad2 ]
+
+
+hush
