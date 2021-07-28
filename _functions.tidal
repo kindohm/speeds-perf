@@ -34,6 +34,7 @@ let
   hatIf f x = every ( range 0 1 $ (cI 0 "93" )) f $ x
   useIter f = every ( range 0 1 $  (cI 0 "89") ) f  
   useExtra f = every ( range 0 1 $  (cI 0 "73") ) f  
+  extraOn  = every (range 1 0 $ (cI 0 "73")) g
   minTempo = (range 1 0.333 $ (cF 0 "88"))
   maxTempo = (range 1 1.5 $ (cF 0 "88"))
   minTempo2 = (range 1 0.333 $ (cF 0 "72"))
@@ -117,6 +118,7 @@ let
   verbdecay pat = ccv pat # ccn 25 # rytm # midichan 12
   verbpre pat = ccv pat # ccn 24 # rytm # midichan 12
   rytmpan pat = ccv pat # ccn 10 # rytm
+  hold pat = ccv pat # ccn 79 # rytm
   rytmfiltercutoff pat = ccv pat # ccn 74 # rytm
   perf3flip = dg5 $ pan "1*16" # perf3 (choose [0,127])
   randGain min p = (|* gain (range min 1 $ shrand 1011)) $ p
