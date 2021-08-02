@@ -31,9 +31,9 @@ do
         , hatOn $ whenmod 32 16 (off 0.0625 id) 
           $ degg $ rytmmap [10,"~"] (randcat pats) # note "c3" # amp 1
         , padOn $ amp "1" # pad5 # note "a2"
-        , samplestart (segment (1/4) $ range 33 100 $ slow 33 rand) # midichan 4
-        , sampleend (segment (1/4) $ range 0 22 $ slow 44 rand) # midichan 4
-        , scene  (segment (1/4) $ range 0 sceneRange $ shrand 9991)
+        , samplestart (slow 2 $ segment 1 $ range 33 100 $ slow 33 rand) # midichan 4
+        , sampleend (slow 2 $ segment 1 $ range 0 22 $ slow 44 rand) # midichan 4
+        , scene  (slow 2 $ segment 1 $ range 0 sceneRange $ shrand 9991)
       ] # rytm 
       , stack [
          harmorOn $ degg $ ampmap [1,"~"] (randcat pats) # note "-12"
@@ -52,7 +52,7 @@ do
         , ccv (rfreq $ ccrand 0 127 1033) # timbre
         , ccv (rfreq $ ccrand 100 100 1133) # amprel
         , ccv (rfreq $ ccrand 0 127 7) # harm
-      ] # harmor # speed004chan
+      ] # harmor # omnomchan
     ]# cps 0.7
 
 

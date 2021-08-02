@@ -51,6 +51,8 @@ let
   speed008chan = midichan 7
   speed018chan = midichan 10
   speed029chan = midichan 12
+  ommnommchan = midichan 12
+  omnomchan = ommnommchan
   rebChan = midichan 8
   cantChan = midichan 9
   std p = limit $ (# cps200) $ p

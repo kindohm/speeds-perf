@@ -1,0 +1,21 @@
+
+-- OMM NOMM
+
+do
+  let pat = "1"
+      f p = ssb 0 (plyWith "<3 5>" (# gain 0.7)) $ p
+  d1
+    $ limit
+    $ stack [
+      f $ struct pat $ midichan "<3 2 2 2 2 2 2 2>" # note "c3"
+    ] # s "rytm" # cps "<2 3 3 3 1 0.5 5 5 5>"
+  d2
+    $ limit
+    $ stack [
+      f $ struct pat $ note "c4"
+    ] # s "harmor" # midichan 15
+
+    hush
+    
+
+    d2 $ fast 8 $ s "harmor" # ccv (range 0 127 $ shrand 89234) # phwidth

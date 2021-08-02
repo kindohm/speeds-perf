@@ -1,0 +1,49 @@
+setcps (150/120/2)
+
+hush
+
+d3 silence
+
+do
+  let pat  = "{1@3 1@2 1@3}%16"
+      vpat = "{1@3 1@2 1@3}%16"
+      cpp  = "{1@3 0@2 0@3}%16"
+      degr = 0
+      mod p = id $ p -- sb 0.4 (off (0.0625/4) id) $ shift $ roll 0.3 $ dg2 $ p
+  p "drums"
+    $ mod
+    $ limit 
+    $ reduce
+    $ stack [
+      perc1On $ struct pat $ midinote 1 # cut 1011
+      , perc1On $ slow 2 $ struct cpp $ midinote 3 # cut 101
+      , perc2On $ struct pat $ midinote 2 # cut 1011
+      , perc2On $ slow 2 $ struct cpp $ midinote 10 # cut 101
+      , kickOn $ struct pat $ midinote 0 # cut 1011
+      , kickOn $ slow 2 $ struct cpp $ midinote 3 # cut 101
+      , hatOn $ midinote "{8 8 9}%16"
+      , hatOn $ ((0.0625) <~) $ gain pat # midinote 5
+      ] # rytm # cps (160/120/2)
+  p "synth"
+    $ harmorOn
+    $ mod
+    $ limit
+    $ reduce 
+    $ pan pat 
+      # note "c4" 
+      # omnomchan
+      # legato 0.2
+      # s "harmor"
+
+  p "ccs"
+    $ stack [ 
+      gain pat # ccv (range 0 127 $ slow 34 tri) # ccn 1,
+      gain pat # ccv (range 0 127 $ slow 32 tri) # ccn 2,
+      gain pat # ccv (range 0 127 $ slow 30 tri) # ccn 3,
+      gain pat # ccv (range 0 127 $ slow 28 tri) # ccn 5
+    ] 
+    # rebChan # s "harmor"
+
+hush
+
+d1 $ fast 4 $ rebChan # s "harmor" # timbre # ccv (range 0 127 $ slow 3 rand)
