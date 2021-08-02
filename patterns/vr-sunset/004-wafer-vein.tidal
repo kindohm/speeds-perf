@@ -1,12 +1,5 @@
 hush
 
-
-
-
-
-
--- Thanks a TON for listening!
-
 do 
   let rfreq = segment 0.125
       chain p = one 0.2 $ shift $ one 0.2 $ shift $ one 0.2 

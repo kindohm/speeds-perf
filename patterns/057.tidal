@@ -1,8 +1,10 @@
+hush 
 
 
 do
   let pat = "{1@9 1@5 1@11 1@6 1@6 1@14 1@7}%16"
       shiftChain p = shift $ shift $ shift $ p
+      rfreq  = segment 1
   d1
     $ limit
     $ useIter (iter (segment 1 $ shiftBy 3733311 $ choose [4,8,16]))
@@ -20,14 +22,38 @@ do
       , perc2On $ roll 0.3 $ fast 2 $ (0.5 ~>) $ midichan 1 # note "c3"
       , perc2On $ ssb 0.1 (# ccv (range 0 127 $ shrand 8293)) $ fast 2 $ (0.5 ~>) $ perf2 "0"
       , hatOn $ reduce $ sb 0.07 (|+ midichan 1) $ struct (binaryN 16 "<23894 3428905 213784923>") $ midichan 10 # note "c3"
+      , extraOn $ (100 ~>) $ reduce $ one 0.2 $ one2 0.2 $ roll 0.3 $ struct pat $ midichan 5 # note "{c3 d3 a2}%13"
       , scene (fast 2 $ segment 1 $ range 0 sceneRange $ shrand 3711000)
     ] # s "rytm" # cps (160/120/2)
   d2 
     $ stack [
-      padOn $ slow 4 $ midichan 4 # note "c3"
+      padOn $ slow 8 $ midichan 4 # note "c3"
+      , samplestart (slow 8 $ segment 1 $ shiftBy 474 $ choose [0,64]) # midichan 4
     ] # s "rytm"
+  d3 
+    $ limit
+    $ useIter (iter (segment 1 $ shiftBy 3733311 $ choose [4,8,16]))
+    $ every 2 rev
+    $ harmorOn $ stack [
+      reduce $ one 0.2 $ one2 0.2 
+        $ roll 0.3 $ struct pat $ note "<c5>"
+      , ccv (rfreq $ ccrand 10 100 133) # filter1
+        , ccv (rfreq $ ccrand 10 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 40 80 38282) # phspeed
+        , ccv (rfreq $ ccrand 5 127 533) # envattack
+        , ccv (rfreq $ ccrand 0 127 7283) # envdecay
+        , ccv (rfreq $ ccrand 100 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 100 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 64 64 1133) # amprel
+        , ccv (rfreq $ ccrand 0 127 7) # harm
+    ] # s "harmor" # speed007chan
 
-
+hush
 
 d1 $ fast 2 $ limit $ s "rytm" # midichan 1 # note "c3"
 
