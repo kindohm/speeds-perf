@@ -1,0 +1,39 @@
+setcps (160/120/2)
+
+hush
+
+do
+    let dis p = slow 4 $ segment 1 $ p
+        vary = 0.25
+        speeds = slow (discretise 1 $ choose [1,2,3]) $ reduce $ shift $ s (randcat( 
+                    (replicate 5 "midi*1") 
+                    ++ (replicate 5 "midi*2") 
+                    ++ (replicate 5 "midi*3") 
+                    ++ (replicate 5 "midi*4") 
+                    ++ (replicate 10 "midi*5") 
+                    ++ (replicate 10 "midi*6") 
+                    ++ (replicate 7 "midi*7") 
+                    ++ (replicate 8 "midi*8") 
+                    ++ (replicate 10 "midi*10") 
+                    ++ (replicate 10 "midi*12") 
+                    ++ (replicate 10 "midi*14") 
+                    ++ (replicate 10 "midi*16") 
+                    ++ (replicate 10 "midi*18") 
+                    ++ (replicate 10 "midi*20") 
+                ))
+    p "drums" $ limit $ sb vary (# midichan 3) $ shift $ speeds # midichan 0 # s "rytm" # note "c3"
+    p "not drums" $ limit $ stack [ 
+        sometimesBy vary (# gain 0.4) $ shift $ speeds # note "-6"
+      , sometimesBy vary (# ccv 127) $ shift $ speeds # ccv 0 # ccn 100
+      , speeds # filter1 # ccv (dis $ range 0 127 $ shiftBy 300 rand) 
+      , speeds # filter2 # ccv (dis $ range 0 127 $ shiftBy 301 rand) 
+      , speeds # unidetune # ccv (dis $ range 0 127 $ shiftBy 302 rand) 
+      , speeds # prism # ccv (dis $ range 0 127 $ shiftBy 303 rand) 
+      , speeds # xfade # ccv (dis $ shiftBy 304 $ choose [0,127]) 
+      , speeds # phwidth # ccv (dis $ range 0 127 $ shiftBy 305 rand) 
+      , speeds # phoff # ccv (dis $ range 0 127 $ shiftBy 306 rand) 
+      ] # midichan 8 # s "harmor"
+
+hush
+
+d1 $ fast 4 $ s "harmor" # midichan 8 # xfade # ccv (range 0 127 $ shrand 8923)

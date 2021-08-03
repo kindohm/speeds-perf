@@ -1,0 +1,48 @@
+
+hush
+
+do
+  let spat       = "[1.0 ~ ~ ~ ~ ~ 0.4 ~ ~ ~]"
+      harmorPat1 = "[1.0 ~ ~ ~ ~ ~ 0.4 ~ ~ ~]"
+      harmorPat2 = "[1.0 ~ ~ ~ ~ ~ 1.0 ~ ~ ~]"
+      xfadepat   = "[0   ~ ~ ~ ~ ~ 127 ~ ~ ~]"
+      -- dpat       = "[0   ~ ~ ~ ~ ~ 1   ~ ~ ~]"
+      -- gpat       = "[1.1 ~ ~ ~ ~ ~ 0.9 ~ ~ ~]"
+      -- cpat       = "[1   ~ ~ ~ ~ ~ 1   ~ ~ ~]"
+      rytmpat    = "[0   ~ ~ ~ ~ ~ 3   ~ ~ ~]"
+      -- mod p = spaceOut [1,1.1,0.9,0.95,1.7,1.25,0.8,1.65,1,0.7,0.823,1.5,1,2,1.8] $ p        
+      cpspat = "<1 1.1 0.9 0.95 1.7 1.25 0.8 1.65 1 0.7 0.823 1.5 1 2 1.8>"
+  p "drums"
+    $ limit
+    $ kickOn
+    $ midichan rytmpat
+    # note "c3"
+    # s "rytm"
+    # cps ((140/120/2) * cpspat * 0.8) 
+  p "notes"
+    $ limit
+    $ stack [
+      perc1On $ gain harmorPat1
+      , perc2On $ gain harmorPat2
+    ]
+    # note "-12" # s "harmor" # midichan 13
+    # cps ((140/120/2) * cpspat * 0.8) 
+  p "ccs"
+    $ stack [
+      (# ccv (range 0 127 $ shrand 123)) $ degradeBy 0.2 $ shiftBy 10 $ ccn "1*4"
+      , (# ccv (range 0 127 $ shrand 1234)) $ degradeBy 0.2 $ shiftBy 11 $ ccn "1*4"  
+      , perc1On $ xfadep 0
+      , perc2On $ xfadep xfadepat
+    ] # s "harmor" # midichan 13
+
+d1 $ fast 8 $ s "harmor" # xfade # ccv (range 0 127 $ shrand 89234) # midichan 13
+
+hush
+
+
+d1 $ s "k*2" # pan "0 1"
+
+hush
+
+
+d1 $ gain "1*4" # ccn 1 # ccv (range 0 127 $ shrand 123) # s "midi" # midichan 15

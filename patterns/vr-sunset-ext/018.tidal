@@ -1,3 +1,6 @@
+hush 
+
+
 do
   let rfreq = segment (1/4)
       stutFunc = (every 3 (plyWith "<5 10>" (# gain 0.8)))
@@ -40,7 +43,8 @@ do
         , ccv (rfreq $ ccrand 1 64 7282323) # phwidth
         , ccv (rfreq $ ccrand 0 127 82323) # phoff
       ] # speed007chan
-      , pad2On $ (0.5 ~>) $ stack [
+      , pad2On $ slow 8 $ midichan 5 # note "c3" # s "rytm"
+      , g $ pad2On $ (0.5 ~>) $ stack [
         slow "<1 2 1>" $ s "rytm" # note "c3"
         , sampletune (segment 1 $ range 40 75 $ shrand 555)
         , samplebr (segment 1 $ range 0 64 $ shrand 666)

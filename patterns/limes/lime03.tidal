@@ -1,0 +1,75 @@
+setcps 0.5
+
+hush
+
+do
+    let howoften = 15
+        ongain = "1"
+        offgain = "0.4"
+        mute1 p = id $ p
+        mute2 p = id $ p
+        densities = [0.3,0.4 .. 4 ]
+        den p = density (slow 4 $ segment 1 $ shiftBy 3829 $ choose densities) $ shift $ p
+        ctlGain = gain (randcat ( 
+                        (replicate 1 "1") 
+                    ++ (replicate 2 "1*2") 
+                    ++ (replicate 3 "1*3") 
+                    ++ (replicate 4 "1*4") 
+                    ++ (replicate 5 "1*5") 
+                    ++ (replicate 6 "1*6") 
+                    ++ (replicate 7 "1*7") 
+                    ++ (replicate howoften "1") 
+                        ))
+    p "drums" $ kickOn $ limit $ den $ gain (randcat ( 
+            (replicate 1 "1") 
+            ++ (replicate 2 "1*2") 
+            ++ (replicate 3 "1*3") 
+            ++ (replicate 4 "1*4") 
+            ++ (replicate 5 "1*5") 
+            ++ (replicate 6 "1*6") 
+            ++ (replicate 7 "1*7") 
+            ++ (replicate howoften "~") 
+        )) # midichan (shiftBy 400 $ choose [0,0,3]) # s "rytm" # note "c3"
+            # cps 0.5
+    p "synth accent" $ perc1On $ limit $ den $ gain (randcat ( 
+            (replicate 1 offgain) 
+            ++ (replicate 2 offgain) 
+            ++ (replicate 3 offgain) 
+            ++ (replicate 4 offgain) 
+            ++ (replicate 5 offgain) 
+            ++ (replicate 6 offgain) 
+            ++ (replicate 7 offgain) 
+            ++ (replicate howoften ongain) 
+        )) # s "harmor" # midichan 8 # note "<c5 c4>"
+    p "synth glitch" $ perc2On $ limit $ den $ gain (randcat ( 
+            (replicate 1 ongain) 
+            ++ (replicate 2 ongain) 
+            ++ (replicate 3 ongain) 
+            ++ (replicate 4 ongain) 
+            ++ (replicate 5 ongain) 
+            ++ (replicate 6 ongain) 
+            ++ (replicate 7 ongain) 
+            ++ (replicate howoften offgain) 
+        )) # s "harmor" # midichan 8 # note "<c5 c4>"
+    p "cc" $ den $ stack [ 
+                 ctlGain # filter1 # ccv (range 0 127 $ shiftBy 300 rand) 
+                , ctlGain # filter2 # ccv (range 0 127 $ shiftBy 301 rand) 
+                , ctlGain # unidetune # ccv (range 0 127 $ shiftBy 302 rand) 
+                , ctlGain # prism # ccv (range 0 127 $ shiftBy 303 rand) 
+                , ctlGain # ph # ccv (shiftBy 304 $ choose [0,127]) 
+                , ctlGain # phwidth # ccv (range 0 127 $ shiftBy 305 rand) 
+                , ctlGain # phoff # ccv (range 0 127 $ shiftBy 306 rand) 
+                , ctlGain # xfade # ccv (shiftBy 238924 $ choose [0,127])
+                ] 
+            # s "harmor" # midichan 8 
+
+hush
+
+ d1 $ fast 4 $ s "harmor" # midichan 8 # phoff # ccv (range 0 127 $ shrand 23892)
+
+ hush
+
+prism 4
+ phaser 5
+ phwidth 6
+ phoff 7

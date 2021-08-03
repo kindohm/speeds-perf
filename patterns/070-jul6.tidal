@@ -1,3 +1,5 @@
+hush 
+
 do
   let pat = (foldEvery [6,8] rev $ "{1@3 1@2 1 1@2 1@3 1@3 1@3 1@7 1@5}%16") :: Pattern Bool
   d1  
@@ -13,18 +15,12 @@ do
         , hatOn $ ("1e" ~>) $ struct pat $ s "rytm" # midichan 10 # note "c3"
         , perc1On $ ("3s" ~>) $ struct pat $ s "rytm" # midichan 6 # note "c3"
         , perc2On $ ("4s" ~>) $ struct pat $ s "rytm" # midichan 7 # note "c3"
+        , extraOn $ ("1s" ~>) $ struct pat $ s "rytm" # midichan 0 # note "c3"
       ] 
       , padOn $ slow 6 $ s "rytm" # midichan 4 # note "<c3>"
       , padOn $ samplestart (segment 1 $ range 0 24 $ shrand 82934) # s "rytm" # midichan 4
       , pad2On $ slow 7 $ s "rytm" # midichan 5 # note "<c3>"
-      -- , pad2On $ samplestart (segment 1 $ range 0 64 $ shrand 82934) # s "rytm" # midichan 5
-      -- , ("1s" ~>) $ struct pat $ s "harmor" # note "c4"
-      -- , ("1s" ~>) $ struct pat $ ccv (slow 4 $ segment 1 $ range 0 127 $ shrand 1000) # filter1 # s "harmor"
-      -- , ("1s" ~>) $ struct pat $ ccv (slow 4 $ segment 1 $ range 0 127 $ shrand 2000) # filter2 # s "harmor"
-      -- , ("1s" ~>) $ struct pat $ ccv (slow 4 $ segment 1 $ range 0 127 $ shrand 3000) # unidetune # s "harmor"
-      -- , ("1s" ~>) $ struct pat $ ccv (slow 4 $ segment 1 $ range 0 20 $ shrand 4000) # phwidth # s "harmor"
-      -- , ("1s" ~>) $ struct pat $ ccv (slow 4 $ segment 1 $ range 0 127 $ shrand 5000) # prism # s "harmor"
-      , scene (foldEvery [2,3,4] (fast 2) $ segment 1 $ range 0 3 $ shrand 82934)
+      , scene   (segment (1/2) $ range 0 sceneRange $ shrand 9991)
     ] # cps (160/120/2)
 
 hush

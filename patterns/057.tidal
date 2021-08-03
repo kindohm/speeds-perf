@@ -61,4 +61,4 @@ d1 $ fast 2 $ limit $ s "rytm" # midichan 1 # note "c3"
 
 
 
-d1 $ note "{a3@11 c4@13 g3@10 e4@18}%16" # s "rytm" # midichan 0 # legato 0.5
+d1 $ note "{a3 c4 g3 e4}%16" # s "rytm" # midichan 0 # legato 0.5

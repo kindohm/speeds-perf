@@ -15,6 +15,8 @@ do
           , perc1On $ (0.0625 ~>) $ chain $ pad7n
           , perc2On $ dg0 $ (0.125 ~>) $ chain $ pad8n
           , clapOn $ dg3 $ ((3/16) ~>) $ chain $ pad4n
+          , hatOn $ shift $ sb 0.1 (# midichan 11) $ shift $ dg3 $ struct "1*16" 
+            $ gain (range 0.7 1 $ shrand 8932) # midichan 10 # note "c3" # s "rytm"
         ]
       , padOn $ ssb 0.2 (|+ note 12) $ slow 4 $ pad5n
       , lfodepth (segment 1.75 $ range 40 70 $ shrand 1771) # midichan 3
@@ -24,7 +26,7 @@ do
       --, perf5 (segment 0.75 $ range 0 127 $ shrand 999)
       , perf7 (segment 1 $ range 0 32 $ shrand 1001100)
       , perf8 (segment 1 $ shiftBy 33 $ choose [0,0,0,127])
-      , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
+      , scene   (segment (1/2) $ range 0 sceneRange $ shrand 9991)
       , stack [
         harmorOn $ (0.375 ~>) $ chain $ harmor # note "-12"
         -- harmor cc's
