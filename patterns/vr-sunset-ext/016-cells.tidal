@@ -1,4 +1,7 @@
 -- real memes 003
+
+-- vox sample range 73 120
+
 do
   let minTempoSpot = (range 0.5 0.25 $ (cF 0 "88"))
       maxTempoSpot = (range 0.5 0.8 $ (cF 0 "88"))
@@ -23,7 +26,9 @@ do
       , reduce $ hatOn $ ssb 0.2 (plyWith "<5 3 7>" id )
         $ rev $ plyWith "<3 5 7>" (# gain 0.8) $ midichan 10 # s "rytm" # note "c3"
       , padOn $ slow 1.333 $ (0.5 ~>) $ (|+ note (shiftBy 474 $ choose [0,-12,-2])) $ s "rytm" # midichan 4 # note "<c3 c3 c3 d3>"
-      , stutIf stutFunc $ reduce $ perc2On $ degradeBy 0.4 $ slow 2.666 $ (0.74 ~>) $ s "rytm" # midichan 5 # note "<c3>"
+      , stutIf stutFunc $ reduce $ perc2On $ shift $ degradeBy 0.4 $ slow 2.666 $ (0.74 ~>) $ s "rytm" # midichan 5 # note "<c3>"
+      , perc2On $ reduce $ shift $ degradeBy 0.4 $ slow 2.666 $ (0.74 ~>) $ midichan "5*8" # sampleend (range 35 120 $ shrand 89234) # s "rytm"
+      , perc2On $ reduce $ shift $ degradeBy 0.4 $ slow 2.666 $ (0.74 ~>) $ midichan "5*8" # samplestart (range 35 120 $ shrand 849234) # s "rytm"
       , samplestart (segment 1.333 $ range 70 80 $ shrand 8372) # midichan 4
       , sampleend (segment 1.666 $ range 55 64 $ shrand 171) # midichan 4
       , ssb 0.333 (# perf3 (segment 3 $ range 0 127 $ shrand 78917111)) $ shiftBy 90 $ perf3 0
@@ -59,7 +64,6 @@ do
         , sampleslot (segment 0.5 $ shiftBy 776644 $ choose [10,9,8,10,9,8,20,45])
         , rytmpan (segment 1 $ range 30 100 $ shrand 444)
       ]
-      , verbpre (segment 0.5 $ range 1 64 $ shrand 1671)
     ] # cps "<3 2 3 2 1 0.5>"
 
     hush

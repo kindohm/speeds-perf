@@ -117,6 +117,10 @@ let
   lfodepth pat = ccv pat # ccn 109 # rytm
   lfomult pat = ccv pat # ccn 103 # rytm
   lfospeed pat = ccv pat # ccn 102 # rytm
+  osc1tune pat = ccv pat # ccn 17 # rytm
+  osc2tune pat = ccv pat # ccn 20 # rytm
+  oscbal pat = ccv pat # ccn 19 # rytm
+  oscbend pat = ccv pat # ccn 23 # rytm
   verbdecay pat = ccv pat # ccn 25 # rytm # midichan 12
   verbpre pat = ccv pat # ccn 24 # rytm # midichan 12
   rytmpan pat = ccv pat # ccn 10 # rytm

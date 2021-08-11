@@ -29,6 +29,7 @@ do
     $ stack [
       padOn $ slow 8 $ midichan 4 # note "c3"
       , samplestart (slow 8 $ segment 1 $ shiftBy 474 $ choose [0,64]) # midichan 4
+      , pad2On $ note "{a3 c4 g3 e4 d4}%16" # s "rytm" # midichan 0 # legato 0.5
     ] # s "rytm"
   d3 
     $ limit
@@ -61,4 +62,4 @@ d1 $ fast 2 $ limit $ s "rytm" # midichan 1 # note "c3"
 
 
 
-d1 $ note "{a3 c4 g3 e4}%16" # s "rytm" # midichan 0 # legato 0.5
+d1 $ note "{a3 c4 g3 e4 d4}%16" # s "rytm" # midichan 0 # legato 0.5

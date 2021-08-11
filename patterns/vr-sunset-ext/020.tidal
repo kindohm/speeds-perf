@@ -15,9 +15,9 @@ do
         $ reduce
         $ shift 
         -- snare fill in
-        $ clapIf (sb 0.4 (off (0.125*3) ( (# midichan (shiftBy 9 $ choose [3,7])) . (# gain 1)) ))
+        $ clapIf (sb 0.5 (off (0.125*3) ( (# midichan (shiftBy 9 $ choose [3,7,7])) . (# gain 1)) ))
         $ shift 
-        $ clapIf (sb 0.5 (# midichan 6))
+        $ clapIf (sb 0.4 (# midichan 6))
         $ shift
         $ roll 0.333
         $ shift
@@ -35,16 +35,20 @@ do
         $ s "rytm" # midichan 10 # note "c3"
       , useIter (iter 8) 
         $ scene (segment 1 $ range 0 sceneRange $ shrand 9991)
-      , pad2On $ (0.5 ~>) $ stack [
+      , pad2On $ reduce $ fast "<2 3 4 1>" $ shift $ (0.5 ~>) $  stack [
         note "c3"
         , sampletune (segment 1 $ range 40 64 $ shrand 555)
         , samplebr (segment 1 $ range 0 64 $ shrand 666)
         , lfospeed (segment 1 $ range 0 127 $ shrand 888)
-        , lfomult (segment 1 $ range 0 8 $ shrand 999)
-        , lfodepth (segment 1 $ range 32 95 $ shrand 777)
+        , lfomult (segment 1 $ range 0 5 $ shrand 999)
+        , lfodepth (segment 1 $ range 22 105 $ shrand 777)
         , rytmpan (segment 1 $ range 30 100 $ shrand 444)
         , samplestart (segment 1 $ range 0 127 $ shrand 1717111)
         , sampleend (segment 1 $ range 0 127 $ shrand 22266)
+        --, osc1tune (segment 8 $ range 20 60 $ shrand 171)
+        --, osc2tune (segment 8 $ range 0 127 $ shrand 27111)
+        -- , oscbal (segment 4 $ range 0 127 $ shrand 892)
+        --, oscbend (segment 8 $ range 0 127 $ shrand 23849)
       ] # midichan 0 # s "rytm"
     ] # cps (140/120/2)
 
