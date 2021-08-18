@@ -1,0 +1,65 @@
+
+let rep x p = stutWith x "3s" id  $ p
+
+do
+  let rep x p = stutWith x "3s" id  $ p
+      rfreq = segment (1/4)
+      mod p = useIter (iter 8) $ every 0 (slow (4/3)) $ whenmod 7 4 (linger "3e") $ whenmod 8 5 (rev) 
+              $ one 0.2
+              $ whenmod 20 10 (iter "<1 2 4 8>")
+              $ p
+      camera p = degradeBy (slow 2 $ segment 1 $ range 0 0.75 $ shrand 33333) $ shift $ p
+  d1
+    $ limit
+    $ camera
+    $ reduce
+    $ shift
+    $ mod
+    $ clapIf (every 5 (within (0,0.5) (const $ (0.125 ~>) $ s "rytm" # note "c3" # midichan 1)))
+    $ stack [
+      clapOn $ whenmod 10 5 (0.125 ~>) $ midichan 3 # note "c3"
+      , kickOn $ ("[0.125]" ~>) $ rep 9 $ slow 2 $ midichan 2 # note "c3"
+      , perc1On $ ((3*0.0625) ~>) $ rep 9 $ slow 2 $ midichan 7 # note "c3"
+      , perc2On $ ((4*0.0625) ~>) $ rep 9 $ slow 2 $ midichan 6 # note "c3"
+      , hatOn $ off "1s" (# midichan 11) 
+        $ ("1s" ~>) $ one 0 $ ("[0.125]" ~>) $ rep 9 $ slow 2 $ midichan 10 # note "c3"
+    ] # s "rytm" # cps (140/120/2)
+  p "d112"
+    $ limit
+    $ stack [
+        padOn $ dg1 $ slow "<3 2>" $ midichan 4 # note "<c3 a2>"
+        , pad2On $ dg1 $ slow 1.564 $ midichan 5 # note "c3"
+      , scene (slow (shiftBy 234 $ choose [0.25,0.5,0.75,1,1.5,2]) $ segment 1 $ range 0 sceneRange $ shrand 9991)
+      , perf3 (segment 1 $ shiftBy 8333 $ choose [0,0,0,0,0,127])
+     ] # s "rytm"
+  d2 
+    $ harmorOn
+    $ camera
+    $ limit
+    $ reduce
+    $ shift
+    $ whenmod 10 5 ("1s" ~>)
+    $ mod
+    $ every 5 (within (0,0.5) (const $ (0.125 ~>) $ s "harmor" # note "[c3]" # gain 0.4))
+    $ ("[0.125]" ~>) $ rep 9 $ slow 2 $ s "harmor" # note "[c3]"
+  d3 
+    $ harmorOn
+      -- harmor cc's
+    $ mod
+    $ stack [
+          ccv (rfreq $ ccrand 20 100 133) # filter1
+        , ccv (rfreq $ ccrand 20 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 5 64 533) # envattack
+        , ccv (rfreq $ ccrand 64 64 533) # envDecay
+        , ccv (rfreq $ ccrand 64 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 64 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+      ] # speed001chan # s "harmor"
+
+hush
+
+  hush

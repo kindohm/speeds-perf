@@ -27,7 +27,7 @@ do
         , perc2On $ reduce  
           $ shift $ one 0.22
           $ gain "1(<2 1 3 1>,16,<11 23 31>)" # midichan 7 # note "c3" # rytm
-        , scene (segment (1/2) $ range 0 sceneRange $ shrand 9991)
+        , scene (segment 1 $ range 0 sceneRange $ shrand 9991)
         , perf4 (segment "<1 2 3>" $ shiftBy 383 $ choose [0,127])
         , delaytime 23 --(segment "<1 3 2 0.5>" $ choose [0,1,3,7,11,23,31,47]) # fxpad
         , delayfb 30 # fxpad
@@ -43,7 +43,7 @@ do
         , ccv (rfreq $ ccrand 1 64 7282323) # phwidth
         , ccv (rfreq $ ccrand 0 127 82323) # phoff
       ] # speed007chan
-      , pad2On $ slow 8 $ midichan 5 # note "c3" # s "rytm"
+      , pad2On $ slow 7 $ midichan 5 # note "c3" # s "rytm"
       , g $ pad2On $ (0.5 ~>) $ stack [
         slow "<1 2 1>" $ s "rytm" # note "c3"
         , sampletune (segment 1 $ range 40 75 $ shrand 555)

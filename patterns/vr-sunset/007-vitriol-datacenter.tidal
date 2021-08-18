@@ -1,6 +1,3 @@
-
-hush
-
 do
   let rfreq = segment 1
       seq = "{1@7 1@11 1@21 1 1 1 1@3 1@3 1@3 1}%16"
@@ -14,12 +11,18 @@ do
       padOn $ slow 3 
         $ (|+ note (shiftBy 4 $ choose [0,12]))
         $ (|+ note (scale "ritusen" "{0 -2 -4 -1 -3}%16")) $ pad5n
-      , samplestart (segment 1 $ range 0 127 $ slow 10 rand) # midichan 4
-      , sampleend (segment 1.1 $ range 0 127 $ slow 21 rand) # midichan 4
+      , pad2On $ slow 3 
+        $ (|+ note (shiftBy 4 $ choose [0,12]))
+        $ (|+ note (scale "ritusen" "{0 -2 -4 -1 -3}%16")) $ pad6n
+      , samplestart (segment 1 $ range 0 127 $ slow 10 rand) # midichan "[4]"
+      , sampleend (segment 1.1 $ range 0 127 $ slow 21 rand) # midichan "[4]"
+      , samplestart (segment 1.2 $ range 0 64 $ slow 110 rand) # midichan "[5]"
+      , sampleend (segment 1.05 $ range 0 64 $ slow 121 rand) # midichan "[5]"
       , useIter (iter 16) $ stack [
         kickOn $ chain (# pad4n) $ pad3n 
           # legato (range 0.5 1 $ shrand 100)
-        , clapOn $ roll 0.25 $ (0.5 ~>) $ midichan 6 # note "c3" # s "rytm"
+        , clapOn $ reduce $ shiftBy 7721 
+          $ roll 0.25 $ (0.5 ~>) $ midichan 6 # note "c3" # s "rytm"
         , harmorOn $ (2 ~>) $ chain (# gain 0.4) $ harmor # note "-12" # speed007chan
         , perc1On $ often (off (0.0625/2) id) $ chain id $ pad11n
       ]

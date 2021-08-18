@@ -34,6 +34,7 @@ let
   hatIf f x = every ( range 0 1 $ (cI 0 "93" )) f $ x
   useIter f = every ( range 0 1 $  (cI 0 "89") ) f  
   useExtra f = every ( range 0 1 $  (cI 0 "73") ) f  
+  useExtra2 f = every ( range 0 1 $  (cI 0 "81") ) f  
   extraOn  = every (range 1 0 $ (cI 0 "73")) g
   minTempo = (range 1 0.333 $ (cF 0 "88"))
   maxTempo = (range 1 1.5 $ (cF 0 "88"))
