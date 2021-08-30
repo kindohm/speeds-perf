@@ -8,7 +8,7 @@ do
               $ one 0.2
               $ whenmod 20 10 (iter "<1 2 4 8>")
               $ p
-      camera p = degradeBy (slow 2 $ segment 1 $ range 0 0.75 $ shrand 33333) $ shift $ p
+      camera p = id $ p -- degradeBy (slow 2 $ segment 1 $ range 0 0.75 $ shrand 33333) $ shift $ p
   d1
     $ limit
     $ camera

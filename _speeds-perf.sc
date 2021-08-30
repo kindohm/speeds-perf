@@ -32,9 +32,10 @@ s.waitForBoot {
 	~harmorOut.latency = 0;
 	~dirt.soundLibrary.addMIDI(\harmor, ~harmorOut);
 
-	~harmorOut2 = MIDIOut.newByName("IAC Driver", "Bus 2");
-	~harmorOut2.latency = 0;
-	~dirt.soundLibrary.addMIDI(\custom, ~harmorOut2);
+	// ~harmorOut2 = MIDIOut.newByName("IAC Driver", "Bus 2");
+	// ~harmorOut2.latency = 0;
+	// ~dirt.soundLibrary.addMIDI(\custom, ~harmorOut2);
+
 
 };
 s.latency = 0;
