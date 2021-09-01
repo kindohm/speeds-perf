@@ -41,6 +41,7 @@ s.waitForBoot {
 s.latency = 0;
 );
 
+/*
 (
 var addr = NetAddr.new("10.0.0.221", 57101);
 OSCFunc({ |msg, time, tidalAddr|
@@ -51,7 +52,7 @@ OSCFunc({ |msg, time, tidalAddr|
 }, '/play2').fix;
 )
 
-SuperDirt.start
+*/
 
 // Evaluate the block below to start the mapping MIDI -> OSC.
 (
@@ -92,6 +93,5 @@ if (~stopMidiToOsc != nil, {
 ~stopMidiToOsc.value;
 
 
-SuperDirt.start
 
 ~dirt.loadSoundFiles("~/studio/sample-maker/*");

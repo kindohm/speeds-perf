@@ -16,8 +16,8 @@ do
         $ (|+ note (scale "ritusen" "{0 -2 -4 -1 -3}%16")) $ pad6n
       , samplestart (segment 1 $ range 0 127 $ slow 10 rand) # midichan "[4]"
       , sampleend (segment 1.1 $ range 0 127 $ slow 21 rand) # midichan "[4]"
-      , samplestart (segment 1.2 $ range 0 84 $ slow 110 rand) # midichan "[5]"
-      , sampleend (segment 1.05 $ range 0 84 $ slow 121 rand) # midichan "[5]"
+      , samplestart (segment 1.2 $ range 0 127 $ slow 110 rand) # midichan "[5]"
+      , sampleend (segment 1.05 $ range 0 127 $ slow 121 rand) # midichan "[5]"
       , useIter (iter 16) $ stack [
         kickOn $ chain (# pad4n) $ pad3n 
           # legato (range 0.5 1 $ shrand 100)
@@ -25,11 +25,13 @@ do
           $ roll 0.25 $ (0.5 ~>) $ midichan 6 # note "c3" # s "rytm"
         , harmorOn $ (2 ~>) $ chain (# gain 0.4) $ harmor # note "-12" # speed007chan
         , perc1On $ often (off (0.0625/2) id) $ chain id $ pad11n
+        , perc2On $ one 0.2 $ struct "1(<3 7 2 5 1>,<16>,<62 859 174 161>)" 
+          $ midichan "{8 9 9 8 8 9 9 8}%18" # s "rytm" # note "c3"
       ]
       , perf4 (segment 1 $ range 0 127 $ shrand 101)
       , perf7 (segment 1.3 $ range 0 127 $ shrand 103)
       , perf8 (segment 1.25 $ range 0 127 $ shrand 202)
-      , scene  (segment (1/2) $ range 0 sceneRange $ shrand 9991)
+      , scene  (segment "<1 2 1 4>" $ range 0 sceneRange $ shrand 9991)
       -- harmor cc's
       , stack [
         ccv (rfreq $ ccrand 10 100 133) # filter1

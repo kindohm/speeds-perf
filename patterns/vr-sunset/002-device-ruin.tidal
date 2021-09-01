@@ -20,12 +20,16 @@ do
         , perc1On $ (0.0625 ~>) $ rytmmap [6,"~"] pat # note "c3"
         -- perc2
         , perc2On $ dg5 $ (0.125 ~>) $ rytmmap [7,10] pat # note "c3"
+        -- perc3
+        , extraOn $ (0.375 ~>) $ rytmmap [8,9] pat # note "c3"
         -- harmor
         , harmorOn $ notemap [0,"~"] pat # harmor # speed002chan
       ]
       -- pad
       , padOn $ dg0 $ shiftBy 100 $ slow 5.5 $ (|+ note (shiftBy 17 $ choose [-36,-24,-12])) $ pan 1 
         # note (scale "minor" "{0 -2 -3}%16") # pad5
+      , pad2On $ slow "<2 4>" $ note "c3" 
+        # s "rytm" # midichan 5
       , perf1 (segment 8 $ shiftBy 33 $ choose [0,0,0,0,0,0,127])
       , perf2 (segment 4 $ range 0 127 $ slow 10 tri)
       , perf3 (segment 4 $ range 0 127 $ slow 11 tri)
