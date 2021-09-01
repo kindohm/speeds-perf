@@ -36,7 +36,7 @@ do
         , scene  (slow 2 $ segment 1 $ range 0 sceneRange $ shrand 9991)
       ] # rytm 
       , stack [
-         harmorOn $ degg $ ampmap [1,"~"] (randcat pats) # note "-12"
+         harmorOn $ degg $ ampmap [1,"~"] (randcat pats) # note "-24"
         -- harmor cc's
         , ccv (rfreq $ ccrand 10 100 133) # filter1
         , ccv (rfreq $ ccrand 10 100 233) # filter2

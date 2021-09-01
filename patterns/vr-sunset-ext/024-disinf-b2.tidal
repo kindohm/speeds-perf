@@ -22,12 +22,14 @@ do
       , perc1On $ ((3*0.0625) ~>) $ rep 9 $ slow 2 $ midichan 7 # note "c3"
       , perc2On $ ((4*0.0625) ~>) $ rep 9 $ slow 2 $ midichan 6 # note "c3"
       , hatOn $ off "1s" (# midichan 11) 
-        $ ("1s" ~>) $ one 0 $ ("[0.125]" ~>) $ rep 9 $ slow 2 $ midichan 10 # note "c3"
+        $ ("2s" ~>) $ ("[0.125]" ~>) $ rep 9 $ slow 2 $ midichan 10 # note "c3"
+      , extraOn $ useExtra2 (off "{1s 2s 3s}%16" (|+ midichan 1)) 
+        $ struct "1(<5 7 9 3>,16,<20 29 27 2359>)" $ midichan 8 # note "c3"
     ] # s "rytm" # cps (140/120/2)
   p "d112"
     $ limit
     $ stack [
-        padOn $ dg1 $ slow "<3 2>" $ midichan 4 # note "<c3 a2>"
+        padOn $ dg1 $ slow "<3 1 2>" $ midichan 4 # note "<c3 a2>"
         , pad2On $ dg1 $ slow 1.564 $ midichan 5 # note "c3"
       , scene (slow (shiftBy 234 $ choose [0.25,0.5,0.75,1,1.5,2]) $ segment 1 $ range 0 sceneRange $ shrand 9991)
       , perf3 (segment 1 $ shiftBy 8333 $ choose [0,0,0,0,0,127])

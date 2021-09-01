@@ -27,12 +27,6 @@ do
       , clapOn $ reduce $ mask rest $ struct "1*4" $ midichan 3
       , scene  (segment "<1 2 1 4>" $ range 0 sceneRange 
         $ shrand 9991)
-      , pad2On 
-        $ reduce
-        $ stack [
-          struct "1(<11 9 7 13 3>,16,<0 44 666>)" $ note "c3" 
-          , rytmpan (segment 8 $ range 40 90 $ slow "<1 2 3>" $ tri)
-        ] # midichan 5
     ] # s "rytm" # cps (200/240) # note "c3"
   d2 
     $ padOn 
@@ -41,6 +35,13 @@ do
           , samplestart (slow 4 $ segment 1 $ range 50 70 $ shrand 28394)
           , sampleend (slow 4 $ segment 1 $ range 72 127 $ shrand 17171)
         ] # midichan 4 # s "rytm"
+  d4 
+    $ pad2On 
+        $ reduce
+        $ stack [
+          struct "1(<11 9 7 13 3>,16,<0 44 666>)" $ note "c3" 
+          , rytmpan (segment 8 $ range 40 90 $ slow "<1 2 3>" $ tri)
+        ] # midichan 5 # s "rytm"
   d3
     $ harmorOn 
     $ limit
