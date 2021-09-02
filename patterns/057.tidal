@@ -22,7 +22,7 @@ do
       , perc2On $ roll 0.3 $ fast 2 $ (0.5 ~>) $ midichan 1 # note "c3"
       , perc2On $ ssb 0.1 (# ccv (range 0 127 $ shrand 8293)) $ fast 2 $ (0.5 ~>) $ perf2 "0"
       , hatOn $ reduce $ sb 0.07 (|+ midichan 1) $ struct (binaryN 16 "<23894 3428905 213784923>") $ midichan 10 # note "c3"
-      , extraOn $ (100 ~>) $ reduce $ one 0.2 $ one2 0.2 $ roll 0.3 
+      , extraOn $ (100 ~>) $ reduce $ one 0.3 $ shift $ one2 0.2 $ roll 0.3 
         $ struct pat $ midichan 5 # note "{c3}%13"
       , scene (fast 2 $ segment 1 $ range 0 sceneRange $ shrand 3711000)
     ] # s "rytm" # cps (160/120/2)

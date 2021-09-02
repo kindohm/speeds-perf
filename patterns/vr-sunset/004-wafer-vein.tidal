@@ -13,7 +13,7 @@ do
       $ stack [
         -- kick and harmor off
         harmorOn $ ("3e" ~>) $ (# note "[-24 -12]/16") $ (# legato "{9 7 6 8}%16") $ chain $ harmor # speed004chan
-        , one 0.333 $ roll 0.333 $ kickOn $ sb 0.1 (# midichan 5) $ chain $ pad2n
+        , one 0.333 $ roll 0.333 $ kickOn $ chain $ pad2n
         -- soft snare
         , perc1On $ struct "{1 ~ ~ ~ ~ ~}%4" $ pad8n
         -- hard snare

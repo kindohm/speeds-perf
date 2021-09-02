@@ -1,3 +1,5 @@
+hush
+
 do
   let pat = ( every 3 rev 
               $ "{[1 0] [1 0] 0 0 [0 1] 1 [0 1] 0 1 [0 1]}%4") :: Pattern Bool
@@ -22,11 +24,13 @@ do
         $ midichan "[6 7]*8" 
       , perc2On $ (0.125 ~>) $ reduce $ mask (inv rest) $ mask (inv pat) 
         $ midichan "[8 9]*8" 
+      , extraOn $ (0.25 ~>) $ reduce $ mask (inv rest) $ mask (inv pat) 
+        $ midichan "[1 11]*8" 
       , hatOn $ perc2If (0.125 ~>) $ reduce $ (0.125 ~>) $ mask (inv rest) $ mask (inv pat) 
         $ midichan "10*16"
       , clapOn $ reduce $ mask rest $ struct "1*4" $ midichan 3
-      , scene  (segment "<1 2 1 4>" $ range 0 sceneRange 
-        $ shrand 9991)
+      , scene  2 --(segment "<1 2 1 4>" $ range 0 sceneRange 
+        -- $ shrand 9991)
     ] # s "rytm" # cps (200/240) # note "c3"
   d2 
     $ padOn 

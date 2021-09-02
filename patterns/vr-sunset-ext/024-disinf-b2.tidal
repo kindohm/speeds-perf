@@ -1,6 +1,8 @@
 
 let rep x p = stutWith x "3s" id  $ p
 
+hush
+
 do
   let rep x p = stutWith x "3s" id  $ p
       rfreq = segment (1/4)
@@ -29,7 +31,7 @@ do
   p "d112"
     $ limit
     $ stack [
-        padOn $ dg1 $ slow "<3 1 2>" $ midichan 4 # note "<c3 a2>"
+        padOn $ dg1 $ slow "<3 1 2>" $ midichan 4 # note "<c3 a2 c3 a2 g2>"
         , pad2On $ dg1 $ slow 1.564 $ midichan 5 # note "c3"
       , scene (slow (shiftBy 234 $ choose [0.25,0.5,0.75,1,1.5,2]) $ segment 1 $ range 0 sceneRange $ shrand 9991)
       , perf3 (segment 1 $ shiftBy 8333 $ choose [0,0,0,0,0,127])
