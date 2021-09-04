@@ -1,0 +1,47 @@
+-- 097 --
+
+do 
+  let plies = "<5 10 15>"
+      pat = "<1 1.5 1 2 0.75 1>"
+      synth1Lfo = (range 0 40 $ slow 10 tri)
+      synth2Lfo = (range 0 40 $ slow 11 tri)
+      randDelay = stack [ slow 2.13 $ ccn 45 # ccv (shiftBy 5544 $ choose [0,127]) -- d
+                          , slow 1.13 $ ccn 46 # ccv (range 0 127 $ shrand 9988) -- dt
+                          , slow 3.1 $ ccn 47 # ccv (range 0 127 $ shrand 19988) ] # s "rytm"
+      normDelay = stack [ ccn 45 # ccv 0, ccn 46 # ccv 0, ccn 47 # ccv 0 ] # s "rytm"  
+      minTempo2Spot = (range 1 0.333 $ (cF 0 "72"))
+      maxTempo2Spot = (range 1 2 $ (cF 0 "72"))
+  d1
+    $ cpsTri minTempo2Spot maxTempo2Spot 4.1
+    $ cpsDisc minTempo maxTempo
+    $ limit
+    $ stack [
+      -- synths
+      padOn $ slow 8 $ fast (shiftBy 3 $ choose [1,1.1..2]) $ midichan 0 # note "c3"
+      , padOn $ slow 7.23234 $ fast (shiftBy 3 $ choose [1,1.1..2]) $  midichan 1 # note "c3"
+      , ccn 35 # ccv synth1Lfo 
+      , ccn 36 # ccv synth2Lfo
+      -- pad2
+      , pad2On $ ssb 0.2 (plyWith ((plies/) $ pat) (|* gain 0.92)) 
+        $ slow "<2 4 3 1>" $ midichan 4 # note "c3"
+      , samplestart (slow "<2 4 3 1>" $ segment 1 $ range 0 127 $ shrand 82934) # midichan 4
+      , sampleend (slow "<2 4 3 1>" $ segment 1 $ range 0 127 $ shrand 89000) # midichan 4
+      -- drums
+      , kickOn $ plyWith ((plies/) $ pat) (# gain 0.85) 
+        $ randcat [midichan 2, midichan 6, midichan 7, midichan 3] 
+        # note "c3" 
+      -- hats
+      , hatOn $ plyWith ((plies/) $ pat) ((# midichan 10) . (# gain 0.8)) $ midichan 11
+        # note "c3"
+      , extraOn $ midichan 5 # note "c3"
+      , scene (slow 2 $ segment 1 $ range 0 sceneRange $ shrand 9991)
+      , randcat [ randDelay]
+    ] # s "rytm" # cps pat
+
+  d2 -- trans
+    $ (|* gain 1.1)
+    $ stack [
+      slow 4 $ pad6 
+    ]
+
+    hush

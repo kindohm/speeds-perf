@@ -2,6 +2,7 @@ hush
 
 do
   let chain p = (0.375 ~>) $ slow "<3 4 5>" $ p
+      rfreq = segment 0.125
   d1
     $ limit
     $ while "{t f f}%4" rev
