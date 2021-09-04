@@ -1,6 +1,5 @@
 hush 
 
-
 do
   let pat = "{1@9 1@5 1@11 1@6 1@6 1@14 1@7}%16"
       shiftChain p = shift $ shift $ shift $ p
@@ -19,7 +18,7 @@ do
       , perc1On $ perf8 (fast 2 $ segment 1 $ range 0 127 $ shrand 87371)
       -- , perc1On $ perf12 (fast 2 $ segment 1 $ range 0 127 $ shrand 776655)
       -- backbeat
-      , perc2On $ roll 0.3 $ fast 2 $ (0.5 ~>) $ midichan 1 # note "c3"
+      , perc2On $ roll 0.3  $ fast 2 $ (0.5 ~>) $ midichan 1 # note "c3"
       , perc2On $ ssb 0.1 (# ccv (range 0 127 $ shrand 8293)) $ fast 2 $ (0.5 ~>) $ perf2 "0"
       , hatOn $ reduce $ sb 0.07 (|+ midichan 1) $ struct (binaryN 16 "<23894 3428905 213784923>") $ midichan 10 # note "c3"
       , extraOn $ (100 ~>) $ reduce $ one 0.3 $ shift $ one2 0.2 $ roll 0.3 

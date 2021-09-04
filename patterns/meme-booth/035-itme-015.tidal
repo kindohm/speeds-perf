@@ -1,0 +1,138 @@
+bps (160/120)
+
+hush
+
+do 
+  let pat = "1 0 0 1 0 1 0 0"
+  d1
+    $ limit
+    $ stack [
+      fast 2 $ struct pat $ midichan 2 # note "c3"
+      , fast 2 $ struct pat $ 
+    ] # s "rytm"
+  d2
+    $ limit
+    $ stack [
+      fast 2 $ struct pat $ note "[0,10,14]" 
+      , ccv (slow 1 $ segment 1 $ range 33 80 $ slow 20 tri) # filter1
+      , ccv (slow 1 $ segment 1 $ range 0 65 $ slow 21 tri) # filter2
+      , ccv (slow 1 $ segment 1 $ range 0 127 $ slow 22 tri) # unidetune
+    ] # midichan 14 # cps (160/240) # s "harmor"
+
+
+
+
+do
+  let mod p = whenmod 56 48 (foldEvery [3,4] (0.25 ~>)) $ p
+  d2 
+    $ limit
+    $ stack [
+      (|+ note (choose[-12,0])) $ (|+ note "6") 
+        $ (# note "[0,10,14]") 
+        $ off (0.0625*3) id 
+        $ note "c5*2"
+        # gain "1"
+        # legato 1
+      , ccv (slow 4 $ segment 1 $ range 33 80 $ slow 20 tri) # filter1
+      , ccv (slow 4 $ segment 1 $ range 0 65 $ slow 21 tri) # filter2
+      , ccv (slow 4 $ segment 1 $ range 0 127 $ slow 22 tri) # unidetune
+    ] # s "harmor" # midichan 14 # cps (160/240)
+  d1 
+    $ limit  
+    $ stack [
+      randcat [
+        off (0.0625) (|* gain "0.8") $ midichan 0
+        , midichan "0(3,8) 0(3,8)"
+        , (0.25 <~) $ midichan "~ 0(3,8)"
+        , midichan "0*2 0 ~ ~"
+        , midichan "~ ~ ~ 0"
+      ] # note "c3"
+      , midichan "10/8" # note "c3"
+      , whenmod 22 16 id $ sb 0.25 (off (0.125*3) id) 
+        $ shift $ midichan "~ 3" # note "c3"
+          -- # perf4 (scale 0 0.25 $ rand)
+          -- # perf3 (scale 0 0.5 $ rand)
+          -- # perf2 (slow 44.71 $ choose [0,0,0,0,0,0,0.5,0.8,0.6]),
+      , slow (slow 8 $ segment 1 $ slow 8311 $ choose [1,(4/3),2,(8/3)] ) $ 
+          whenmod 32 24 g $ (# gain (range 100 127 $ slow 382 rand)) $ midichan "5*16" # note "c3"
+      , scene (slow 8 $ segment 1 $ range 0 sceneRange $ shrand 9991)
+      , perf4 (segment 1 $ range 0 33 $ shrand 82934)
+      , perf3 (segment 1 $ range 0 64 $ shrand 81711)
+      , perf2 (segment 1 $ slow 234 $ choose [0,0,0,0,0,0,64,100,75])
+      ] # s "rytm" # cps (160/240)
+
+
+
+    harmor2 $ mod $ whenmod 28 20 (gtfo) $ 
+            (# imgtime (discretise (1/4) $ scale 0 1 $ slow 13 rand)) $
+            (# imgspeed (discretise (1/4) $ scale 0.25 1 $ slow 113 rand)) $
+            (# y (discretise (1/4) $ scale 0.1 0.9 $ slow 11 rand)) $
+            (# z (discretise (1/4) $ scale 0 1 $ slow 12 rand)) $
+            slow (discretise (1/4) $ slow 8311 $ choose [1,(4/3),2,(8/3),4,(12/3)] ) $ 
+                (|+| note (discretise (1/4) $ slow 37.1 $ choose [0,-12])) $ (|+| note "8") $ (|=| note "[0,-1]") $ note "0*16"
+                # velocity "0.8"
+    rytm $ mod $ 
+        (|=| scene "[0 0.01 0 0.02]/32") $
+        degradeBy (discretise (1/4) $ shift' 108 $ choose[0,0,0,0,0,1]) $
+        shift $
+        stack [
+        randcat [off (0.0625) (|*| velocity "0.8") $ midinote "0", midinote "0(3,8) 0(3,8)", 
+            (0.25 <~) $ midinote "~ 0(3,8)", midinote "0*2 0 ~ ~", midinote "~ ~ ~ 0"] # velocity "1",
+        midinote "10/8",
+        whenmod 22 16 (gtfo) $ sometimesBy 0.25 (off (0.125*3) (|*| velocity "1")) $ shift $ midinote "~ 3" # velocity "1"
+            # perf4 (scale 0 0.25 $ rand)
+            # perf3 (scale 0 0.5 $ rand)
+            # perf2 (slow 44.71 $ choose [0,0,0,0,0,0,0.5,0.8,0.6]),
+        slow (discretise (1/8) $ slow 8311 $ choose [1,(4/3),2,(8/3)] ) $ 
+            whenmod 32 24 (gtfo) $  (# velocity (scale 0.8 1 $ slow 382 rand)) $ midinote "5*16"]  # nudge "0"
+
+
+
+hush   
+
+harmor $ note "0"
+
+
+
+
+
+
+
+
+
+
+
+
+
+do
+    let mod p = whenmod 26 18 (move) $ p
+    harmor $ mod $ whenmod 20 12 (gtfo) $ 
+         (|+| note (choose[-12,0])) $ (|+| note "6") $ (|=| note "[0,10,14]") $ off (0.0625*3) (|*| velocity "1") $ 
+            note "0*2"
+        # velocity "0.7"
+        # dur "0.3"
+        # x (discretise (1/4) $ scale 0.25 0.65 $ slow 20 tri)
+        # y (discretise (1/4) $ scale 0 0.51 $ slow 21 tri)
+        # z (discretise (1/4) $ scale 0 1 $ slow 22 tri)
+    harmor2 $ mod $ whenmod 28 20 (gtfo) $ 
+            (# imgtime (discretise (1/4) $ scale 0 1 $ slow 13 rand)) $
+            (# imgspeed (discretise (1/4) $ scale 0.25 1 $ slow 113 rand)) $
+            (# y (discretise (1/4) $ scale 0.1 0.9 $ slow 11 rand)) $
+            (# z (discretise (1/4) $ scale 0 1 $ slow 12 rand)) $
+            slow (discretise (1/4) $ slow 8311 $ choose [1,(4/3),2,(8/3),4,(12/3)] ) $ 
+                (|+| note (discretise (1/4) $ slow 37.1 $ choose [0,-12])) $ (|+| note "8") $ (|=| note "[0,-1]") $ note "0*16"
+                # velocity "0.8"
+    rytm $ mod $ whenmod 34 26 (gtfo) $ whenmod 38 30 (|=| scene "0.02") $  whenmod 40 32 (|=| scene "0.01") $
+        stack [
+        randcat [off (0.0625) (|*| velocity "0.8") $ midinote "0", midinote "0(3,8) 0(3,8)", 
+            (0.25 <~) $ midinote "~ 0(3,8)", midinote "0*2 0 ~ ~", midinote "~ ~ ~ 0"] # velocity "1",
+        midinote "10/8",
+        whenmod 22 16 (gtfo) $ rarely (off (0.125*3) (|*| velocity "1")) $ shift $ midinote "~ 3" # velocity "1"
+            # perf4 (scale 0 0.25 $ rand)
+            # perf3 (scale 0 0.5 $ rand)
+            # perf2 (slow 44.71 $ choose [0,0,0,0,0,0,0.5,0.8,0.6]),
+        slow (discretise (1/8) $ slow 8311 $ choose [1,(4/3),2,(8/3)] ) $ 
+            whenmod 32 24 (gtfo) $  (# velocity (scale 0.8 1 $ slow 382 rand)) $ midinote "5*16"]  # nudge "0"
+
+
+hush
