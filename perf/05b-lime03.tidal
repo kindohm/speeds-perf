@@ -8,7 +8,7 @@ do
         offgain = "0.4"
         mute1 p = id $ p
         mute2 p = id $ p
-        densities = [0.6,0.7..4 ]
+        densities = [0.6,0.7..6 ]
         den p = density (slow 4 $ segment 1 $ shiftBy 3829 $ choose densities) $ shift $ p
         ctlGain = gain (randcat ( 
                         (replicate 1 "1") 
@@ -31,10 +31,10 @@ do
             ++ (replicate howoften "~") 
         )) # midichan (shiftBy 400 $ choose [0,0,3]) # s "rytm" # note "c3"
             # cps 0.5
-    d5 $ padOn $ limit stack [
-        slow 2 $ midichan 4
-        , slow 3 $ midichan 1
-    ] # s "rytm" # note "c3"
+    d5 $ padOn $ limit $ stack [
+            slow 2 $ midichan 4
+            , slow 3 $ midichan 1
+        ] # s "rytm" # note "c3"
     d2 $ perc1On $ limit $ den $ gain (randcat ( 
             (replicate 1 offgain) 
             ++ (replicate 2 offgain) 

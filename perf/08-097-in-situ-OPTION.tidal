@@ -3,7 +3,7 @@
 hush 
 
 do 
-  let plies = "<5 10 5>"
+  let plies = "<25 10 20 15>"
       pat = "<1 1.5 1 2 0.75 1>"
       synth1Lfo = (range 0 40 $ slow 10 tri)
       synth2Lfo = (range 0 40 $ slow 11 tri)
@@ -37,7 +37,7 @@ do
         # note "c3"
       , extraOn $ midichan 5 # note "c3"
       , scene (slow 2 $ segment 1 $ range 0 sceneRange $ shrand 9991)
-      , randcat [ normDelay]
+      , randcat [ randDelay]
     ] # s "rytm" # cps pat
 
   d2 -- trans
