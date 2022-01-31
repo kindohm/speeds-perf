@@ -32,11 +32,16 @@ let
   kickIfInv f x = every ( range 1 0 $ ( cI 0 "71" )) f $ x
   hatOn = every ( range 1 0 $  (cI 0 "93") ) g  
   hatIf f x = every ( range 0 1 $ (cI 0 "93" )) f $ x
-  useIter f = every ( range 0 1 $  (cI 0 "89") ) f  
+  doIter = iter (select (cF 0 "104") ["1", "2", "4", "8", "16"])
+  useIter f = every ( range 0 1 $  (cI 0 "89") ) f
+  doLing = linger (select (cF 0 "102") ["1e", "2e", "3e", "4e", "5e", "6e", "7e", "8e"]) 
+  doLing16 = linger (select (cF 0 "102") ["1s", "2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s", "10s", "11s", "12s", "13s", "14s", "15s", "16s"]) 
+  useLing f = every ( range 0 1 $ (cI 0 "103") ) f
   useExtra f = every ( range 0 1 $  (cI 0 "73") ) f  
   useExtra2 f = every ( range 0 1 $  (cI 0 "81") ) f  
   extraOn  = every (range 1 0 $ (cI 0 "73")) g
   extra2On  = every (range 1 0 $ (cI 0 "81")) g
+  allOn = every (range 1 0 $ (cI 0 "126"))
   minTempo = (range 1 0.333 $ (cF 0 "88"))
   maxTempo = (range 1 1.5 $ (cF 0 "88"))
   minTempo2 = (range 1 0.333 $ (cF 0 "72"))
@@ -207,7 +212,7 @@ let
         , ccv (rfreq $ ccrand 64 64 1133) # amprel
         , ccv (rfreq $ ccrand 0 127 7) # harm ] # harmor
   rep12 = gain (randcat (
-                (replicate 10 "~")
+                (replicate 10 "~") 
                 ++ (replicate 2 "1")
                 ++ (replicate 4 "1*2")
                 ++ (replicate 6 "1*3")

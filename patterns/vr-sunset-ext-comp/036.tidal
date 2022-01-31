@@ -1,0 +1,22 @@
+
+
+
+d1
+  $ limit
+  $ (|* cps (range 0.5 2 $ slow 4.1 tri))
+  $ (|* cps (segment 1 $ range 0.2 2 $ shrand 383))
+  $ ssb 0.3 (plyWith "<5 10 15 25>" (# gain 0.7))
+  $ shift
+  $ (# legato (range 0.2 1 $ slow 1144 rand))
+  $ stack [
+    degradeBy (segment 1 $ shiftBy 9908 $ choose [0,0.02..0.7]) 
+      $ shift $ ssb 0.2 g $ shift $ ssb 0.5 (|+ midichan 8)
+      $ midichan (segment 1 $ choose [0,1,2,3]) # note "<c3 b2 a2 d3>"
+      # legato 1
+    , slow "<3 1 5 2 4 6>" $ (0.5 ~>) $ midichan (segment 1 $ choose [4,5]) # note "<c3 b2 a2 d3>"
+    , slow 5 $ (0.5 ~>) $ ssb 0.15 (|- midichan 1) $ midichan 7 # note "c3" 
+  ] # cps 1 # s "rytm"
+
+hush
+
+

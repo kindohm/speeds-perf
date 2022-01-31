@@ -9,7 +9,8 @@ do
     $ limit
     $ every 5 rev
     $ stack [
-      useIter (iter 16) 
+      useLing doLing
+        $ useIter (doIter) 
         $ stack [
           kickOn $ (|+ note (shiftBy 8084 $ choose [0,0,0,-1])) $ chain $ pad3n
           , perc1On $ (0.0625 ~>) $ chain $ pad7n
@@ -31,7 +32,7 @@ do
       , perf7 (segment 1 $ range 0 32 $ shrand 1001100)
       , perf8 (segment 1 $ shiftBy 33 $ choose [0,0,0,127])
       , scene   (segment "<1 2 4 1>" $ range 0 sceneRange $ shrand 9991)
-      , stack [
+      , useLing doLing $ useIter doIter $ stack [
         harmorOn $ (0.375 ~>) $ chain $ harmor # note "-12"
         -- harmor cc's
         , chain $ ccv (ccrand 10 100 133) # filter1

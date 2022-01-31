@@ -8,8 +8,11 @@ do
         offgain = "0.4"
         mute1 p = id $ p
         mute2 p = id $ p
-        densities = [0.6,0.7..4 ]
-        den p = density (slow 4 $ segment 1 $ shiftBy 3829 $ choose densities) $ shift $ p
+        perc2OnLocal = every ( range 1 0 $  (cI 0 "87") ) g
+        cDensity = (segment 1 $ range 0.2 7 $ (cF 0 "96"))
+        -- densities = [0.6,0.7..4 ]
+        -- den_old p = density (slow 4 $ segment 1 $ shiftBy 3829 $ choose densities) $ shift $ p
+        den p = id p -- (|* cps cDensity) $ shift $ p
         ctlGain = gain (randcat ( 
                         (replicate 1 "1") 
                     ++ (replicate 2 "1*2") 
@@ -30,7 +33,7 @@ do
             ++ (replicate 7 "1*7") 
             ++ (replicate howoften "~") 
         )) # midichan (shiftBy 400 $ choose [0,0,3]) # s "rytm" # note "c3"
-            # cps 0.5
+            # cps ((0.5) * (range 0.2 7 $ (cF 0 "96")))
     p "synth accent" $ perc1On $ limit $ den $ gain (randcat ( 
             (replicate 1 offgain) 
             ++ (replicate 2 offgain) 
@@ -41,7 +44,7 @@ do
             ++ (replicate 7 offgain) 
             ++ (replicate howoften ongain) 
         )) # s "harmor" # midichan 8 # note "<c5 c4>"
-    p "synth glitch" $ perc2On $ limit $ den $ gain (randcat ( 
+    p "synth glitch" $ perc2OnLocal $ limit $ den $ gain (randcat ( 
             (replicate 1 ongain) 
             ++ (replicate 2 ongain) 
             ++ (replicate 3 ongain) 

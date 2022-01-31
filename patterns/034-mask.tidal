@@ -13,7 +13,8 @@ do
                       $ reduce $ struct seq $ p
   d1
     $ limit
-    $ useIter (iter 8)
+    $ useLing doLing16
+    $ useIter doIter
     $ foldEvery [3,5] (0.125 ~>)
     $ whenmod 10 5 (iter "{2 4 8}%4")
     $ mask (inv rest2)
@@ -29,8 +30,7 @@ do
       , hatOn $ perc2If (0.125 ~>) $ reduce $ (0.125 ~>) $ mask (inv rest) $ mask (inv pat) 
         $ midichan "10*16"
       , clapOn $ reduce $ mask rest $ struct "1*4" $ midichan 3
-      , scene  2 --(segment "<1 2 1 4>" $ range 0 sceneRange 
-        -- $ shrand 9991)
+      , scene  (segment "<1 2 1 4>" $ range 0 sceneRange $ shrand 9991) # midichan 12
     ] # s "rytm" # cps (200/240) # note "c3"
   d2 
     $ padOn 
@@ -49,7 +49,8 @@ do
   d3
     $ harmorOn 
     $ limit
-    $ useIter (iter 8)
+    $ useLing doLing16
+    $ useIter doIter
     $ foldEvery [3,5] (0.125 ~>)
     $ whenmod 10 5 (iter "{2 4 8}%4")
     $ mask (inv rest2)

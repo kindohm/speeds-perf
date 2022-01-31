@@ -10,7 +10,7 @@ do
     $ stack [
       whenmod 50 30 rev
       -- $ whenmod 40 20 (iter 16)
-      $ useIter (iter 16)
+      $ useLing doLing $ useIter (doIter)
       -- $ degradeBy (segment (1/4) $ shiftBy 18 $ choose [0.75])
       $ reduce
       $ stack [

@@ -14,8 +14,8 @@ do
     $ whenmod 30 25 (slow (4/3))
     $ whenmod 25 20 (slow (4/3))
     $ whenmod 20 15 (slow (4/3))
-    $ useIter (iter 8)
-    $ whenmod 12 9 (linger "3e")
+    $ useIter doIter
+    $ useLing doLing16
     $ ssb 0.3 rev 
     $ shift
     $ foldEvery [2,3] (0.25 ~>)

@@ -9,7 +9,8 @@ do
     $ limit
     $ stack [
       reduce
-      $ useIter (iter 16)
+      $ useLing doLing
+      $ useIter (doIter)
       $ stack [
         -- kick and harmor off
         harmorOn $ ("3e" ~>) $ (# note "[-24 -12]/16") $ (# legato "{9 7 6 8}%16") $ chain $ harmor # speed004chan

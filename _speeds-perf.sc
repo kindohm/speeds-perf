@@ -19,40 +19,44 @@ s.waitForBoot {
 	// ~dirt.loadSoundFiles("~/studio/_deleted/moon/other/*");
 	// ~dirt.loadSoundFiles("~/studio/sample-maker/*");
 
+	// ~dirt.loadSoundFiles("~/studio/tidal-samples/*");
+
 	s.sync;
 	~dirt.start(57120, [0]);
 
 	MIDIClient.init;
 
-	~rytmOut = MIDIOut.newByName("Elektron Analog Rytm", "Elektron Analog Rytm");
+	// ~rytmOut = MIDIOut.newByName("Elektron Analog Rytm", "Elektron Analog Rytm");
+	~rytmOut = MIDIOut.newByName("Elektron Analog Rytm MKII", "Elektron Analog Rytm MKII");
 	~rytmOut.latency = 0;
 	~dirt.soundLibrary.addMIDI(\rytm, ~rytmOut);
-
+	//
 	~harmorOut = MIDIOut.newByName("IAC Driver", "Bus 1");
 	~harmorOut.latency = 0;
 	~dirt.soundLibrary.addMIDI(\harmor, ~harmorOut);
 
 	// ~harmorOut2 = MIDIOut.newByName("IAC Driver", "Bus 2");
 	// ~harmorOut2.latency = 0;
-	// ~dirt.soundLibrary.addMIDI(\custom, ~harmorOut2);
+	// ~dirt.soundLibrary.addMIDI(\rytm, ~harmorOut2);
 
 
 };
 s.latency = 0;
 );
 
-/*
+
 (
-var addr = NetAddr.new("10.0.0.221", 57101);
+// var addr = NetAddr.new("10.0.0.244", 5150);
+var addr = NetAddr.new("127.0.0.1", 5150);
 OSCFunc({ |msg, time, tidalAddr|
     var latency = time - Main.elapsedTime;
     msg = msg ++ ["time", time, "latency", latency];
-    msg.postln;
-    addr.sendBundle(latency, msg)
-}, '/play2').fix;
+	// msg.postln;
+    addr.sendBundle(latency, msg);
+}, '/dirt/play').fix;
 )
 
-*/
+
 
 // Evaluate the block below to start the mapping MIDI -> OSC.
 (

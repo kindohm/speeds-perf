@@ -11,7 +11,6 @@ do
       b1 = "{-6@31}%16"
       rfreq = segment 0.25
   d1  
-    $ whenmod 26 20 (one 1)
     $ std
     $ stack [
       -- pad
@@ -19,7 +18,8 @@ do
         $ note (scale "ritusen" "{0 -1 1 -2 2}%1") # pad1
       , pad2On $ slow 4 $ midichan 4 # note "c3" # s "rytm"
       -- kick
-      , useIter (iter 16) $ stack [
+      , useLing doLing16 $ useIter doIter $ whenmod 26 20 (one 1)
+        $ stack [
         kickOn $ reduce $ struct main $ pad3n
         -- perc1
         , perc1On $ reduce $ ssb 0.5 (superimpose (0.125 ~>)) $ (0.0625 ~>) 
@@ -36,7 +36,7 @@ do
         -- cp
         , clapOn $ reduce $ struct cp $ pad4n
         -- ch
-        , hatOn $ pickF "<0 1>" [dg8, dg7] $ shift $ ghostp 0.08 (|+ midichan 1) 
+        , hatOn $ reduce $ pickF "<0 1>" [dg8, dg7] $ shift $ ghostp 0.08 (|+ midichan 1) 
           $ struct ch $ pad11n
         -- harmor
         , harmorOn $ reduce $ struct main $ harmor # note "-24" # speed001chan 
@@ -48,7 +48,8 @@ do
       , perf4 (segment 1 $ (range 0 127 $ shrand 89204))
       , perf7 (segment 4 $ range 0 127 $ slow 234 rand)
       , perf8 (segment 4 $ range 0 127 $ slow 1234 rand)
-      , scene (slow 2 $ segment 1 $ range 0 (range 0 4 $ (cF 0 "90")) $ shrand 9991)
+      , useLing doLing16 $ useIter doIter
+        $ scene (slow 2 $ segment 1 $ range 0 (range 0 4 $ (cF 0 "90")) $ shrand 9991)
       -- harmor cc's
       , stack [
           ccv (rfreq $ ccrand 20 100 133) # filter1
@@ -69,3 +70,5 @@ hush
 
 
 d1 $ pad4n
+
+d1 $ useLing doLing16 $ midichan "1 2 3 9 5 6 7 8" # s "rytm" # note "c3"
