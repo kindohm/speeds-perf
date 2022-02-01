@@ -47,6 +47,8 @@ let
   minTempo2 = (range 1 0.333 $ (cF 0 "72"))
   maxTempo2 = (range 1 1.5 $ (cF 0 "72"))
   sceneRange = (range 0 3 $ (cF 0 "90"))
+  perf1Knob = (segment 4 $ range 0 127 $ (cF 0 "124"))
+  perf2Knob = (segment 4 $ range 0 127 $ (cF 0 "123"))
   rytm = s "rytm"
   harmor = s "harmor"
   speed001chan = midichan 0
@@ -133,6 +135,7 @@ let
   rytmpan pat = ccv pat # ccn 10 # rytm
   hold pat = ccv pat # ccn 79 # rytm
   rytmfiltercutoff pat = ccv pat # ccn 74 # rytm
+  rytmfilterenv pat = ccv pat # ccn 77 # rytm
   perf3flip = dg5 $ pan "1*16" # perf3 (choose [0,127])
   randGain min p = (|* gain (range min 1 $ shrand 1011)) $ p
   filter1 = ccn 1 # harmor
@@ -196,6 +199,11 @@ let
   replicator' n text1 = [putStr (text1) | x <- replicate n text1]
   flood' n text2 = sequence_(replicator' n text2)
   say = flood
+  shelvingFreq pat = ccv pat # ccn 26 # s "rytm" # midichan 12
+  preDelay pat = ccv pat # ccn 24 # s "rytm" # midichan 12
+  shelvingGain pat = ccv pat # ccn 27 # s "rytm" # midichan 12
+  delaySend pat = ccv pat # ccn 82 # s "rytm"
+  reverbSend pat = ccv pat # ccn 83 # s "rytm"
   allccs rfreq = stack [
         ccv (rfreq $ ccrand 10 100 133) # filter1
         , ccv (rfreq $ ccrand 10 100 233) # filter2
