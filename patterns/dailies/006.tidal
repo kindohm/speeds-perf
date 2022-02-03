@@ -2,7 +2,7 @@
 
 do
   let plies = "<5 10 15 30 20 25>"
-  let minTempoLocal = (range 1 0.1 $ (cF 0 "88"))
+  let minTempoLocal = (range 1 0.08 $ (cF 0 "88"))
   let maxTempoLocal = (range 1 1 $ (cF 0 "88"))
   let minTempo2Local = (range 1 0.1 $ (cF 0 "72"))
   let maxTempo2Local = (range 1 2 $ (cF 0 "72"))
@@ -35,6 +35,11 @@ do
       , perf2 perf2Knob
       , pad2On $ reduce $ slow 2.5 $ midichan 4 # note "c3"
     ] # s "rytm" # cps "<4 2 3 2 1 1>"
+  d2
+    $ harmorOn $ superimpose (3.5 ~>) $
+        slow 8 $ note "{c5 d4 c5 d4 d4}%1"
+        # s "harmor" # midichan 11
+
 
 -- does anyone else instinctively save their file after every change?
 

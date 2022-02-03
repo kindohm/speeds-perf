@@ -30,9 +30,9 @@ do
     # cps ((140/120/2) * cpspat * 0.8) 
   p "ccs"
     $ stack [
-      (# ccv (range 0 127 $ shrand 123)) $ degradeBy 0.2 $ shiftBy 10 $ ccn "1*4"
-      , (# ccv (range 0 127 $ shrand 1234)) $ degradeBy 0.2 $ shiftBy 11 $ ccn "2*4"  
-      , perc1On $ xfadep 0
+      -- (# ccv (range 0 127 $ shrand 123)) $ degradeBy 0.2 $ shiftBy 10 $ ccn "1*4"
+      -- , (# ccv (range 0 127 $ shrand 1234)) $ degradeBy 0.2 $ shiftBy 11 $ ccn "2*4"  
+      perc1On $ xfadep 0
       , perc2On $ xfadep xfadepat
     ] # s "harmor" # midichan 13
 
