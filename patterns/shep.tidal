@@ -1,0 +1,22 @@
+do
+  let 
+    plies = (slow 2 $ "<5 10 15>") :: Pattern Time
+    denom = "<4>"
+  d1
+    $ cpsTri 0.5 1.5 6.1
+    $ cpsDisc 0.5 1.5
+    $ someCyclesBy 0.1 (within (0, 1) (const $ midichan 3 # note "c3" # s "rytm"))
+    $ stack [
+      whenmod 40 20 (plyWith 2 (|+ midichan 4) )
+        $ whenmod 15 10 (|+ midichan 1)
+        $ whenmod 10 5 (|+ midichan 1)    
+        $ plyWith plies (# amp 0.3) $ slow (plies/denom) $ midichan 0 # note "c3" # s "rytm" # amp 1
+      , every 1 (plyWith 2 (# midichan 8) )
+        $ plyWith plies (# midichan 10) $ slow (plies/denom) $ midichan 11 # note "c3" # s "rytm"
+      , scene (foldEvery [1,2,3,4] (slow 1.5) $ "<0 1 2>")
+    ] # cps 2.25
+  d2 $ slow 4 $ note "c4" # s "harmor" # midichan 15 # amp 0.6
+
+
+
+hush
