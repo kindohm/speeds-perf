@@ -6,7 +6,10 @@ do
       dg = reduce
       chain mod p = sb 0.3 (mod) $ one 0.3 $ shift $ one 0.2 $ shift $ roll 0.2 
                       $ dg $ struct seq $ p
+  let minTempo2Local = (range 1 0.1 $ (cF 0 "72"))
+  let maxTempo2Local = (range 1 2 $ (cF 0 "72"))
   d1
+    $ (|* cps (range minTempo2Local maxTempo2Local $ slow 4.1 tri))
     $ cpsDisc minTempo maxTempo
     $ limit
     $ stack [
@@ -15,12 +18,12 @@ do
         $ (|+ note (scale "ritusen" "{0 -2 -4 -1 -3}%16")) $ pad5n
       , pad2On $ slow 3 
         $ (|+ note (shiftBy 4 $ choose [0,12]))
-        $ (|+ note (scale "ritusen" "{0 -2 -4 -1 -3}%16")) $ pad6n
+        $ (|+ note (scale "ritusen" "{0 -1 -2}%16")) $ pad6n
       , samplestart (segment 1 $ range 0 127 $ slow 10 rand) # midichan "[4]"
       , sampleend (segment 1.1 $ range 0 127 $ slow 21 rand) # midichan "[4]"
-      , samplestart (segment 1.2 $ range 0 127 $ slow 110 rand) # midichan "[5]"
-      , sampleend (segment 1.05 $ range 0 127 $ slow 121 rand) # midichan "[5]"
-      , useIter (iter 16) $ stack [
+      -- , samplestart (segment 1.2 $ range 0 127 $ slow 110 rand) # midichan "[5]"
+      --, sampleend (segment 1.05 $ range 0 127 $ slow 121 rand) # midichan "[5]"
+      , useLing doLing $ useIter doIter $ stack [
         kickOn $ chain (# pad4n) $ pad3n 
           # legato (range 0.5 1 $ shrand 100)
         , clapOn $ reduce $ shiftBy 7721 
