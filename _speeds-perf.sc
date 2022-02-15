@@ -30,14 +30,14 @@ s.waitForBoot {
 	~rytmOut = MIDIOut.newByName("Elektron Analog Rytm MKII", "Elektron Analog Rytm MKII");
 	~rytmOut.latency = 0;
 	~dirt.soundLibrary.addMIDI(\rytm, ~rytmOut);
-	//
+
 	~harmorOut = MIDIOut.newByName("IAC Driver", "Bus 1");
 	~harmorOut.latency = 0;
 	~dirt.soundLibrary.addMIDI(\harmor, ~harmorOut);
 
-	// ~harmorOut2 = MIDIOut.newByName("IAC Driver", "Bus 2");
-	// ~harmorOut2.latency = 0;
-	// ~dirt.soundLibrary.addMIDI(\rytm, ~harmorOut2);
+	~euroOut = MIDIOut.newByName("MIDI 1U", "MIDI 1U");
+	~euroOut.latency = 0;
+	~dirt.soundLibrary.addMIDI(\euro, ~euroOut);
 
 
 };
@@ -99,3 +99,5 @@ if (~stopMidiToOsc != nil, {
 
 
 ~dirt.loadSoundFiles("~/studio/sample-maker/*");
+
+SuperDirt.start
