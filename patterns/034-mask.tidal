@@ -74,6 +74,7 @@ do
         , ccv (rfreq $ ccrand 64 64 1133) # amprel
         , ccv (rfreq $ ccrand 0 127 7) # harm
       ] # omnomchan # s "harmor"
+  p "vis" $ fast 0.2 $ vowel "thanks_for_listening_" # s "partWrite" # pan 1 # orbit 10 
 
 
 

@@ -2,7 +2,7 @@ hush
 
 do
   d2
-    $ every 1 (cpsDisc 0.5 5)
+    $ every 1 (cpsDisc 0.25 2)
     $ limit
     $ stack [
       slow 6 $ note "c3" # midichan 4

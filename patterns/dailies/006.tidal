@@ -39,6 +39,7 @@ do
     $ harmorOn $ superimpose (3.5 ~>) $
         slow 8 $ note "{c5 d4 c5 d4 d4}%1"
         # s "harmor" # midichan 11
+  p "handler" $ s "[partWrite]" # pan 1 # orbit 10
 
 
 -- does anyone else instinctively save their file after every change?

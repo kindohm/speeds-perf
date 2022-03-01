@@ -40,7 +40,7 @@ do
         $ shift $ struct "1*16" $ midichan 1 # note "c3" # s "rytm"
       , extraOn $ lfospeed (fast "<0.5 1 2 3>" $ segment 1 $ range 20 100 $ shrand 77711) 
         # midichan 1 # s "rytm"
-      , perf3 (segment 1 $ shiftBy 28394 $ choose [0,0,0,0,127]) # s "rytm" # midichan 0
+      , perf3 (segment 1 $ shiftBy 28394 $ choose [0,0,0,0,75]) # s "rytm" # midichan 0
       , harmorOn $ gain "{1@6 1 1 1 1 1 1 1 1 1}%16" # note "c4" # speed007chan # s "harmor"
       , harmorOn $ stack [
         ccv (rfreq $ ccrand 10 100 134443) # filter1
@@ -59,6 +59,7 @@ do
         , ccv (rfreq $ ccrand 0 127 777000) # harm
       ] # speed007chan
     ] # cps (200/120/2)
+  p "vis" $ slow 1 $ s "hashes" # vowel "[color]" # orbit 10
 
 -- NOPE outro
 do

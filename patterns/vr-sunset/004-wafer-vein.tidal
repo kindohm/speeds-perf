@@ -46,6 +46,7 @@ do
         , ccv (rfreq $ ccrand 0 0 1133) # amprel
       ] # speed004chan
     ] # cps (160/120/2)
+  p "vis" $ s "corpus" # orbit 10 # pan 0.2
 
 
 

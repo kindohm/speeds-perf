@@ -35,9 +35,9 @@ s.waitForBoot {
 	~harmorOut.latency = 0;
 	~dirt.soundLibrary.addMIDI(\harmor, ~harmorOut);
 
-	~euroOut = MIDIOut.newByName("MIDI 1U", "MIDI 1U");
-	~euroOut.latency = 0;
-	~dirt.soundLibrary.addMIDI(\euro, ~euroOut);
+	// ~euroOut = MIDIOut.newByName("MIDI 1U", "MIDI 1U");
+	// ~euroOut.latency = 0;
+	// ~dirt.soundLibrary.addMIDI(\euro, ~euroOut);
 
 
 };
