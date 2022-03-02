@@ -65,7 +65,7 @@ do
         , ccv (rfreq $ ccrand 0 127 1033) # timbre
       ] # speed001chan
     ]
-  p "vis" $ fast 5 $ vowel "asdfasdf" # s "figlet" # pan 1 # orbit 10 # gain (segment 1 $ range 0 1 $ rand)
+  p "vis" $ fast 4 $ s "plainOsc" # pan 0 # orbit 10
 
 hush
 

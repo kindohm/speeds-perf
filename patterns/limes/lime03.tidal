@@ -65,6 +65,7 @@ do
                 , ctlGain # xfade # ccv (shiftBy 238924 $ choose [0,127])
                 ] 
             # s "harmor" # midichan 8 
+    p "vis" $ fast 3 $ vowel "algorithms_against_facism" # s "mangler" # orbit 10 # pan 0
 
 hush
 
