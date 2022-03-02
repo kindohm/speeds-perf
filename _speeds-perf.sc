@@ -26,10 +26,10 @@ s.waitForBoot {
 
 	MIDIClient.init;
 
-	// // ~rytmOut = MIDIOut.newByName("Elektron Analog Rytm", "Elektron Analog Rytm");
-	// ~rytmOut = MIDIOut.newByName("Elektron Analog Rytm MKII", "Elektron Analog Rytm MKII");
-	// ~rytmOut.latency = 0;
-	// ~dirt.soundLibrary.addMIDI(\rytm, ~rytmOut);
+	// ~rytmOut = MIDIOut.newByName("Elektron Analog Rytm", "Elektron Analog Rytm");
+	~rytmOut = MIDIOut.newByName("Elektron Analog Rytm MKII", "Elektron Analog Rytm MKII");
+	~rytmOut.latency = 0;
+	~dirt.soundLibrary.addMIDI(\rytm, ~rytmOut);
 
 	~harmorOut = MIDIOut.newByName("IAC Driver", "Bus 1");
 	~harmorOut.latency = 0;
@@ -68,7 +68,7 @@ osc = NetAddr.new("127.0.0.1", 6010);
 MIDIClient.init;
 //MIDIIn.connectAll;
 
-MIDIIn.connect(inport: 0, device: 2);
+MIDIIn.connect(inport: 0, device: 4);
 
 // on = MIDIFunc.noteOn({ |val, num, chan, src|
 // 	osc.sendMsg("/ctrl", num.asString, val/127);
