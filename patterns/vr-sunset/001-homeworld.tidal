@@ -43,11 +43,11 @@ do
       ] # cps (140/120/2)
       -- rytm eprfs
       , perf1 (segment 0.25 $ (shiftBy 1100 $ choose [0,127]))
-      , perf2 (segment 1 $ (range 0 127 $ shrand 89234))
-      , perf3 (segment 4 $ shiftBy 4477 $ choose [0])
-      , perf4 (segment 1 $ (range 0 127 $ shrand 89204))
-      , perf7 (segment 4 $ range 0 127 $ slow 234 rand)
-      , perf8 (segment 4 $ range 0 127 $ slow 1234 rand)
+      , perf2 (segment 0.99 $ (range 0 127 $ shrand 89234))
+      , perf3 (segment 4.051 $ shiftBy 4477 $ choose [0])
+      , perf4 (segment 1.05 $ (range 0 127 $ shrand 89204))
+      , perf7 (segment 4.1 $ range 0 127 $ slow 234 rand)
+      , perf8 (segment 3.9 $ range 0 127 $ slow 1234 rand)
       , useLing doLing16 $ useIter doIter
         $ scene (slow 2 $ segment 1 $ range 0 (range 0 4 $ (cF 0 "90")) $ shrand 9991)
       -- harmor cc's
@@ -65,7 +65,7 @@ do
         , ccv (rfreq $ ccrand 0 127 1033) # timbre
       ] # speed001chan
     ]
-  p "vis" $ fast 4 $ s "plainOsc" # pan 0 # orbit 10
+  p "vis" $ fast 4 $ s "plainOsc" # pan colorProb # orbit 10
 
 hush
 

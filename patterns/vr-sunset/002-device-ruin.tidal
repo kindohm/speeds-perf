@@ -57,7 +57,7 @@ do
         , ccv 1 # amprel
       ] # speed002chan
     ] # cps (140/120/2)
-  p "vis" $ fast 4 $ s "hashes" # pan 0 # orbit 10
+  p "vis" $ fast 4 $ s "base64March" # pan colorProb # orbit 10
 
     hush
 

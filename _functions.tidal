@@ -10,6 +10,7 @@ let
   beginend bpat durpat = (begin bpat) # (end $ (+) <$> bpat <*> durpat)
   be = beginend
   cps200 = cps (200/120/2)
+  colorProb = (cF 0 "56")
   reduce = degradeBy (cF 0 "96")
   reduce2 = degradeBy (cF 0 "72")
   stutIf f x = every (range 0 1 $ (cI 0 "81")) f $ x

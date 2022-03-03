@@ -15,7 +15,7 @@ do
         # note "c3"
       , foldEvery [3,4,5] (1.25 ~>) $ scene "<0 1 2 3>"
     ] # s "rytm" # cps 0.666
-  p "vis" $ vowel "goodbye" # s "figlet" # pan 1 # orbit 10 
+  p "vis" $ vowel "goodbye" # s "figlet" # pan colorProb # orbit 10 
 
 
 hush
@@ -32,9 +32,9 @@ p "coda"
 once $ limit $ midichan 5 # s "rytm" # note "c3"
 
 
+p "coda" silence
 
-
-
+hush
 
 
 

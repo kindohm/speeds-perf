@@ -11,8 +11,10 @@ do
     $ (|* cps (segment 0.5 $ range minTempoLocal maxTempoLocal $ (111 ~>) $ rand))
     $ limit
     $ stack [      
-      kickOn $ reduce $ useExtra( plyWith plies ((# midichan 10) . (|* legato 0.95) . (# note "<c3 d2 d3 b2 a3>")) )
+      kickOn $ reduce
         $ midichan 2 # note "c3"
+      , extraOn $ plyWith plies ((# midichan 10) . (|* legato 0.95) . (# note "<c3 d2 d3 b2 a3>") . (# gain 1))
+        $ reduce $ midichan 10 # note "c3" # gain 0.01
       -- randsamps
       , perc2On $ reduce $ (1 ~>) $ degradeBy 0.75 $ (0.75 ~>) 
         $ plyWith plies (# gain 0.9) $ midichan 1 # note "c3"
@@ -33,13 +35,14 @@ do
       , scene (segment 1 $ shiftBy 36733 $ range 0 sceneRange $ shrand 731)
       , perf1 perf1Knob
       , perf2 perf2Knob
+      , perf6 (segment 1 $ range 0 127 $ shrand 7837111001)
       , pad2On $ reduce $ slow 2.5 $ midichan 4 # note "c3"
     ] # s "rytm" # cps "<4 2 3 2 1 1>"
   d2
     $ harmorOn $ superimpose (3.5 ~>) $
         slow 8 $ note "{c5 d4 c5 d4 d4}%1"
         # s "harmor" # midichan 11
-  p "vis" $ s "[emojiCount]" # pan 0 # orbit 10
+  p "vis" $ s "[emojiCount]" # pan colorProb # orbit 10
 
 
 

@@ -74,7 +74,7 @@ do
         , ccv (rfreq $ ccrand 64 64 1133) # amprel
         , ccv (rfreq $ ccrand 0 127 7) # harm
       ] # omnomchan # s "harmor"
-  p "vis" $ s "partWrite" # pan 0 # orbit 10 
+  p "vis" $ s "partWrite" # pan colorProb # orbit 10 
 
 
 

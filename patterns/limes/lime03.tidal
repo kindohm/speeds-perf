@@ -65,7 +65,7 @@ do
                 , ctlGain # xfade # ccv (shiftBy 238924 $ choose [0,127])
                 ] 
             # s "harmor" # midichan 8 
-    p "vis" $ fast 3 $ vowel "[algorithms_against_facism make_algorithms_not_war]/2" # s "mangler" # orbit 10 # pan 1
+    p "vis" $ fast 3 $ vowel "[algorithms_against_facism midi_is_a_herb]/6" # s "mangler" # orbit 10 # pan colorProb
 
 hush
 

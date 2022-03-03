@@ -59,7 +59,10 @@ do
         , ccv (rfreq $ ccrand 0 127 777000) # harm
       ] # speed007chan
     ] # cps (200/120/2)
-  p "vis" $ s "verticalBins" # pan 0 # orbit 10
+  p "vis" $ s "verticalBins" # pan colorProb # orbit 10
+
+hush
+
 
 -- NOPE outro
 do

@@ -46,7 +46,7 @@ do
         , ccv (rfreq $ ccrand 0 0 1133) # amprel
       ] # speed004chan
     ] # cps (160/120/2)
-  p "vis" $ fast 2 $ s "corpus" # orbit 10 # pan 0
+  p "vis" $ fast 2 $ s "corpus" # orbit 10 # pan colorProb
 
 
 
