@@ -1,6 +1,8 @@
 hush 
 
 -- kit 39
+-- REMEMBER INTRO LZRCP
+
 do
   let rfreq p = slow 4 $ segment 1 $ p
       elim p = ssb (cF 0 "96") (const $ stack [s "harmor" # speed007chan # note "c4" # gain 0.4]) $ p

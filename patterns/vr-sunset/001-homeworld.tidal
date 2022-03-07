@@ -14,7 +14,7 @@ do
     $ std
     $ stack [
       -- pad
-      padOn $ slow 4 $ (|+ note (shiftBy 1100 $ choose [-36,-24, -24, -12])) 
+      padOn $ slow 4 $ (|+ note (shiftBy 1100 $ choose [-36,-24, -24, -12, -12])) 
         $ note (scale "ritusen" "{0 -1 1 -2 2}%1") # pad1
       , pad2On $ slow 4 $ midichan 4 # note "c3" # s "rytm"
       -- kick

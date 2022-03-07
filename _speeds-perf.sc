@@ -80,7 +80,6 @@ MIDIIn.connect(inport: 0, device: 4);
 
 cc = MIDIFunc.cc({ |val, num, chan, src|
 	osc.sendMsg("/ctrl", num.asString, val/127);
-	val.postln;
 });
 
 if (~stopMidiToOsc != nil, {

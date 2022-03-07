@@ -3,7 +3,7 @@ hush
 do
   let plies = "<5 10 15 30 20 25>"
   let minTempoLocal = (range 1 0.08 $ (cF 0 "88"))
-  let maxTempoLocal = (range 1 1 $ (cF 0 "88"))
+  let maxTempoLocal = (range 1 1.5 $ (cF 0 "88"))
   let minTempo2Local = (range 1 0.1 $ (cF 0 "72"))
   let maxTempo2Local = (range 1 2 $ (cF 0 "72"))
   d1
