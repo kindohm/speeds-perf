@@ -3,7 +3,7 @@ setcps 0.5
 hush
 
 do
-    let howoften = 15
+    let howoften = 10
         ongain = "1"
         offgain = "0.4"
         mute1 p = id $ p
@@ -65,6 +65,10 @@ do
                 , ctlGain # xfade # ccv (shiftBy 238924 $ choose [0,127])
                 ] 
             # s "harmor" # midichan 8 
+    p "shep"
+        $ harmorOn $ stack [
+            slow 8 $ note "c4"
+        ] # s "harmor" # midichan 10 # gain 1.15
     p "vis" $ fast 3 $ vowel "[algorithms_against_facism midi_is_a_herb]/6" # s "mangler" # orbit 10 # pan colorProb
 
 hush
