@@ -2,6 +2,7 @@ hush
 
 -- kit 39
 -- REMEMBER INTRO LZRCP
+-- 🚨🚨🚨🚨 DO NOT START WITH PAD!!!!!! 🚨🚨🚨🚨
 
 do
   let rfreq p = slow 4 $ segment 1 $ p

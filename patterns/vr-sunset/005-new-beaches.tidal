@@ -7,19 +7,25 @@ do
     $ limit
     $ stack [
       padOn $ slow 4 $ (|+ note (shiftBy 44 $ choose [0,-1])) $ pad5n
-      , useIter (iter 16) $ stack [
+      , pad2On $ slow 4 $ pad6n
+      , extraOn $ slow 3 $ s "rytm" # midichan 8 # note "c3"
+      ,  useLing doLing16 $ useIter doIter
+        $ reduce $ stack [
         kickOn $ one 0.4 $ roll 0.3 $ slow 5 $ reduce $ fast 2
           $ struct "1(3,16)" $ pad3n # legato (shiftBy 33 $ choose [1,1.1..4])
         , clapOn $ (|+ note (scale "ritusen" (shiftBy 44 $ choose [0,0,0]))) 
         $ slow "<2%3 1 4%3 5%3>" $ (0.5 ~>) $ reduce $ fast 2 $ pad4n
         , harmorOn $ slow 6 $ note "-24"
           # harmor # legato (range 0.5 1 $ shrand 1000) # speed005chan
+        , perc1On $ one 0.2 $ degradeBy 0.3 $ shift 
+          $ gain "1(<3 2>,8,<2 5 11>)" # midichan (segment "{2 8 4}%1" $ shiftBy 101011 $ choose [6,7]) # s "rytm" # note "c3" # legato "{3 4 5 6 7}%13"
       ]
       , perf5 (segment segpat $ range "<30 40 50>" "<70 90 80 100>" $ shrand 100)
       , perf6 (slow 9 $ "<0 127>")
       , every 3 (# ccv (range 0 127 $ shrand 773)) $ perf3 0
       , perf4 (segment 1 $ ccrand 0 64 3388)
       , perf8 (segment 1 $ ccrand 0 127 448)
+      , extraOn $ perf9 (segment 1 $ ccrand 0 127 61661)
       , perf12 (segment 1 $ range 0 127 $ shrand 4001)
       , scene (segment (shiftBy 414 $ choose [1,2,3,0.5,0.5]) $ range 0 sceneRange $ shrand 9991)
       -- harmor cc's
@@ -40,5 +46,6 @@ do
         , ccv (rfreq $ ccrand 0 127 7) # harm
       ] # speed005chan
     ] # cps (140/120/2)
+  p "vis" $ fast 3 $ vowel "[kickOn_one_0.4_roll_0.3_slow_5_reduce_fast_2_struct_1_3_16_pad3n_legato_4]/6" # s "mangler" # orbit 10 # pan colorProb
 
     hush
