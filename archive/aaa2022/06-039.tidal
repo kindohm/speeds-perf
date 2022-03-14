@@ -1,0 +1,104 @@
+hush 
+
+-- kit 39
+-- REMEMBER INTRO LZRCP
+-- 🚨🚨🚨🚨 DO NOT START WITH PAD!!!!!! 🚨🚨🚨🚨
+
+do
+  let rfreq p = slow 4 $ segment 1 $ p
+      elim p = ssb (cF 0 "96") (const $ stack [s "harmor" # speed007chan # note "c4" # gain 0.4]) $ p
+  let samplepat = "1(<4 3 3>,<8 16>,<10 20 30 40 50 60 70>)"
+      deg = dg3
+  d1 
+    $ limit
+    $ elim
+    $ cpsTri minTempo2 (range 1 2 $ (cF 0 "72")) 4.1
+    $ cpsDisc minTempo maxTempo
+    $ whenmod 30 25 (slow (4/3))
+    $ whenmod 25 20 (slow (4/3))
+    $ whenmod 20 15 (slow (4/3))
+    $ useIter doIter
+    $ useLing doLing16
+    $ ssb 0.3 rev 
+    $ shift
+    $ foldEvery [2,3] (0.25 ~>)
+    $ ssb 0.5 (slow 2)
+    $ stack [
+      padOn $ whenmod 14 9 (|+ note "-12") $ midichan "{4@6 4 4 4 4 4 4 4 4 4}%16" # note "c3" # s "rytm"
+      , padOn $ midichan 4 # note "c3" # s "rytm" # sampletune 64
+      , pad2On $ slow 2 $ midichan 5 # note "c3" # s "rytm"
+      , pad2On $ sampletune 62 # midichan 5 # s "rytm"
+      , kickOn $ midichan "{3@6 2 2 2 2 2 2 2 2 2}%16" # note "c3" # s "rytm"
+      , perc1On $ ((0.0625/2) ~>) $ midichan "{~@6 0 0 0 0 0 0 0 0 0}%16" # note "c3" # s "rytm"
+      , hatOn $ (|+ midichan 10) $ ((0.0625/2) ~>) $ midichan "{~@6 0 0 0 0 0 0 0 0 0}%16" # note "c3" # s "rytm"
+      , perc2On $ deg $ struct samplepat $ midichan 8 # note "c3" # s "rytm" -- (range 4 30 $ shrand 8923104)
+      , perc2On $ deg $ struct samplepat $ samplestart (range 0 100 $ shrand 82934) # midichan 8 # s "rytm" 
+      , perc2On $ deg $ struct samplepat $ sampleend (range 2 102 $ shrand 82934) # midichan 8 # s "rytm" 
+      , perc2On $ deg $ struct samplepat $ sampletune (range 40 98 $ shrand 1781) # midichan 8 # s "rytm" 
+      , perc2On $ deg $ struct samplepat $ rytmpan (range 30 100 $ shrand 171) # midichan 8 # s "rytm" 
+      , perc2On $ deg $ struct samplepat $ hold (range 20 100 $ shrand 17111) # midichan 8 # s "rytm" 
+      , clapOn $ (0.5 ~>) $ midichan 6 # note "c3" # s "rytm"
+      , scene (segment 1 $ shiftBy 36733 $ range 0 sceneRange $ shrand 731)
+      , extraOn $ fast "<1.666 2 1.333>" $ degradeBy (segment 1 $ range 0 0.3 $ shrand 10101) 
+        $ shift $ struct "1*16" $ midichan 1 # note "c3" # s "rytm"
+      , extraOn $ lfospeed (fast "<0.5 1 2 3>" $ segment 1 $ range 20 100 $ shrand 77711) 
+        # midichan 1 # s "rytm"
+      , perf3 (segment 1 $ shiftBy 28394 $ choose [0,0,0,0,75]) # s "rytm" # midichan 0
+      , harmorOn $ gain "{1@6 1 1 1 1 1 1 1 1 1}%16" # note "c4" # speed007chan # s "harmor"
+      , harmorOn $ stack [
+        ccv (rfreq $ ccrand 10 100 134443) # filter1
+        , ccv (rfreq $ ccrand 10 100 2333) # filter2
+        , ccv (rfreq $ ccrand 0 127 3343) # unidetune
+        , ccv (rfreq $ ccrand 0 64 4533) # phwidth
+        , ccv (rfreq $ ccrand 40 80 38282) # phspeed
+        , ccv (rfreq $ ccrand 5 127 5633) # envattack
+        , ccv (rfreq $ ccrand 0 127 77283) # envdecay
+        , ccv (rfreq $ ccrand 100 127 6833 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 7033 ) # filter1env
+        , ccv (rfreq $ ccrand 100 127 80033 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 9933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 10833) # timbre
+        , ccv (rfreq $ ccrand 64 64 11733) # amprel
+        , ccv (rfreq $ ccrand 0 127 777000) # harm
+      ] # speed007chan
+    ] # cps (200/120/2)
+  p "vis" $ s "verticalBins" # pan colorProb # orbit 10
+
+hush
+
+
+-- NOPE outro
+do
+  let deg = degradeBy (segment 1 $ range 0.3 0.7 $ shrand 10101)
+  d1
+    $ limit
+    $ stack [
+      deg $ shift $ struct "1*16" $ midichan 4 # note "c3"
+      , scene 3
+    ] # s "rytm" # cps (200/120/2)
+
+    hush
+
+-- NOPE kit 39 intro
+
+do
+  let samplepat = "1(<1 2 3>,<8 16>,<10 20 30 40 50>)"
+      deg = dg3
+  d1
+    $ limit
+    $ stack [
+      padOn $ fast "<1 2 3 4 5 6>" $  midichan 4 # note "c3" # s "rytm"
+      , pad2On $ slow 4 $ midichan 5 # note "c3"
+      , g $ pad2On $ ssb "<0.3 0.4 0.5>" (# ccv (range 30 90 $ shrand 82934)) 
+        $ degradeBy 0.5 $ shift $ sampletune "62*8" # midichan 5
+      , perc2On $ deg $ struct samplepat $ midichan 8 # note "c3" -- (range 4 30 $ shrand 8923104)
+      , perc2On $ deg $ struct samplepat $ samplestart (range 0 100 $ shrand 82934) # midichan 8
+      , perc2On $ deg $ struct samplepat $ sampleend (range 2 102 $ shrand 82934) # midichan 8
+      , perc2On $ deg $ struct samplepat $ sampletune (range 40 98 $ shrand 1781) # midichan 8
+      , clapOn $ dg5 $ shift $ struct "1(<1 2>,16,<11 43 55 66346234>)" 
+        $ (|+ note "-24") $ midichan 6 # note (scale "ritusen" "{0 1 4 -1 2 -2 3 }%16")
+      , perc2On $ deg $ struct samplepat $ rytmpan (range 30 100 $ shrand 171) # midichan 8
+      , perc2On $ deg $ struct samplepat $ hold (range 20 100 $ shrand 17111) # midichan 8
+    ] # s "rytm" # cps (200/120/2)
+
+hush

@@ -1,0 +1,66 @@
+hush
+
+do 
+  let pat1 = "{0@5 0@5 1@3 0@2 0@7 1 0@3 1@5 0@10}%16"
+      pat2 = "{0 0 0 0 0 0 0@11 1@7 0@3}%16"
+      pat = (whenmod 28 25 (const $ pat2) $ pat1 :: Pattern Int)
+      rfreq = segment 0.125
+  d1
+    $ limit
+    $ stack [
+      whenmod 50 30 rev
+      -- $ whenmod 40 20 (iter 16)
+      $ useLing doLing $ useIter (doIter)
+      -- $ degradeBy (segment (1/4) $ shiftBy 18 $ choose [0.75])
+      $ reduce
+      $ stack [
+        -- kick & clap
+        kickOn $ rytmmap ["[2,7?]",3] pat # note "c3"
+        -- perc1
+        , perc1On $ (0.0625 ~>) $ rytmmap [6,"~"] pat # note "c3"
+        -- perc2
+        , perc2On $ dg5 $ (0.125 ~>) $ rytmmap [7,10] pat # note "c3"
+        -- perc3
+        , extraOn $ one 0.25 $ (0.375 ~>) $ rytmmap [8,9] pat # note "c3"
+        -- harmor
+        , harmorOn $ notemap [0,"~"] pat # harmor # speed002chan
+      ]
+      -- pad
+      , padOn $ dg0 $ shiftBy 100 $ slow 5.5 $ (|+ note (shiftBy 17 $ choose [-36,-24,-12])) $ pan 1 
+        # note (scale "minor" "{0 -2 -3}%16") # pad5
+      , pad2On $ slow "<2 4>" $ note "c3" 
+        # s "rytm" # midichan 5
+      , perf1 (segment 8 $ shiftBy 33 $ choose [0,0,0,0,0,0,127])
+      , perf2 (segment 4 $ range 0 127 $ slow 10 tri)
+      , perf3 (segment 4 $ range 0 127 $ slow 11 tri)
+      , perf4 (segment 4 $ range 0 127 $ slow 12 tri)
+      , perf8 (segment 4 $ range 0 127 $ slow 13 tri)
+      , samplestart (segment 1.666 $ ccrand 20 100 900) # midichan 4
+      , sampleend (segment 1.333 $ ccrand 20 100 901) # midichan 4
+      , scene (segment 2 $ range 0 sceneRange $ shrand 9991)
+      -- harmor cc's
+      , stack [
+        ccv (rfreq $ ccrand 20 100 133) # filter1
+        , ccv (rfreq $ ccrand 20 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 5 64 533) # envattack
+        , ccv (rfreq $ ccrand 0 127 7283) # envdecay
+        , ccv (rfreq $ ccrand 64 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 64 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 0 127 20222) # prism
+        , ccv (rfreq $ ccrand 0 127 10132) # phoff
+        , ccv (rfreq $ ccrand 45 75 38111) # phspeed
+        , ccv 1 # amprel
+      ] # speed002chan
+    ] # cps (140/120/2)
+  p "vis" $ fast 4 $ s "base64March" # pan colorProb # orbit 10
+
+    hush
+
+    d1 $ harmor # phspeed # ccv 0
+
+say "hows it going? "

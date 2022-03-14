@@ -69,7 +69,7 @@ do
         $ harmorOn $ stack [
             slow 8 $ note "c4"
         ] # s "harmor" # midichan 10 # gain 1.15
-    p "vis" $ fast 3 $ vowel "[zero_usb_dongles_are_used_in_this_performance i_have_spednars_hat midi_is_a_herb]/6" # s "mangler" # orbit 10 # pan colorProb
+    p "vis" $ fast 3 $ vowel "[no_usb_dongles_used i_have_spednars_hat midi_is_a_herb]/6" # s "mangler" # orbit 10 # pan colorProb
 
 hush
 

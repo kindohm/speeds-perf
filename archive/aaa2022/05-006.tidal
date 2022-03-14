@@ -1,0 +1,80 @@
+hush
+
+do
+  let plies = "<5 10 15 30 20 25>"
+  let minTempoLocal = (range 1 0.08 $ (cF 0 "88"))
+  let maxTempoLocal = (range 1 1.5 $ (cF 0 "88"))
+  let minTempo2Local = (range 1 0.1 $ (cF 0 "72"))
+  let maxTempo2Local = (range 1 2 $ (cF 0 "72"))
+  d1
+    $ (|* cps (range minTempo2Local maxTempo2Local $ slow 4.1 tri))
+    $ (|* cps (segment 0.5 $ range minTempoLocal maxTempoLocal $ (111 ~>) $ rand))
+    $ limit
+    $ stack [      
+      kickOn $ reduce
+        $ midichan 2 # note "c3"
+      , extraOn $ plyWith plies ((# midichan 10) . (|* legato 0.95) . (# note "<c3 d2 d3 b2 a3>") . (# gain 1))
+        $ reduce $ midichan 10 # note "c3" # gain 0.01
+      -- randsamps
+      , perc2On $ reduce $ (1 ~>) $ degradeBy 0.75 $ (0.75 ~>) 
+        $ plyWith plies (# gain 0.9) $ midichan 1 # note "c3"
+      -- bassy perc + ride
+      , perc1On $ reduce $ (0.5 ~>) $ midichan "[8 8 9]/3" # note "<e2 c3 d2 d3 a3 g2>" 
+        # legato (shiftBy 3833 $ choose [0.1,0.12..1])
+      , clapOn $ reduce $ (1.5 ~>) $ slow 4 $ midichan 3 # note "c3"
+      -- melody
+      , padOn $ reduce $ (0.25 ~>) $ note (scale "prometheus" ("{0 1 -1 2 -2 3 -3}%1" + "-12")) # midichan 0
+      , delaySend (segment 1 $ range 0 75 $ shrand 100) # midichan 10
+      , reverbSend (segment 1 $ range 0 90 $ shrand 200) # midichan 10
+      -- hat
+      , hatOn $ reduce $ struct "1*2" $ midichan 5 # note "c3"
+      , delaytime (segment (1/5) $ shiftBy 889 $ choose [1,2..45])
+      , shelvingFreq (segment 1 $ range 0 64 $ shrand 1010101)
+      , shelvingGain (segment 1 $ range 0 32 $ shrand 89)
+      --, preDelay (segment 1 $ range 0 127 $ shrand 7377)
+      , scene (segment 1 $ shiftBy 36733 $ range 0 sceneRange $ shrand 731)
+      , perf1 perf1Knob
+      , perf2 perf2Knob
+      , perf6 (segment 1 $ range 0 127 $ shrand 7837111001)
+      , pad2On $ reduce $ slow 2.5 $ midichan 4 # note "c3"
+    ] # s "rytm" # cps "<4 2 3 2 1 1>"
+  d2
+    $ harmorOn $ superimpose (3.5 ~>) $
+        slow 8 $ note "{c5 d4 c5 d4 d4}%1"
+        # s "harmor" # midichan 11
+  p "vis" $ s "[emojiCount]" # pan colorProb # orbit 10
+
+
+
+
+hush
+
+-- previous:
+do
+  let ccStruct = "1*8"
+  d2
+    -- the square. the circle. the thin rectangle. the arch. the arch.
+    $ limit
+    $ stack [
+      struct "1/12" $ s "harmor" # midichan 0 # note "[c5, f5, g5]"
+      -- time
+      , struct ccStruct $ midichan 0 # modx 0
+      -- speed
+      , struct ccStruct $ midichan 0 # mody (range 60 90 $ (1000 ~>) $ slow 10 $ perlin) -- 85
+      -- frmt
+      , struct ccStruct $ midichan 0 # modz (range 60 80 $ slow 10 $ perlin) -- 70
+    ] # cps 0.5
+
+  d3 
+    $ limit
+    $ stack [
+      superimpose (3.5 ~>) $
+        slow 8 $ note "{c5 d4 c5 d4 d4}%1"
+    ] # s "harmor" # midichan 1
+
+
+d2 silence
+
+    hush
+
+    d1 $ shelvingFreq(segment 1 $ range 0 64 $ shrand 82394) # s "rytm" # cps 1

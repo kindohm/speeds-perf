@@ -1,0 +1,48 @@
+hush
+
+do
+  d2
+    $ degradeBy 0
+    $ every 1 (cpsDisc 0.25 3) -- 🚨
+    $ limit
+    $ stack [
+      slow 6 $ note "c3" # midichan 4
+      , 
+        degradeBy 0 $ shift $ sb 0.2 (|+ note "{1 2 3 -1 -2 -3}%16")
+        $ plyWith "<1 1 2 1 4 1 8 1 16>" (  (# gain 0.7))
+        $ whenmod 30 15 rev 
+        $ foldEvery [3,4] (234 ~>) 
+        $ midichan "<2 3 6 7 8 9>" 
+        # note "c3"
+      , foldEvery [3,4,5] (1.25 ~>) $ scene "<0 1 2 3>" -- 🚨
+    ] # s "rytm" # cps 0.666
+  p "vis" $ vowel "goodbye" # s "figlet" # pan colorProb # orbit 10 
+
+
+hush
+
+d2 silence
+
+p "coda"
+  $ every 1 (cpsDisc 0.5 2)
+  $ limit
+  $ superimpose ((0.125 <~) . (# note "<c4 a3>"))
+  $ slow 4 $ s "rytm" # midichan 0 # note "<c3 a2>" 
+    
+-- coda, for real
+once $ limit $ midichan 5 # s "rytm" # note "c3"
+
+
+p "coda" silence
+
+hush
+
+
+
+
+
+
+
+
+
+
