@@ -1,3 +1,5 @@
+hush
+
 do 
   let minTempoLocal = (range 1 0.1 $ (cF 0 "88"))
   let maxTempoLocal = (range 1 2 $ (cF 0 "88"))
@@ -23,7 +25,7 @@ do
     ] # s "rytm" # amp 1 # cps (130/120/2)
   p "shep"
       $ harmorOn $ stack [
-          slow 8 $ note "c4"
+          slow 4 $ note "c4"
       ] # s "harmor" # midichan 10 # gain 1.15
 
     hush        

@@ -14,7 +14,7 @@ do
         $ foldEvery [3,4] (234 ~>) 
         $ midichan "<2 3 6 7 8 9>" 
         # note "c3"
-      , foldEvery [3,4,5] (1.25 ~>) $ scene "<0 1 2 3>" -- 🚨
+      , foldEvery [3,4,5] (1.25 ~>) $ scene "<0>" -- 🚨
     ] # s "rytm" # cps 0.666
   p "vis" $ vowel "goodbye" # s "figlet" # pan colorProb # orbit 10 
 
