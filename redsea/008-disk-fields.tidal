@@ -1,0 +1,66 @@
+hush
+
+do
+  let rfreq = segment 1
+      seq = "{1@7 1@9 1@11 1@13 1 1@3 1@5}%16"
+      chain p = roll 0.1 $ reduce $ struct seq $ p
+  d1
+    $ cpsDisc minTempo maxTempo
+    $ limit
+    $ every 5 rev
+    $ stack [
+      useLing doLing
+        $ useIter (doIter) 
+        $ stack [
+          kickOn $ (|+ note (shiftBy 8084 $ choose [0,0,0,-1])) $ chain $ pad3n
+          , perc1On $ (0.0625 ~>) $ chain $ pad7n
+          , perc2On $ dg0 $ (0.125 ~>) $ chain $ pad8n
+          , clapOn $ dg3 $ ((3/16) ~>) $ chain $ pad4n
+          , hatOn $ reduce $ shift $ sb 0.1 (# midichan 11) $ shift $ dg3 $ struct "1*16" 
+            $ gain (range 0.7 1 $ shrand 8932) # midichan 10 # note "c3" # s "rytm"
+          , extraOn $ reduce $ shift $ one 0.25 $ shift $ dg2 $ shift 
+            $ one 0.2 $ struct "1(<3 2 5 7>,16,<100 200 2381 7111>)"
+            $ midichan "{8 9 8}%16" # note "c3" # s "rytm"
+        ]
+      , padOn $ ssb 0.2 (|+ note 12) $ slow 4 $ pad5n
+      , pad2On $ slow "<2 3 2 1>" $ pad6n
+      , lfodepth (segment 1.75 $ range 40 70 $ shrand 1771) # midichan 3
+      , perf2 (segment 1 $ shiftBy 883310 $ choose [0,0,0,0,0,127])
+      , perf3 (segment 2.11 $ range 0 127 $ shrand 888)
+      , perf4 (segment 1.333 $ range 0 127 $ shrand 777)
+      --, perf5 (segment 0.75 $ range 0 127 $ shrand 999)
+      , perf7 (segment 1 $ range 0 32 $ shrand 1001100)
+      , perf8 (segment 1 $ shiftBy 33 $ choose [0,0,0,127])
+      , scene   (segment "<1 2 4 1>" $ range 0 sceneRange $ shrand 9991)
+      , useLing doLing $ useIter doIter $ stack [
+        harmorOn $ (0.375 ~>) $ chain $ harmor # note "-12"
+        -- harmor cc's
+        , chain $ ccv (ccrand 10 100 133) # filter1
+        , chain $ ccv (ccrand 10 100 233) # filter2
+        , chain $ ccv (ccrand 0 127 333) # unidetune
+        , chain $ ccv (ccrand 0 15 433) # phwidth
+        , chain $ ccv (ccrand 40 80 38282) # phspeed
+        , chain $ ccv (ccrand 0 127 2382) # phoff
+        , chain $ ccv (ccrand 5 127 533) # envattack
+        , chain $ ccv (ccrand 20 127 7283) # envdecay
+        , chain $ ccv (ccrand 64 127 633 ) # filter1width
+        , chain $ ccv (ccrand 64 127 833 ) # filter2width
+        , chain $ ccv (ccrand 0 127 1033) # timbre
+        , chain $ ccv (ccrand 0 127 10183) # prism
+      ] # speed008chan
+    ] 
+    # cps (160/120/2)
+
+    hush
+
+    
+
+
+
+    / thanks for listening 
+
+
+
+    hush
+
+    

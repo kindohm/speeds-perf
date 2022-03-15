@@ -15,9 +15,11 @@ do
     $ slow 8
     $ reduce
     $ (4 ~>)
-    $ sometimesBy 0.2 (off "1s" (|- note 2))
-    $ (3 ~>)
+    $ sometimesBy 0.3 (off "1s" (|- note 2))
+    $ (1 ~>)
     $ sometimesBy 0.2 (off "1s" (|+ midichan "{1 2 3}%16"))
+    $ (3 ~>)
+    $ sometimesBy 0.3 (off "1s" (|+ midichan "{1 2 3}%16"))
     $ (12 ~>)
     $ stack [
       kickOn $ midichan (fmap ([0,1,2,3]!!) $ markovPat 8 0 [ [3,3,3,4], [6,7,8,9], [2,3,4,5], [7,8,9,5] ])

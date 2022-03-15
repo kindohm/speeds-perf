@@ -1,0 +1,60 @@
+hush
+
+do
+  let rfreq = segment 1
+      seq = "{1@7 1@11 1@21 1 1 1 1@3 1@3 1@3 1}%16"
+      dg = reduce
+      chain mod p = sb 0.3 (mod) $ one 0.3 $ shift $ one 0.2 $ shift $ roll 0.2 
+                      $ dg $ struct seq $ p
+  let minTempo2Local = (range 1 0.1 $ (cF 0 "72"))
+  let maxTempo2Local = (range 1 2 $ (cF 0 "72"))
+  d1
+    $ (|* cps (range minTempo2Local maxTempo2Local $ slow 4.1 tri))
+    $ cpsDisc minTempo maxTempo
+    $ limit
+    $ stack [
+      padOn $ slow 3 
+        $ (|+ note (shiftBy 4 $ choose [0,12]))
+        $ (|+ note (scale "ritusen" "{0 -2 -4 -1 -3}%16")) $ pad5n
+      , pad2On $ slow 3 
+        $ (|+ note (shiftBy 4 $ choose [0,12]))
+        $ (|+ note (scale "ritusen" "{0 -1 -2}%16")) $ pad6n
+      , samplestart (segment 1 $ range 0 127 $ slow 10 rand) # midichan "[4]"
+      , sampleend (segment 1.1 $ range 0 127 $ slow 21 rand) # midichan "[4]"
+      -- , samplestart (segment 1.2 $ range 0 127 $ slow 110 rand) # midichan "[5]"
+      --, sampleend (segment 1.05 $ range 0 127 $ slow 121 rand) # midichan "[5]"
+      , useLing doLing $ useIter doIter $ stack [
+        kickOn $ chain (# pad4n) $ pad3n 
+          # legato (range 0.5 1 $ shrand 100)
+        , clapOn $ reduce $ shiftBy 7721 
+          $ roll 0.25 $ (0.5 ~>) $ midichan 6 # note "c3" # s "rytm"
+        , harmorOn $ (2 ~>) $ chain (# gain 0.4) $ harmor # note "-12" # speed007chan
+        , perc1On $ often (off (0.0625/2) id) $ chain id $ pad11n
+        , perc2On $ one 0.2 $ reduce $ shiftBy 333333 $ dg3 $ shiftBy 1111 
+          $ struct "1(<3 7 2 5 1>,<16>,<62 859 174 161>)" 
+          $ midichan "{8 9 9 8 8 9 9 8}%18" # s "rytm" # note "c3"
+      ]
+      , perf4 (segment 1 $ range 0 127 $ shrand 101)
+      , perf7 (segment 1.3 $ range 0 127 $ shrand 103)
+      , perf8 (segment 1.25 $ range 0 127 $ shrand 202)
+      , scene  (segment "<1 2 1 4>" $ range 0 sceneRange $ shrand 9991)
+      -- harmor cc's
+      , stack [
+        ccv (rfreq $ ccrand 10 100 133) # filter1
+        , ccv (rfreq $ ccrand 10 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 40 80 38282) # phspeed
+        , ccv (rfreq $ ccrand 5 127 533) # envattack
+        , ccv (rfreq $ ccrand 0 127 7283) # envdecay
+        , ccv (rfreq $ ccrand 100 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 100 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 64 64 1133) # amprel
+        , ccv (rfreq $ ccrand 0 127 7) # harm
+      ] # speed007chan
+    ] # cps (140/120/2)
+
+    hush
