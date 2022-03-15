@@ -1,0 +1,81 @@
+hush
+
+do
+  let pat = ( every 3 rev 
+              $ "{[1 0] [1 0] 0 0 [0 1] 1 [0 1] 0 1 [0 1]}%4") :: Pattern Bool
+      rest  = (foldEvery [2,3,7] ("3e" ~>) 
+              $ "{[1] 0 0 0 0}%4") :: Pattern Bool
+      rest2 = (foldEvery [2,3,4] rev 
+              $ "{1 0 0 0 0 [0 1]/2 0 0 [0 1 1]/3 0}%9") :: Pattern Bool
+      rfreq = segment 0.5
+      seq = "{1@7 1@11 1@21 1 1 1 1@3 1@3 1@3 1}%16"
+      chain mod p = sb 0.3 (mod) $ one 0.3 $ shift $ one 0.2 $ shift $ roll 0.2 
+                      $ reduce $ struct seq $ p
+  d1
+    $ limit
+    $ useLing doLing16
+    $ useIter doIter
+    $ foldEvery [3,5] (0.125 ~>)
+    $ whenmod 10 5 (iter "{2 4 8}%4")
+    $ mask (inv rest2)
+    $ stack [
+      kickOn $ reduce $ mask (inv rest) $ mask pat $ struct "1*8" 
+        $ midichan "2" 
+      , perc1On $ reduce $ mask (inv rest) $ mask (inv pat) 
+        $ midichan "[6 7]*8" 
+      , perc2On $ (0.125 ~>) $ reduce $ mask (inv rest) $ mask (inv pat) 
+        $ midichan "[8 9]*8" 
+      , extraOn $ (0.25 ~>) $ reduce $ mask (inv rest) $ mask (inv pat) 
+        $ midichan "[1 11]*8" 
+      , hatOn $ perc2If (0.125 ~>) $ reduce $ (0.125 ~>) $ mask (inv rest) $ mask (inv pat) 
+        $ midichan "10*16"
+      , clapOn $ reduce $ mask rest $ struct "1*4" $ midichan 3
+      , scene  (segment "<1 2 1 4>" $ range 0 sceneRange $ shrand 9991) # midichan 12
+    ] # s "rytm" # cps (200/240) # note "c3"
+  d2 
+    $ padOn 
+        $ stack [
+          slow 4 $ note "c3" 
+          , samplestart (slow 4 $ segment 1 $ range 50 70 $ shrand 28394)
+          , sampleend (slow 4 $ segment 1 $ range 72 127 $ shrand 17171)
+        ] # midichan 4 # s "rytm"
+  d4 
+    $ pad2On 
+        $ reduce
+        $ stack [
+          struct "1(<11 9 7 13 3>,16,<0 44 666>)" $ note "c3" 
+          , rytmpan (segment 8 $ range 40 90 $ slow "<1 2 3>" $ tri)
+        ] # midichan 5 # s "rytm"
+  d3
+    $ harmorOn 
+    $ limit
+    $ useLing doLing16
+    $ useIter doIter
+    $ foldEvery [3,5] (0.125 ~>)
+    $ whenmod 10 5 (iter "{2 4 8}%4")
+    $ mask (inv rest2)
+    $ stack [
+        --chain id $ note "-24"
+        reduce $ mask (inv rest) $ mask pat 
+          $ struct "1*8" 
+          $ note "b2" # legato (range 1 2 $ shrand 893)
+        , ccv (rfreq $ ccrand 10 100 133) # filter1
+        , ccv (rfreq $ ccrand 10 100 233) # filter2
+        , ccv (rfreq $ ccrand 0 127 333) # unidetune
+        , ccv (rfreq $ ccrand 0 64 433) # phwidth
+        , ccv (rfreq $ ccrand 40 80 38282) # phspeed
+        , ccv (rfreq $ ccrand 5 127 533) # envattack
+        , ccv (rfreq $ ccrand 0 127 7283) # envdecay
+        , ccv (rfreq $ ccrand 100 127 633 ) # filter1width
+        , ccv (rfreq $ ccrand 127 127 733 ) # filter1env
+        , ccv (rfreq $ ccrand 100 127 833 ) # filter2width
+        , ccv (rfreq $ ccrand 127 127 933 ) # filter2env
+        , ccv (rfreq $ ccrand 0 127 1033) # timbre
+        , ccv (rfreq $ ccrand 64 64 1133) # amprel
+        , ccv (rfreq $ ccrand 0 127 7) # harm
+      ] # omnomchan # s "harmor"
+  p "vis" $ s "partWrite" # pan colorProb # orbit 10 
+
+
+
+hush
