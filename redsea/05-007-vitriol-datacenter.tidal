@@ -56,5 +56,6 @@ do
         , ccv (rfreq $ ccrand 0 127 7) # harm
       ] # speed007chan
     ] # cps (140/120/2)
+  p "vis" $ fast 3 $ vowel "[vitriol_datacenter disk_fields device_ruin vr_sunset wafer_vein]/6" # s "mangler" # orbit 10 # pan colorProb
 
     hush

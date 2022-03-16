@@ -51,6 +51,7 @@ do
         , ccv (rfreq $ ccrand 0 127 7) # harm
       ] # speed006chan
     ] # cps (100/120/2)
+  p "vis" $ s "[emojiCount]" # pan colorProb # orbit 10
 
     hush
 

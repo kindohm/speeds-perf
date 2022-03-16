@@ -50,6 +50,7 @@ do
       ] # speed008chan
     ] 
     # cps (160/120/2)
+  p "vis" $ fast 3 $ vowel "[no_usb_dongles_used midi_is_a_herb]/6" # s "mangler" # orbit 10 # pan colorProb
 
     hush
 

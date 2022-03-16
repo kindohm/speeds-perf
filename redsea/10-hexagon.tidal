@@ -1,3 +1,5 @@
+hush
+
 do
   let g p = (const $ s "~") $ p
   let minTempoLocal = (range 1 0.1 $ (cF 0 "88"))
@@ -28,6 +30,7 @@ do
       , scene  (segment "<1 2 1 4>" $ range 0 sceneRange $ shrand 9991) # midichan 12
     ] # s "rytm" # cps (180/120/2)
   d2 $ harmorOn $ limit $ reduce $ s "harmor" # midichan 9 # note "c3" 
+  p "vis" $ fast 4 $ s "base64March" # pan colorProb # orbit 10
 
 
     hush
