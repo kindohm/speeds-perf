@@ -21,6 +21,8 @@ s.waitForBoot {
 
 	// ~dirt.loadSoundFiles("~/studio/tidal-samples/*");
 
+	// ~dirt.loadSoundFiles("~/studio/march-2020-tracking/night/exported/*");
+
 	s.sync;
 	~dirt.start(57120, [0]);
 

@@ -3,7 +3,7 @@ hush
 do
   d2
     $ degradeBy 0
-    $ every 1 (cpsDisc 0.1 1) -- 🚨
+    $ every 1 (cpsDisc 0.125 2) -- 🚨
     $ limit
     $ stack [
       slow 6 $ note "c3" # midichan 4
@@ -16,6 +16,7 @@ do
         # note "c3"
       , foldEvery [3,4,5] (1.25 ~>) $ scene "<0 1 2 3>" -- 🚨
     ] # s "rytm" # cps 0.666
+
   p "vis" $ vowel "goodbye" # s "figlet" # pan colorProb # orbit 10 
 
 

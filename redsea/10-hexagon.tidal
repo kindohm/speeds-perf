@@ -3,10 +3,11 @@ hush
 do
   let g p = (const $ s "~") $ p
   let minTempoLocal = (range 1 0.1 $ (cF 0 "88"))
-  let maxTempoLocal = (range 1 2 $ (cF 0 "88"))
+  let maxTempoLocal = (range 1 1.25 $ (cF 0 "88"))
   let minTempo2Local = (range 1 0.1 $ (cF 0 "72"))
-  let maxTempo2Local = (range 1 2 $ (cF 0 "72"))
+  let maxTempo2Local = (range 1 1.25 $ (cF 0 "72"))
   d1
+    $ (433111 ~>)
     $ (|* cps (range minTempo2Local maxTempo2Local $ slow 4.1 tri))
     $ (|* cps (segment 0.5 $ range minTempoLocal maxTempoLocal $ (111 ~>) $ rand))
     $ limit
@@ -30,6 +31,7 @@ do
       , scene  (segment "<1 2 1 4>" $ range 0 sceneRange $ shrand 9991) # midichan 12
     ] # s "rytm" # cps (180/120/2)
   d2 $ harmorOn $ limit $ reduce $ s "harmor" # midichan 9 # note "c3" 
+
   p "vis" $ fast 4 $ s "base64March" # pan colorProb # orbit 10
 
 

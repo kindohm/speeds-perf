@@ -27,6 +27,7 @@ do
       $ harmorOn $ stack [
           slow 4 $ note "c4"
       ] # s "harmor" # midichan 10 # gain 1.15
+      
   p "vis" $ s "[emojiCount]" # pan colorProb # orbit 10
 
     hush        

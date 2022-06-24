@@ -42,6 +42,7 @@ do
     $ harmorOn $ superimpose (3.5 ~>) $
         slow 8 $ note "{c5 d4 c5 d4 d4}%1"
         # s "harmor" # midichan 11
+
   p "vis" $ s "[emojiCount]" # pan colorProb # orbit 10
 
 
