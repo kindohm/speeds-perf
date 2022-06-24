@@ -6,10 +6,10 @@ do
   d1
     $ stack [
         mod $ (|+ note "<-24>") 
-          $ s "harmor" # midichan 0 # amp 0.6 # note (scale "prometheus" "[0,1,4,7,8]") # legato 0.125
-      , mod $ s "rytm" # midichan 0 # amp 1 # note "c3"
-      , (0.5 ~>) $ s "rytm" # midichan 3 # amp 1 # note "c3"
-      , struct (binaryN 16 "<82394 2304532490 1374834 2403523408 7123481234>") $ s "rytm" # midichan 10 # note "c3" # amp 1
+          $ s "harmor2" # midichan 3 # amp 0.6 # note (scale "prometheus" "[0,1,4,7,8]") # legato 0.125
+      , g $ mod $ s "rytm" # midichan 0 # amp 1 # note "c3"
+      , g $ (0.5 ~>) $ s "rytm" # midichan 3 # amp 1 # note "c3"
+      , g $ struct (binaryN 16 "<82394 2304532490 1374834 2403523408 7123481234>") $ s "rytm" # midichan 10 # note "c3" # amp 1
     ] # cps (130/120/2)
 
     hush

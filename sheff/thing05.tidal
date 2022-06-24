@@ -8,10 +8,10 @@ do
         $ s "rytm" # midichan 2 # note "c3" # amp 1
       , g $ every 4 g $ plyWith "<8 12 16>" ((# midichan 10))
         $ s "rytm" # midichan 11 # note "c3" # amp 1
-      , slow 4 $ s "rytm" # midichan 3 # note "c3" # amp 1
-      , g $ fast "<8 12 16>"
+      , g $ slow 4 $ s "rytm" # midichan 3 # note "c3" # amp 1
+      , fast "<8 12 16>"
         $ sometimes (|+ note 12)
-        $ note (scale "major" "{[0,2,5] [5,6,9] [-1,3,5] [-2,5,6] [2,7,10] [4,8,11]}%1") # s "harmor" # midichan 0 # amp 0.5
+        $ note (scale "major" "{[0,2,5] [5,6,9] [-1,3,5] [-2,5,6] [2,7,10] [4,8,11]}%1") # s "harmor2" # midichan 2 # amp 0.5
     ] # cps ("<5 2 4 3 1>" * 0.5)
 
 hush
