@@ -2,21 +2,21 @@ do
     let dens = 1
         melody = "{[0 4] 2 -24 ~ [ 4 11] ~ ~ [0] [14 16] ~ 11 ~ ~}%16"        
     p "synth" 
-        $ harmorOn 
+        $ id -- harmorOn 
         $ every 0 (stutWith (shiftBy 20 $ choose [2,3]) (0.125*6) (|+ note (shiftBy 44 $ choose [5,7,12,14,-12,-5,-7]))) 
         $ (|+ note "-7") 
         $ slow 4 $ note melody 
-        # cantChan # gain 1.15 # cps 0.6666666 # s "harmor"
-    p "ccs" $ harmorOn $ density dens $ stack [ 
-        pan melody # ccv (range 0 127 $ slow 13.1 sine) # filter1
-        , pan melody # ccv (range 127 127 $ slow 11.31 sine) # filter1width
-        , pan melody # ccv (range 0 127 $ slow 12.25 sine) # filter1env
-        , pan melody # ccv (range 70 127 $ slow 10.212 sine) # filter2
-        , pan melody # ccv (range 0 127 $ slow 8.41 sine) # filter2width
-        , pan melody # ccv (range 40 90 $ slow 9.587 sine) # filter2env
-        , pan melody # ccv (range 60 127 $ slow 14.6801 sine) # uniDetune
+        # midichan 0 # gain 1.15 # cps 0.6666666 # s "harmor2"
+    p "ccs" $ density dens $ stack [ 
+        pan melody # ccv (range 0 127 $ slow 21.1 sine) # filter1
+        , pan melody # ccv (range 127 127 $ slow 18.31 sine) # filter1width
+        , pan melody # ccv (range 0 127 $ slow 20.25 sine) # filter1env
+        , pan melody # ccv (range 70 127 $ slow 19.212 sine) # filter2
+        , pan melody # ccv (range 0 127 $ slow 16.41 sine) # filter2width
+        , pan melody # ccv (range 40 90 $ slow 17.587 sine) # filter2env
+        , pan melody # ccv (range 20 127 $ slow 22.6801 sine) # uniDetune
         , pan melody # ccv (range 64 64 $ slow 15 tri) # porta
-        ] # cantChan # s "harmor"
+        ] # midichan 0 # s "harmor2"
 
     let 
         bd1 p = fast 2 $ whenmod 32 16 (# pad6n) $ shift $ sb 0.2 (within (0,0.125) g) $ struct "1(3,8,3)" $ p
@@ -48,6 +48,8 @@ hush
 
 
 
+
+
 do
   let dens = 1
       melody = "{[0 4] 2 -24 ~ [ 4 11] ~ ~ [0] [14 16] ~ 11 ~ ~}%16"        
@@ -63,3 +65,7 @@ do
     ] # s "rytm" # cps (150/120/2)
 
     hush
+
+
+
+

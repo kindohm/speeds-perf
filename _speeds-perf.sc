@@ -2,12 +2,12 @@
 SuperDirt.postBadValues = false;
 
 // s.options.device_("JackRouter");
-// s.options.device_("BlackHole 16ch");
+s.options.device_("BlackHole 16ch");
 
 
-s.options.numBuffers = 1024 * 16;
-s.options.memSize = 8192 * 16;
-s.options.maxNodes = 1024 * 64;
+// s.options.numBuffers = 1024 * 16;
+// s.options.memSize = 8192 * 16;
+// s.options.maxNodes = 1024 * 64;
 s.options.numOutputBusChannels = 2;
 s.options.numInputBusChannels = 0;
 
@@ -36,6 +36,10 @@ s.waitForBoot {
 	~harmorOut = MIDIOut.newByName("IAC Driver", "Bus 1");
 	~harmorOut.latency = 0;
 	~dirt.soundLibrary.addMIDI(\harmor, ~harmorOut);
+
+	~harmor2Out = MIDIOut.newByName("IAC Driver", "Bus 2");
+	~harmor2Out.latency = 0;
+	~dirt.soundLibrary.addMIDI(\harmor2, ~harmor2Out);
 
 	// ~euroOut = MIDIOut.newByName("MIDI 1U", "MIDI 1U");
 	// ~euroOut.latency = 0;
