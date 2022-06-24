@@ -1,0 +1,44 @@
+setcps (150/120/2)
+
+hush
+
+d3 silence
+
+do
+  let pat  = "{1       ~ ~ 1 ~ 1 ~ 1 ~ 1 ~ ~ }%16"
+      vpat = "{[0 1]/2 ~ ~ 1 ~ 1 ~ 1 ~ 1 ~ ~ }%16"
+      cpp  = "{1       ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ }%16"
+      degr = 0
+      mod p = id $ p -- sb 0.4 (off (0.0625/4) id) $ shift $ roll 0.3 $ dg2 $ p
+  p "drums"
+    $ mod
+    $ limit 
+    $ degradeBy degr
+    $ stack [
+      gain (pat) # midinote 0 # cut 1011,
+      slow 2 $ gain cpp # midinote 3 # cut 101,
+      midinote "{8 8 9}%16" ,
+      ((0.0625) <~) $ gain pat 
+        # midinote 5]
+        # rytm
+        # cps (160/120/2)
+  p "synth"
+    $ mod
+    $ (|* gain 1.2)
+    $ degradeBy degr $ pan pat 
+      # note "[0,2,4]" 
+      # rebChan
+      # legato 0.2
+      # s "harmor"
+  p "ccs"
+    $ stack [ 
+      gain pat # ccv (range 0 127 $ slow 34 tri) # ccn 1,
+      gain pat # ccv (range 0 127 $ slow 32 tri) # ccn 2,
+      gain pat # ccv (range 0 127 $ slow 30 tri) # ccn 3,
+      gain pat # ccv (range 0 127 $ slow 28 tri) # ccn 5
+    ] 
+    # rebChan # s "harmor"
+
+hush
+
+d1 $ fast 4 $ rebChan # s "harmor" # timbre # ccv (range 0 127 $ slow 3 rand)
